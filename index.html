@@ -1,80 +1,468 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="site_title">Ysidro Almonte (@ysi.almonte) | Professional Web Developer</title>
-    <meta name="description" content="Software developer with years of experience creating amazing websites worldwide">
-    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K64V5D2PH1"></script>
-    <script>
-        // window.dataLayer = window.dataLayer || [];
-        // function gtag() { dataLayer.push(arguments); }
-        // gtag('js', new Date());
 
-        // gtag('config', 'G-K64V5D2PH1');
-    </script>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Ysiro Almonte - Portfolio</title>
+    <meta name="description" content="">
+    <meta name="author" content="Ysidro Almonte">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+    <script src="js/pace.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.jpg">
+    <link rel="icon" type="image/jpg" sizes="32x32" href="favicon-32x32.jpg">
+    <link rel="icon" type="image/jpg" sizes="16x16" href="favicon-16x16.jpg">
+    <link rel="manifest" href="site.webmanifest">
+
 </head>
-<body>
-    <section id="container">
-        <div class="card">
-            <figure id="header-image">
-                <img src="img/headbannersite.jpg?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1506&q=80"
-                    alt="Source code in a room with low light">
-            </figure>
-            
-            <figure id="avatar">
-                <img src="img/profile-foto.jpg" alt="">
-            </figure>
-            
-            <h1 id="user_name"><!--Here the name of the user--></h1>
-            <h2 id="professional_title"><!--Actual professional title--></h2>
-            <article id="personal-info">
-                <p id="about">
-                    <!-- Web Developer with more than 6 years of experience creating amazing websites and web apps as freelancer and employee of
-                    great agencies and organizations, even the government -->
-                </p>
-                
-                <div id="skills">
-                    <h3>Main Skills</h3>
-                    <hr>
-                    <table id="skills_list">
-                        <!--Here de list of skills-->
-                    </table>
-                </div>
-                <hr>
-                <h3>Work Experience</h3>
-               <section id="experience">
-                    <!--Here the Job Experience List-->
-               </section>
-            </article>
-            <div id="contact">
-                <h3>Contact Me </h3>
-                <nav id="contact-menu">
-                    <a href="https://wa.me/+18492072614" target="_blank" class="button"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:almonte.ysidro@gmail.com" target="_blank" class="button"><i class="far fa-envelope"></i></a>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B52YZ2XD3T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-                    <a href="https://www.linkedin.com/in/ysidro-almonte-b5458a39/" target="_blank" class="button"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://github.com/ysidro" target="_blank" class="button"><i class="fab fa-github"></i></a>
-                </nav>
+  gtag('config', 'G-B52YZ2XD3T');
+</script>
+<body id="top">
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- site header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="header-logo">
+            <a class="site-logo" href="index.html">
+                <img src="images/ysidro-almonte.jpg" alt="Homepage">
+            </a>
+        </div>
+
+        <nav class="header-nav-wrap">
+            <ul class="header-main-nav">
+                <li class="current"><a class="smoothscroll" href="#intro" title="intro">Intro</a></li>
+                <li><a class="smoothscroll" href="#about" title="about">About</a></li>
+                <li><a class="smoothscroll" href="#services" title="services">Services</a></li>
+                <li><a class="smoothscroll" href="#works" title="works">Works</a></li>
+            
+            </ul>
+
+        </nav>
+
+        <a class="header-menu-toggle" href="#"><span>Menu</span></a>
+
+    </header> <!-- end s-header -->
+
+
+    <!-- intro
+    ================================================== -->
+    <section id="intro" class="s-intro target-section">
+
+        <div class="row intro-content">
+
+            <div class="column large-9 mob-full intro-text">
+                <h3>Hello, I'm Ysidro Almonte</h3>
+                <h1>
+                    Web Developer <br>
+                    Front-End / Back-End <br/> 
+                    Experience.
+                </h1>
+            </div>
+
+            <div class="intro-scroll">
+                <a href="#about" class="intro-scroll-link smoothscroll">
+                    Scroll For More
+                </a>
+            </div>
+
+            <div class="intro-grid"></div>
+            <!-- <div class="intro-pic"></div> -->
+
+        </div> <!-- end row -->
+
+    </section> <!-- end intro -->
+
+
+    <!-- about
+    ================================================== -->
+    <section id="about" class="s-about target-section">
+
+        <div class="about-me">
+
+            <div class="row heading-block" data-aos="fade-up">
+                <div class="column large-full">
+                    <h2 class="section-heading">About Me</h2>
+                </div>
+            </div>
+
+            <div class="row about-me__content" data-aos="fade-up">
+                <div class="column large-full about-me__text">
+                    <p class="lead">
+                        Advertising, Multimedia Design, and Photography have been my lifelong passions, deeply ingrained in me since a young age. I have always been a fervent follower of new trends in digital design and hold a deep admiration for creativity.
+                    </p>
+
+                    <p>
+                        Driven by my passion for technology and fueled by an insatiable desire to learn, I have mastered the necessary tools for success in the professional world of multimedia. 
+                        </p>
+                        
+                        <p>This has allowed me to actively contribute to various projects, both enhancing my personal growth and making a positive impact on the work environment.
+
+                    </p>
+
+                    <p>
+                        Ingenuity defines who I am, and I strive to foster a culture of innovation and creativity among the teams I work with. While I am a cheerful individual, I also maintain a sense of reservation. I firmly believe that building strong relationships with colleagues improves overall performance and communication within the team.
+
+                    </p>
+
+                    <p>
+                        In terms of technical expertise, I possess comprehensive experience with a range of technologies like PHP, WordPress, Laravel, Codeigniter, Javascript, jQuery, React Js, Node Js
+                    </p>
+                </div>
+            </div>
+    
+            <div class="row about-me__buttons">
+                <div class="column large-half tab-full" data-aos="fade-up">
+                    <a href="https://www.linkedin.com/in/ysidro-almonte-b5458a39/" target="_blank" class="btn btn--stroke full-width">Hire Me</a>
+                </div>
+            </div>
+
+        </div> <!-- end about-me -->
+
+        <div class="about-experience">
+
+            <div class="row heading-block" data-aos="fade-up">
+                <div class="column large-full">
+                    <h2 class="section-heading">Work & Education</h2>
+                </div>
+            </div>
+
+            <div class="row about-experience__timeline">
+
+                <div class="column large-half tab-full" data-aos="fade-up">
+                    <div class="timeline">
+
+                        <div class="timeline__icon-wrap">
+                            <span class="timeline__icon timeline__icon--work"></span>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">Sep 2017 - Present</p>
+                                <h3 class="item-title">OMD Dominican Republic</h3>
+                                <h5>Software Engineer II</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Build tools that connect to various AdWords services that marketing teams rely on to efficiently generate final reports for clients.</p>
+                                <p>Develop different websites and landing pages as resources to support the mechanics of different advertising campaigns for the agency's clients using different technologies such as PHP, Javascript, HTML and CSS. </p>
+                            </div>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">May 2021 - May 2022</p>
+                                <h3 class="item-title">Crunch.io</h3>
+                                <h5>Frontend Developer</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>Implement the creative vision for our client-facing website, and create documentation pages and online/offline marketing designs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column large-half tab-full" data-aos="fade-up">
+                    <div class="timeline">
+
+                        <div class="timeline__icon-wrap">
+                            <span class="timeline__icon timeline__icon--education"></span>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">July 2018</p>
+                                <h3 class="item-title">UNAPEC</h3>
+                                <h5>Bachelor degree on Advertising</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>APEC University's exceptional program equipped me with the knowledge and skills necessary to thrive in the dynamic world of advertising. Through rigorous coursework and hands-on experiences, I gained a deep understanding of the strategic aspects of advertising, consumer behavior analysis, market research, creative concept development, and campaign execution.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">Nov 2022</p>
+                                <h3 class="item-title">Geekle</h3>
+                                <h5>React Global Online Summit 22.2 Geekle</h5>
+                            </div>
+                            <div class="timeline__desc">
+                                <p>The primary focus of the React Global Online Summit 22.2 is to provide a platform for knowledge sharing, collaboration, and networking within the React ecosystem. With a diverse lineup of speakers, including renowned React experts and influential developers, the summit aims to cover a wide range of topics related to React development, best practices, and emerging trends.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">Jun 2021</p>
+                                <h3 class="item-title">UDEMI</h3>
+                                
+                                <h5>Learn Javascript ES9, HTML, CSS3 and NodeJS from scratch</h5>
+                                <div class="timeline__desc">
+                                <p>The Udemy course "Learn Javascript ES9, HTML, CSS3, and NodeJS from scratch" is an exceptional learning resource that helped me to have a complete understanding of the essential web development technologies.in this course with its step-by-step approach I could learn to master Javascript ES9, HTML, CSS3 and NodeJS from scratch.  With hands-on experience through practical exercises and real-world projects, I managed to build interactive web applications and dynamic websites. </p>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="timeline__block">
+                            <div class="timeline__bullet"></div>
+                            <div class="timeline__header">
+                                <p class="timeline__timeframe">Mar 2022</p>
+                                <h3 class="item-title">UDEMI</h3>
+                                <h5>React Native without borders</h5>
+                                <div class="timeline__desc">
+                                <p>"React Native without Borders" was exceptional learning opportunity to learn how to create mobile apps with React Native with a comprehensive, hands-on approach to developing cross-platform mobile apps without limitations.</p><p> Through hands-on examples and real-world projects, I got to harness the power of React Native to create beautiful, high-performance mobile apps that work seamlessly on both iOS and Android devices. </p>
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- end about-experience -->
+
+    </section> <!-- end s-about -->
+
+
+    <!-- services
+    ================================================== -->
+    <section id="services" class="s-services ss-dark target-section">
+
+        <div class="shadow-overlay"></div>
+
+        <div class="row heading-block heading-block--center" data-aos="fade-up">
+            <div class="column large-full">
+                <h2 class="section-heading section-heading--centerbottom">Capabilities</h2>
+            </div>
+        </div> <!-- end heading-block -->
+
+        <div class="row services-list block-large-1-3 block-medium-1-2 block-tab-full">
+
+            <div class="column item-service" data-aos="fade-up">
+                <div class="item-service__content">
+                    <h4 class="item-title">WordPress Template Development</h4>
+                    <p>
+                        Developing a custom template offers numerous advantages to businesses and website owners who wish to create a unique and professional online presence. This allows me to create custom WordPress templates tailored to specific needs and branding requirements. With a custom template, I can ensure a visually appealing and user-friendly website that aligns with your brand identity. 
+                    </p>
+                </div>
+            </div>
+
+            <div class="column item-service" data-aos="fade-up">
+                <div class="item-service__content">
+                    <h4 class="item-title">WordPress Plugins Development</h4>
+                    <p>
+                        WordPress plugin development offers businesses and website owners a powerful means to extend the functionality of their WordPress websites. A custom plugin can address specific needs and requirements that are not met by existing plugins. This flexibility allows for the creation of custom solutions that enhance the user experience, streamline processes, and add unique features. 
+                    </p>
+                </div>
+            </div>
+
+            <div class="column item-service" data-aos="fade-up">
+                <div class="item-service__content">
+                    <h4 class="item-title">Web Design</h4>
+                    <p>
+                        In web development I combine the power of React.js, HTML5 and CSS3 to deliver stunning, high quality websites. Using React.js, I build dynamic and interactive web applications that provide a seamless user experience.</p>
+                        <p> I leverage the goodness of HTML5 and CSS3 to create visually stunning and responsive designs, ensuring that your website looks exceptional on all devices. In addition to front-end technologies, we incorporate PHP and Node JS to handle server-side functionality, allowing for robust back-end development and seamless integration with databases and APIs. 
+                    </p>
+                </div>
+            </div>
+
+        </div> <!-- end services-list -->
+
+    </section> <!-- end s-services -->
+
+
+
+    <!-- works
+    ================================================== -->
+    <section id="works" class="s-works target-section">
+
+        <div class="row heading-block heading-block--center" data-aos="fade-up">
+            <div class="column large-full">
+                <h2 class="section-heading section-heading--centerbottom">Selected Works</h2>
+                <p class="section-desc">
+                    Here are some of my selected works I have done lately. Feel free to 
+                    check them out.
+                </p>
+            </div>
+        </div> <!-- end heading-block -->
+
+        <div class="masonry-wrap">
+
+            <div class="masonry">
+                <div class="grid-sizer"></div>
+    
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <img src="images/portfolio/chevrolet-w900-h720.png" 
+                        alt="Chevrolet.com.do">
+                        <div class="item-folio__text">
+                            <h4 class="item-folio__title">
+                                Chevrolet.com.do
+                            </h4>
+                            <p class="item-folio__cat">
+                                Website
+                            </p>
+                        </div>
+    
+                        
+                    </div>
+                </div> <!-- end masonry__brick -->
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <img src="images/portfolio/suzuki-w900-h720.png" 
+                        alt="Chevrolet.com.do">
+                        <div class="item-folio__text">
+                            <h4 class="item-folio__title">
+                                Suzuki.com.do
+                            </h4>
+                            <p class="item-folio__cat">
+                                Website
+                            </p>
+                        </div>
+    
+                        
+                    </div>
+                </div> <!-- end masonry__brick -->
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <img src="images/portfolio/yohablo-w900-h720.png" 
+                        alt="Chevrolet.com.do">
+                        <div class="item-folio__text">
+                            <h4 class="item-folio__title">
+                                Yohabloconsanta.com.do
+                            </h4>
+                            <p class="item-folio__cat">
+                                Landing Page
+                            </p>
+                        </div>
+    
+                        
+                    </div>
+                </div> <!-- end masonry__brick -->
+                
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <img src="images/portfolio/gminmobiliaria-w900-h720.png" 
+                        alt="Chevrolet.com.do">
+                        <div class="item-folio__text">
+                            <h4 class="item-folio__title">
+                                Gminmobiliaria.net
+                            </h4>
+                            <p class="item-folio__cat">
+                                Website
+                            </p>
+                        </div>
+    
+                        
+                    </div>
+                </div> <!-- end masonry__brick -->
+    
+
+            </div> <!-- end masonry -->
+
+        </div> <!-- end masonry-wrap -->
+
+    </section> <!-- end s-work -->
+
+
+    <!-- footer
+    ================================================== -->
+    <footer>
+        <div class="row">
+            <div class="column large-full ss-copyright">
+                <span>© Copyright Ysidro Almonte</span> 
+            </div>            
+
+            <div class="ss-go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top"></a>
             </div>
         </div>
-    </section>
-
-    <footer class="copy">
-        &copy; Ysidroalmonte 2022
     </footer>
-    
-    <!--Client Data-->
-    <script src="js/data.js"></script>
 
-    <!--All the frontend functionalities-->
-    <script src="js/functions.js"></script>
+
+    <!-- photoswipe background
+    ================================================== -->
+    <div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button> <button class="pswp__button pswp__button--share" title=
+                    "Share"></button> <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom" title=
+                    "Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button> <button class="pswp__button pswp__button--arrow--right" title=
+                "Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div><!-- end photoSwipe background -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
-</html>
