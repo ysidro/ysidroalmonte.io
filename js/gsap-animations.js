@@ -29,11 +29,70 @@
     });
   }
 
-  // ── Intro — no ScrollTrigger, runs on load ──────────────────────────
-  gsap.timeline()
-    .from('.intro-text h3', { y: 16, opacity: 0, duration: 0.55, ease: EASE })
-    .from('.intro-text h1', { y: 24, opacity: 0, duration: 0.7,  ease: EASE }, '-=0.28')
-    .from('#skill > div',   { y: 12, opacity: 0, duration: 0.4, stagger: 0.06, ease: 'back.out(1.3)' }, '-=0.35');
+  // ── Character split — wraps each glyph in a span, preserves <br> ───
+  function splitChars(el) {
+    const nodes = Array.from(el.childNodes);
+    el.innerHTML = '';
+    nodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        node.textContent.split('').forEach(ch => {
+          if (!ch.trim()) {
+            el.appendChild(document.createTextNode(ch));
+          } else {
+            const s = document.createElement('span');
+            s.className = 'char';
+            s.style.display = 'inline-block';
+            s.textContent = ch;
+            el.appendChild(s);
+          }
+        });
+      } else {
+        el.appendChild(node.cloneNode(true));
+      }
+    });
+    return el.querySelectorAll('.char');
+  }
+
+  // ── Intro — particle text reveal ────────────────────────────────────
+  const h3   = document.querySelector('.intro-text h3');
+  const h1   = document.querySelector('.intro-text h1');
+  const h3ch = h3 ? splitChars(h3) : [];
+  const h1ch = h1 ? splitChars(h1) : [];
+
+  const rand = gsap.utils.random;
+
+  const tl = gsap.timeline();
+
+  if (h3ch.length) {
+    tl.from(h3ch, {
+      opacity:  0,
+      x:        () => rand(-55, 55),
+      y:        () => rand(-35, 35),
+      scale:    () => rand(0.3, 0.8),
+      filter:   'blur(6px)',
+      duration: 0.7,
+      stagger:  { amount: 0.35, from: 'random' },
+      ease:     'power3.out',
+    });
+  }
+
+  if (h1ch.length) {
+    tl.from(h1ch, {
+      opacity:  0,
+      x:        () => rand(-70, 70),
+      y:        () => rand(-40, 40),
+      scale:    () => rand(0.25, 0.75),
+      filter:   'blur(8px)',
+      duration: 0.85,
+      stagger:  { amount: 0.5, from: 'random' },
+      ease:     'power3.out',
+    }, '-=0.2');
+  }
+
+  tl.from('#skill > div', {
+    y: 12, opacity: 0, duration: 0.4, stagger: 0.06, ease: 'back.out(1.3)',
+  }, '-=0.3')
+  .add(() => document.dispatchEvent(new CustomEvent('introAnimDone')));
 
   // ── Section headings ────────────────────────────────────────────────
   gsap.utils.toArray('.section-heading').forEach(el =>

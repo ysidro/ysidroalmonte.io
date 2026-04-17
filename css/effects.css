@@ -2,16 +2,49 @@
  * effects.css
  * =================================================================== */
 
-/* ── Pixi.js canvas layer ─────────────────────────────────────────── */
-#pixi-bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
+/* ── Intro section ────────────────────────────────────────────────── */
+.s-intro {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Override main.css dot-grid: replace with our canvas grid */
+.intro-grid {
+  width: 798px;
+  height: 550px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-image: none !important;
+  opacity: 1 !important;
+  overflow: hidden;
+  pointer-events: auto;
   z-index: 0;
 }
 
-/* Sections above the canvas */
+.intro-grid canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+@media screen and (max-width: 1100px) {
+  .intro-grid {
+    width: 100%;
+    height: 320px;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transform: none;
+    opacity: 0.5 !important;
+    pointer-events: none;
+  }
+}
+
+/* Sections above stacking context */
 .s-about,
 .s-works,
 footer,
@@ -20,9 +53,72 @@ footer,
   z-index: 1;
 }
 
-/* Header — keep its own positioning, just ensure it's always on top */
+/* Header — always on top */
 .s-header {
   z-index: 200;
+}
+
+/* ── Header nav — sweep underline on hover ────────────────────────── */
+.header-main-nav a {
+  position: relative;
+  letter-spacing: 0.28rem;
+  transition: color 0.25s ease, letter-spacing 0.3s ease;
+}
+
+.header-main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #28d5be;
+  transition: width 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-main-nav a:hover,
+.header-main-nav a:focus {
+  color: #ffffff !important;
+  letter-spacing: 0.34rem;
+}
+
+.header-main-nav a:hover::after,
+.header-main-nav .current a::after {
+  width: 100%;
+}
+
+.header-main-nav .current a::after {
+  background: #28d5be;
+}
+
+/* ── Header social icons ─────────────────────────────────────────── */
+.header-social li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  transition: color 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.header-social li a svg {
+  display: block;
+}
+
+.header-social li a:hover {
+  color: #28d5be;
+  transform: translateY(-3px) scale(1.15);
+}
+
+/* ── Header logo pulse on hover ──────────────────────────────────── */
+.header-logo a {
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.header-logo a:hover {
+  opacity: 0.85;
+  transform: scale(1.05);
 }
 
 /* Intro — transparent so canvas shines through */
