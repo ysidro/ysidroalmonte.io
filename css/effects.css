@@ -466,8 +466,23 @@ footer,
     max-height: 92vh;
   }
 
+  /* Pin close button to viewport so it stays visible while scrolling */
+  .project-modal__close {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.2rem;
+    width: 44px;
+    height: 44px;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50%;
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
   .project-modal__body {
-    padding: 2.4rem 2rem;
+    padding: 2.4rem 2rem 4rem;
   }
 
   .project-modal__title {
