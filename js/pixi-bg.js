@@ -7,7 +7,7 @@
   if (window.innerWidth < 900 || !window.PIXI) return;
 
   const ACCENT = 0x28d5be; // Match site's teal accent
-  const ACCENT_CSS = '#28d5be';
+  const ACCENT_CSS = '#fff';
 
   const CODE_LINES = [
     "const router = createBrowserRouter([",

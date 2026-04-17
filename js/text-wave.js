@@ -52,7 +52,7 @@
   }
 
   /* ── Read computed style → PIXI.TextStyle ─────────────────────── */
-  function pixiStyle(el, overrides = {}) {
+  function pixiStyle(el, overrides = {}, color = '#28d5be') {
     const cs  = window.getComputedStyle(el);
     const lh  = cs.lineHeight === 'normal'
       ? parseFloat(cs.fontSize) * 1.25
@@ -62,7 +62,7 @@
       fontFamily:    cs.fontFamily,
       fontSize:      parseFloat(cs.fontSize),
       fontWeight:    cs.fontWeight,
-      fill:          '#ffffff',
+      fill:          color,
       lineHeight:    lh,
       letterSpacing: parseFloat(cs.letterSpacing) || 0,
       ...overrides,
@@ -98,14 +98,14 @@
 
     const textGroup = new PIXI.Container();
 
-    const pixi_h3 = new PIXI.Text(h3El.textContent.trim(), pixiStyle(h3El));
+    const pixi_h3 = new PIXI.Text(h3El.textContent.trim(), pixiStyle(h3El,{}, "#28d5be"));
     pixi_h3.x = 0;
     pixi_h3.y = h3Y;
 
     // innerText preserves \n where <br> was
     const pixi_h1 = new PIXI.Text(
       (h1El.innerText || h1El.textContent).trim(),
-      pixiStyle(h1El)
+      pixiStyle(h1El,{}, "#ffffff")
     );
     pixi_h1.x = 0;
     pixi_h1.y = h1Y;
