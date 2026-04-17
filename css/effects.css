@@ -1,0 +1,480 @@
+/* ===================================================================
+ * effects.css
+ * =================================================================== */
+
+/* ── Pixi.js canvas layer ─────────────────────────────────────────── */
+#pixi-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Sections above the canvas */
+.s-about,
+.s-works,
+footer,
+#preloader {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header — keep its own positioning, just ensure it's always on top */
+.s-header {
+  z-index: 200;
+}
+
+/* Intro — transparent so canvas shines through */
+.s-intro {
+  background-color: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Services — transparent so canvas shines through (PixiJS effect) */
+.s-services {
+  background-color: transparent !important;
+  background-image: none !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Remove the opaque overlays that block the canvas */
+.s-services::before,
+.s-services .shadow-overlay {
+  display: none !important;
+}
+
+/* All content rows stay above canvas z-index */
+.s-services .row,
+.s-services .services-list {
+  position: relative;
+  z-index: 2;
+}
+
+/* Sticky header — glass morphism */
+.s-header.sticky {
+  background: rgba(5, 5, 5, 0.55) !important;
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 40px rgba(0, 0, 0, 0.35);
+  transition: background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease;
+}
+
+/* Social icons in header */
+.header-social li a svg {
+  display: block;
+  transition: color 0.25s ease, transform 0.25s ease;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.header-social li a:hover svg {
+  color: #28d5be;
+  transform: translateY(-2px);
+}
+
+
+/* ===================================================================
+ * Works — dark section
+ * =================================================================== */
+.s-works {
+  background: #080808;
+}
+
+/* Original headings were black (white bg) — force white */
+.s-works .section-heading,
+.s-works .section-desc {
+  color: #ffffff;
+}
+
+.s-works .section-desc {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.works-intro-line {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #28d5be;
+  margin: 1rem auto 3.2rem;
+}
+
+/* ── Works grid ────────────────────────────────────────────────────── */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 3.2rem;
+}
+
+/* ── Card ──────────────────────────────────────────────────────────── */
+.work-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform;
+  background: #111;
+}
+
+.work-card__img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.work-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hover overlay */
+.work-card__hover {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5, 5, 5, 0.95) 0%,
+    rgba(5, 5, 5, 0.45) 55%,
+    transparent 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.work-card:hover .work-card__hover { opacity: 1; }
+.work-card:hover .work-card__img img { transform: scale(1.06); }
+
+.work-card__hover-cta {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #28d5be;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.work-card__hover-cta::after {
+  content: '→';
+  display: inline-block;
+  transition: transform 0.25s;
+}
+
+.work-card:hover .work-card__hover-cta::after {
+  transform: translateX(5px);
+}
+
+/* Card footer */
+.work-card__info {
+  padding: 1.4rem 1.8rem 1.8rem;
+  background: #111;
+}
+
+.work-card__cat {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #28d5be;
+  margin: 0 0 0.4rem;
+}
+
+.work-card__name {
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+/* Tags: no background, green text, white bottom border */
+.work-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+}
+
+.work-card__tags span {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #28d5be;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 0;
+  padding: 0 0 0.15rem;
+  line-height: 1.6;
+}
+
+
+/* ===================================================================
+ * Project Modal — max-width 1440px, side-by-side layout
+ * =================================================================== */
+.project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.project-modal.is-open {
+  pointer-events: all;
+  visibility: visible;
+}
+
+/* Backdrop */
+.project-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  cursor: pointer;
+  transition: background 0.35s, backdrop-filter 0.35s;
+}
+
+.project-modal.is-open .project-modal__backdrop {
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Panel — wide layout */
+.project-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1440px;
+  max-height: 90vh;
+  background: #0e0e0e;
+  border: 1px solid rgba(40, 213, 190, 0.18);
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(28px) scale(0.96);
+  display: grid;
+  grid-template-columns: 48% 1fr;
+  overflow: hidden;
+}
+
+/* Close button — just the X, no bg or border */
+.project-modal__close {
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.project-modal__close:hover {
+  color: #ffffff;
+}
+
+/* Left — image fills the column */
+.project-modal__img {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.project-modal__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Right — scrollable text column */
+.project-modal__body {
+  padding: 4rem 4.8rem 4rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(40, 213, 190, 0.3) transparent;
+}
+
+.project-modal__body::-webkit-scrollbar { width: 4px; }
+.project-modal__body::-webkit-scrollbar-track { background: transparent; }
+.project-modal__body::-webkit-scrollbar-thumb { background: rgba(40, 213, 190, 0.3); border-radius: 4px; }
+
+.project-modal__category {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #28d5be;
+  margin: 0 0 0.6rem;
+}
+
+.project-modal__title {
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 3.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0 0 1.6rem;
+}
+
+/* Modal tags — same style as card tags */
+.project-modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  margin-bottom: 3rem;
+}
+
+.project-modal__tags span {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #28d5be;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 0;
+  padding: 0 0 0.15rem;
+  line-height: 1.7;
+}
+
+.project-modal__divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin: 2.4rem 0;
+}
+
+.project-modal__block {
+  margin-bottom: 0.4rem;
+}
+
+.project-modal__label {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #28d5be;
+  margin: 0 0 0.8rem;
+}
+
+.project-modal__block p:last-child {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.project-modal__cta {
+  margin-top: 3.2rem;
+}
+
+.project-modal__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #050505;
+  background: #28d5be;
+  padding: 1.2rem 3rem;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+}
+
+.project-modal__link:hover {
+  background: #ffffff;
+}
+
+.project-modal__link::after {
+  content: '→';
+}
+
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media screen and (max-width: 1100px) {
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .project-modal__panel {
+    grid-template-columns: 1fr;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .project-modal__img {
+    min-height: 280px;
+    max-height: 320px;
+  }
+
+  .project-modal__body {
+    padding: 3rem 3.2rem;
+    overflow-y: visible;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .works-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1.6rem;
+  }
+
+  .project-modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .project-modal__panel {
+    border-radius: 8px 8px 0 0;
+    max-height: 92vh;
+  }
+
+  .project-modal__body {
+    padding: 2.4rem 2rem;
+  }
+
+  .project-modal__title {
+    font-size: 2.6rem;
+  }
+
+  #pixi-bg {
+    display: none;
+  }
+}
