@@ -3636,10 +3636,10 @@ html[data-useragent*='rv:11.0'] .ss-go-top::after {
  * # Trust Bar
  * ------------------------------------------------------------------- */
 .s-trust-bar {
-    background: rgba(255, 255, 255, 0.04);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 2rem 0;
+    background: rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 1.8rem 0;
 }
 
 .trust-bar__list {
@@ -3649,30 +3649,44 @@ html[data-useragent*='rv:11.0'] .ss-go-top::after {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0;
+    align-items: center;
+    row-gap: .8rem;
+    column-gap: 0;
 }
 
 .trust-bar__list li {
-    font-size: 1.2rem;
-    font-weight: 500;
-    letter-spacing: .15em;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
-    padding: 0 2.4rem;
+    color: rgba(255, 255, 255, 0.82);
+    padding: 0 2.2rem;
     position: relative;
+    white-space: nowrap;
 }
 
 .trust-bar__list li + li::before {
     content: '·';
     position: absolute;
     left: 0;
-    color: rgba(255, 255, 255, 0.25);
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.6rem;
+    line-height: 1;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
+    .trust-bar__list li {
+        font-size: 1.15rem;
+        padding: .3rem 1.6rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
     .trust-bar__list li {
         font-size: 1.1rem;
-        padding: .4rem 1.4rem;
+        padding: .3rem 1.2rem;
     }
 }
 
@@ -3682,6 +3696,15 @@ html[data-useragent*='rv:11.0'] .ss-go-top::after {
  * ------------------------------------------------------------------- */
 .s-open-remote {
     padding: 8rem 0;
+    background-color: #0d0d0d;
+    position: relative;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.s-open-remote .section-heading,
+.s-open-remote .section-desc {
+    color: #ffffff;
 }
 
 .open-remote__list {
@@ -3691,17 +3714,18 @@ html[data-useragent*='rv:11.0'] .ss-go-top::after {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1.2rem 2rem;
+    gap: 1.2rem 1.6rem;
 }
 
 .open-remote__list li {
     font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.75);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     border-radius: 4px;
-    padding: .6rem 1.6rem;
-    letter-spacing: .05em;
+    padding: .7rem 1.8rem;
+    letter-spacing: .04em;
 }
 
 .open-remote__cta {
@@ -3709,6 +3733,29 @@ html[data-useragent*='rv:11.0'] .ss-go-top::after {
     gap: 1.6rem;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.open-remote__cta .btn--stroke {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.open-remote__cta .btn--stroke:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #111111;
+}
+
+.open-remote__cta .btn--primary {
+    background: #28d5be;
+    border-color: #28d5be;
+    color: #111111;
+}
+
+.open-remote__cta .btn--primary:hover {
+    background: #1fb8a4;
+    border-color: #1fb8a4;
+    color: #111111;
 }
 
 
