@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { moreProjects } from '../../data/site';
+
+const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout
+  title="Engineering Work — Ysidro Almonte"
+  description="Case studies in WordPress engineering: custom plugins, WooCommerce, API integrations, and performance work."
+  path="/work/"
+>
+  <Header />
+  <main class="mx-auto max-w-5xl px-6 py-14">
+    <p class="font-mono text-xs uppercase tracking-wide text-accent-600">Engineering Work</p>
+    <h1 class="mt-2 font-serif text-4xl font-semibold text-ink-900">Featured Engineering Projects</h1>
+    <p class="mt-3 max-w-2xl text-ink-700">
+      Each project below is a technical case study — role, architecture, engineering challenges, and measurable results.
+    </p>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      {projects.map((p) => (
+        <ProjectCard
+          slug={p.id}
+          name={p.data.name}
+          summary={p.data.summary}
+          role={p.data.role}
+          stack={p.data.stack}
+          results={p.data.results}
+          githubUrl={p.data.githubUrl}
+          liveUrl={p.data.liveUrl}
+          basePath="/work/"
+        />
+      ))}
+    </div>
+
+    <div class="mt-20 border-t border-ink-300 pt-10">
+      <p class="font-mono text-xs uppercase tracking-wide text-ink-500">More Projects</p>
+      <h2 class="mt-2 font-serif text-2xl font-semibold text-ink-900">Additional client work</h2>
+      <p class="mt-2 max-w-2xl text-sm text-ink-700">
+        Production sites without a full engineering write-up — still real, shipped work.
+      </p>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {moreProjects.map((p) => (
+          <article class="overflow-hidden rounded-lg border border-ink-300 bg-ink-100">
+            <img src={p.image} alt={p.name} class="h-36 w-full object-cover" loading="lazy" width="900" height="720" />
+            <div class="p-4">
+              <p class="font-mono text-[0.65rem] uppercase tracking-wide text-ink-500">{p.category}</p>
+              <h3 class="mt-1 font-semibold text-ink-900">{p.name}</h3>
+              <p class="mt-1 text-sm text-ink-700">{p.description}</p>
+              <ul class="mt-3 flex flex-wrap gap-1.5">
+                {p.tags.map((tech) => (
+                  <li class="rounded bg-teal-100 px-2 py-0.5 font-mono text-xs text-teal-600">{tech}</li>
+                ))}
+              </ul>
+              {p.url && (
+                <a href={p.url} target="_blank" rel="noopener" class="mt-3 inline-block text-sm font-semibold text-accent-600 hover:text-accent-900">
+                  Visit site ↗
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

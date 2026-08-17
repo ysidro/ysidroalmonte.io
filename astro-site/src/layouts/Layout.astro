@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import { person } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path = '/' } = Astro.props;
+const canonical = new URL(path, Astro.site ?? 'https://ysidroalmonte.com').toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={person.fullName} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32x32.jpg" type="image/jpeg" sizes="32x32" />
+    <link rel="icon" href="/favicon-16x16.jpg" type="image/jpeg" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.jpg" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0a0d0d" />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: person.fullName,
+      jobTitle: person.title,
+      email: `mailto:${person.email}`,
+      url: person.links.site,
+      sameAs: [person.links.linkedin, person.links.github],
+    })} />
+  </head>
+  <body class="bg-ink-50 text-ink-900 font-sans antialiased">
+    <slot />
+  </body>
+</html>

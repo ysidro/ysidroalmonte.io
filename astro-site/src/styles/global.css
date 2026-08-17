@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Geist, self-hosted — no external font requests at runtime */
+@import "@fontsource/geist-sans/latin-400.css";
+@import "@fontsource/geist-sans/latin-500.css";
+@import "@fontsource/geist-sans/latin-600.css";
+@import "@fontsource/geist-sans/latin-700.css";
+@import "@fontsource/geist-mono/latin-400.css";
+@import "@fontsource/geist-mono/latin-500.css";
+@import "@fontsource/geist-mono/latin-600.css";
+
+@theme {
+  --font-sans: "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+
+  /* Neutrals — dark-first, matching the site's original near-black identity */
+  --color-ink-50: #0a0d0d;   /* page background */
+  --color-ink-100: #12181a;  /* raised surface: cards, badges, alternating sections */
+  --color-ink-300: #223034;  /* borders */
+  --color-ink-500: #7c8d89;  /* faint / meta text */
+  --color-ink-700: #c3d0cd;  /* body text */
+  --color-ink-900: #f2f7f5;  /* headings, strong text */
+
+  /* Brand teal — pulled directly from the original site (#28d5be) */
+  --color-accent-100: #12302b; /* tinted surface: outline-button hover, highlight box */
+  --color-accent-600: #28d5be; /* primary teal: CTAs, links, borders */
+  --color-accent-900: #6eebd8; /* bright teal: text on tinted surfaces, button hover */
+
+  /* Secondary teal — technology tags, slightly quieter than the brand accent */
+  --color-teal-100: #123330;
+  --color-teal-600: #5fd6c4;
+  --color-teal-900: #a6f3e6;
+
+  /* Violet — second color lifted from the logo's gradient, reserved for the
+     Beyond WordPress / mobile section so it reads distinct without competing */
+  --color-violet-100: #1c1a33;
+  --color-violet-600: #9686f8;
+  --color-violet-900: #c2b8fc;
+}
+
+@layer base {
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+}

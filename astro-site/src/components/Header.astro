@@ -1,0 +1,43 @@
+---
+import { hero } from '../data/site';
+
+const nav = [
+  { label: 'Work', href: '/work/' },
+  { label: 'Mobile', href: '/mobile/' },
+  { label: 'GitHub', href: 'https://github.com/ysidro', external: true },
+  { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-ink-300 bg-ink-50/90 backdrop-blur">
+  <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+    <a href="/" class="font-mono text-sm font-bold tracking-tight text-ink-900">
+      Ysidro Almonte
+    </a>
+    <nav class="flex items-center gap-6">
+      <ul class="hidden items-center gap-5 sm:flex">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noopener' : undefined}
+              class="text-sm text-ink-700 hover:text-ink-900"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a
+        href={hero.ctaResume.href}
+        target="_blank"
+        rel="noopener"
+        class="rounded-md border border-accent-600 px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-accent-900 hover:bg-accent-100"
+      >
+        Resume
+      </a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Page Not Found — Ysidro Almonte"
+  description="This page doesn't exist."
+  path="/404/"
+>
+  <Header />
+  <main class="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-6 py-20 text-center">
+    <p class="font-mono text-sm text-accent-600">404</p>
+    <h1 class="mt-3 font-serif text-3xl font-semibold text-ink-900">Page not found</h1>
+    <p class="mt-3 text-ink-700">The page you're looking for doesn't exist or has moved.</p>
+    <a href="/" class="mt-8 inline-block rounded-md bg-accent-600 px-5 py-2.5 font-mono text-sm font-semibold uppercase tracking-wide text-ink-50 hover:bg-accent-900">
+      Back to Home
+    </a>
+  </main>
+  <Footer />
+</Layout>
