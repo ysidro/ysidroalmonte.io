@@ -1,11 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { moreProjects } from '../../data/site';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { moreProjects } from '../../../data/site.es';
 
-const caseStudies = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const caseStudies = (await getCollection('workEs')).sort((a, b) => a.data.order - b.data.order);
 
 const visuals: Record<string, { accent: string; image?: string }> = {
   acrylicphotoprint: { accent: 'cyan', image: '/images/work/featured/acrylic-photo-print.png' },
@@ -16,19 +16,20 @@ const visuals: Record<string, { accent: string; image?: string }> = {
 ---
 
 <Layout
-  title="Engineering Work — Ysidro Almonte"
-  description="Case studies in WordPress engineering: custom plugins, WooCommerce, API integrations, and performance work."
-  path="/work/"
+  title="Trabajo de Ingeniería — Ysidro Almonte"
+  description="Casos de estudio de ingeniería en WordPress: plugins a medida, WooCommerce, integraciones de API y trabajo de rendimiento."
+  path="/es/work/"
+  lang="es"
 >
-  <Header />
+  <Header lang="es" />
   <main>
     <section class="page-hero section-shell" data-reveal>
-      <p class="eyebrow">Engineering work</p>
-      <h1>Selected systems,<br /><em>not just screens.</em></h1>
-      <p class="lead">Every project below is a technical case study — role, architecture, engineering challenges, and measurable results.</p>
+      <p class="eyebrow">Trabajo de ingeniería</p>
+      <h1>Sistemas seleccionados,<br /><em>no solo pantallas.</em></h1>
+      <p class="lead">Cada proyecto a continuación es un caso de estudio técnico — rol, arquitectura, retos de ingeniería y resultados medibles.</p>
     </section>
 
-    <section class="projects section-shell" aria-label="Case studies">
+    <section class="projects section-shell" aria-label="Casos de estudio">
       {caseStudies.map((p) => {
         const visual = visuals[p.id] ?? { accent: 'violet' };
         return (
@@ -39,21 +40,21 @@ const visuals: Record<string, { accent: string; image?: string }> = {
               <p>{p.data.summary}</p>
               <ul>{p.data.stack.map((tech) => <li>{tech}</li>)}</ul>
               <div class="project-links">
-                <a href={`/work/${p.id}/`}>Read case study <span>↗</span></a>
+                <a href={`/es/work/${p.id}/`}>Leer caso de estudio <span>↗</span></a>
                 {p.data.githubUrl && <a href={p.data.githubUrl} target="_blank" rel="noopener">GitHub <span>↗</span></a>}
-                {p.data.liveUrl && <a href={p.data.liveUrl} target="_blank" rel="noopener">Live project <span>↗</span></a>}
+                {p.data.liveUrl && <a href={p.data.liveUrl} target="_blank" rel="noopener">Proyecto en vivo <span>↗</span></a>}
               </div>
             </div>
             <div class={`project-visual ${visual.image ? 'browser-stage' : 'visual-mark'}`}>
               {visual.image ? (
                 <div class="browser-frame">
                   <span class="browser-bar"><i></i><i></i><i></i></span>
-                  <img src={visual.image} alt={`${p.data.name} product screenshot`} loading="lazy" />
+                  <img src={visual.image} alt={`Captura de producto de ${p.data.name}`} loading="lazy" />
                 </div>
               ) : (
                 <>
                   <span>{p.data.stack[0]}</span>
-                  <small>No public screenshot — see case study</small>
+                  <small>Sin captura pública — ver caso de estudio</small>
                 </>
               )}
             </div>
@@ -63,9 +64,9 @@ const visuals: Record<string, { accent: string; image?: string }> = {
     </section>
 
     <section class="section-shell" style="padding-bottom:150px" data-reveal>
-      <p class="section-index">More projects</p>
-      <h2 style="margin:20px 0 14px;font-size:clamp(32px,4.5vw,54px);line-height:1;letter-spacing:-.04em;font-weight:500">Additional client work</h2>
-      <p class="lead" style="margin-bottom:50px">Production sites without a full engineering write-up — still real, shipped work.</p>
+      <p class="section-index">Más proyectos</p>
+      <h2 style="margin:20px 0 14px;font-size:clamp(32px,4.5vw,54px);line-height:1;letter-spacing:-.04em;font-weight:500">Otro trabajo con clientes</h2>
+      <p class="lead" style="margin-bottom:50px">Sitios en producción sin un caso de estudio técnico completo — trabajo real igualmente.</p>
 
       <div style="display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
         {moreProjects.map((p) => (
@@ -75,7 +76,7 @@ const visuals: Record<string, { accent: string; image?: string }> = {
             <h3>{p.name}</h3>
             <p>{p.description}</p>
             <ul>{p.tags.map((tech) => <li>{tech}</li>)}</ul>
-            {p.url && <a href={p.url} target="_blank" rel="noopener" class="row-link">Visit site ↗</a>}
+            {p.url && <a href={p.url} target="_blank" rel="noopener" class="row-link">Visitar sitio ↗</a>}
           </div>
         ))}
       </div>

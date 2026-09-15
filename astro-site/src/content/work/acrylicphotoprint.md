@@ -4,6 +4,7 @@ summary: "Custom product-personalization platform on WooCommerce, rebuilt on a m
 role: "Sole engineer — platform architecture, custom plugins, and storefront rebuild"
 stack: ["WooCommerce", "Custom Plugins", "Timber", "Twig", "Svelte", "Tailwind CSS", "AWS", "Cloudflare"]
 liveUrl: "https://acrylicphotoprint.com"
+heroImage: "/images/work/featured/acrylic-photo-print.png"
 featured: true
 order: 0
 results:

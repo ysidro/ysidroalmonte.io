@@ -11,77 +11,76 @@ interface Props {
   results: string[];
   githubUrl?: string;
   liveUrl?: string;
+  heroImage?: string;
+  lang?: 'en' | 'es';
 }
 
-const { name, summary, role, stack, results, githubUrl, liveUrl } = Astro.props;
+const { name, summary, role, stack, results, githubUrl, liveUrl, heroImage, lang = 'en' } = Astro.props;
+
+const t = lang === 'es'
+  ? {
+      caseStudy: 'Caso de estudio',
+      github: 'GitHub',
+      live: 'Proyecto en vivo',
+      private: 'Trabajo privado para cliente — código no disponible públicamente',
+      results: 'Resultados',
+      closingHeadline: '¿Buscas un Senior WordPress / PHP Engineer?',
+      closingBody: 'Estoy disponible para oportunidades remotas con equipos internacionales.',
+      contact: 'Contáctame',
+    }
+  : {
+      caseStudy: 'Case study',
+      github: 'GitHub',
+      live: 'Live project',
+      private: 'Private client work — code not publicly available',
+      results: 'Results',
+      closingHeadline: "Looking for a Senior WordPress / PHP Engineer?",
+      closingBody: "I'm available for remote opportunities with international teams.",
+      contact: 'Contact me',
+    };
 ---
 
-<Layout title={`${name} — Ysidro Almonte`} description={summary} path={Astro.url.pathname}>
-  <Header />
-  <main class="mx-auto max-w-3xl px-6 py-14">
-    <p class="font-mono text-xs uppercase tracking-wide text-accent-600">Case Study</p>
-    <h1 class="mt-2 font-serif text-4xl font-semibold text-ink-900">{name}</h1>
-    <p class="mt-3 max-w-2xl text-lg text-ink-700">{summary}</p>
-    <p class="mt-2 font-mono text-sm text-ink-500">{role}</p>
+<Layout title={`${name} — Ysidro Almonte`} description={summary} path={Astro.url.pathname} lang={lang}>
+  <Header lang={lang} />
+  <main class="section-shell">
+    <section class="case-hero" data-reveal>
+      <p class="eyebrow">{t.caseStudy}</p>
+      <h1>{name}</h1>
+      <p class="lead">{summary}</p>
+      <ul>{stack.map((tech) => <li>{tech}</li>)}</ul>
 
-    <ul class="mt-4 flex flex-wrap gap-1.5">
-      {stack.map((tech) => (
-        <li class="rounded bg-teal-100 px-2 py-0.5 font-mono text-xs text-teal-600">{tech}</li>
-      ))}
-    </ul>
+      <div class="case-meta">
+        <span>{role}</span>
+        {githubUrl && <a href={githubUrl} target="_blank" rel="noopener">{t.github} ↗</a>}
+        {liveUrl && <a href={liveUrl} target="_blank" rel="noopener">{t.live} ↗</a>}
+        {!githubUrl && <span>{t.private}</span>}
+      </div>
+    </section>
 
-    <div class="mt-4 flex gap-4 text-sm">
-      {githubUrl && <a href={githubUrl} target="_blank" rel="noopener" class="text-ink-700 hover:text-ink-900">GitHub ↗</a>}
-      {liveUrl && <a href={liveUrl} target="_blank" rel="noopener" class="text-ink-700 hover:text-ink-900">Live Project ↗</a>}
-    </div>
+    {heroImage && (
+      <figure class="case-figure" data-reveal>
+        <img src={heroImage} alt={`${name} product screenshot`} loading="eager" />
+      </figure>
+    )}
 
-    <article class="prose-case mt-10 border-t border-ink-300 pt-8">
+    <article class="prose-case" data-reveal>
       <slot />
     </article>
 
     {results.length > 0 && (
-      <div class="mt-10 rounded-lg border border-ink-300 bg-ink-100 p-6">
-        <p class="font-mono text-xs uppercase tracking-wide text-accent-600">Results</p>
-        <ul class="mt-3 space-y-2 text-sm text-ink-700">
+      <div class="glass" style="margin:0 0 60px;border-radius:24px;padding:36px;max-width:720px" data-reveal>
+        <p class="section-index" style="margin:0 0 14px">{t.results}</p>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;color:#c0c1c6;font-size:14px">
           {results.map((r) => <li>— {r}</li>)}
         </ul>
       </div>
     )}
 
-    <div class="mt-14 rounded-lg border border-accent-600 bg-accent-100 p-6 text-center">
-      <p class="font-serif text-xl font-semibold text-accent-900">Looking for a Senior WordPress / PHP Engineer?</p>
-      <p class="mt-1 text-sm text-accent-900">I'm available for remote opportunities with international teams.</p>
-      <a href="/contact/" class="mt-4 inline-block rounded-md bg-accent-600 px-5 py-2 font-mono text-xs font-semibold uppercase tracking-wide text-ink-50">Contact Me</a>
+    <div class="glass glass-accent" style="margin:0 0 150px;border-radius:24px;padding:50px;text-align:center;max-width:720px" data-reveal>
+      <p style="margin:0;font:400 26px/1.3 Georgia,serif;color:#ddd7ff">{t.closingHeadline}</p>
+      <p style="margin:14px 0 0;color:#a2a4ab">{t.closingBody}</p>
+      <a class="button button-primary" href={lang === 'es' ? '/es/contact/' : '/contact/'} style="display:inline-flex;margin-top:28px">{t.contact} <span>↗</span></a>
     </div>
   </main>
   <Footer />
 </Layout>
-
-<style>
-  .prose-case :global(h2) {
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 2.2rem 0 0.8rem;
-    color: var(--color-ink-900);
-  }
-  .prose-case :global(h2:first-child) {
-    margin-top: 0;
-  }
-  .prose-case :global(p) {
-    color: var(--color-ink-700);
-    margin: 0 0 1rem;
-    line-height: 1.7;
-  }
-  .prose-case :global(ul) {
-    margin: 0 0 1rem;
-    padding-left: 1.2rem;
-    color: var(--color-ink-700);
-  }
-  .prose-case :global(li) {
-    margin-bottom: 0.4rem;
-  }
-  .prose-case :global(strong) {
-    color: var(--color-ink-900);
-  }
-</style>

@@ -1,43 +1,64 @@
 ---
-import { hero } from '../data/site';
+interface Props {
+  lang?: 'en' | 'es';
+}
+const { lang = 'en' } = Astro.props;
+const p = lang === 'es' ? '/es' : '';
 
-const nav = [
-  { label: 'Work', href: '/work/' },
-  { label: 'Mobile', href: '/mobile/' },
-  { label: 'GitHub', href: 'https://github.com/ysidro', external: true },
-  { label: 'About', href: '/about/' },
-  { label: 'Contact', href: '/contact/' },
-];
+const nav = lang === 'es'
+  ? [
+      { label: 'Proyectos', href: `${p}/work/` },
+      { label: 'Mobile', href: `${p}/mobile/` },
+      { label: 'Experiencia', href: `${p}/#experience` },
+      { label: 'Sobre mí', href: `${p}/about/` },
+    ]
+  : [
+      { label: 'Work', href: '/work/' },
+      { label: 'Mobile', href: '/mobile/' },
+      { label: 'Experience', href: '/#experience' },
+      { label: 'About', href: '/about/' },
+    ];
+
+const talk = lang === 'es' ? 'Hablemos' : "Let's talk";
+
+// Current path minus locale prefix, used to compute the equivalent URL in the other language.
+const currentPath = Astro.url.pathname;
+const basePath = currentPath.replace(/^\/es\/?/, '/');
+const switchHref = lang === 'es' ? basePath : '/es' + (basePath === '/' ? '/' : basePath);
+const switchLabel = lang === 'es' ? 'EN' : 'ES';
 ---
-
-<header class="sticky top-0 z-40 border-b border-ink-300 bg-ink-50/90 backdrop-blur">
-  <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href="/" class="font-mono text-sm font-bold tracking-tight text-ink-900">
-      Ysidro Almonte
-    </a>
-    <nav class="flex items-center gap-6">
-      <ul class="hidden items-center gap-5 sm:flex">
-        {nav.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noopener' : undefined}
-              class="text-sm text-ink-700 hover:text-ink-900"
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <a
-        href={hero.ctaResume.href}
-        target="_blank"
-        rel="noopener"
-        class="rounded-md border border-accent-600 px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-accent-900 hover:bg-accent-100"
-      >
-        Resume
-      </a>
-    </nav>
+<header class="site-header">
+  <div class="nav-glass">
+    <a href={lang === 'es' ? '/es/' : '/'} class="wordmark" aria-label="Ysidro Almonte, home"><img src="/apple-touch-icon.jpg" alt="" width="38" height="38" /><strong>Ysidro Almonte</strong></a>
+    <nav aria-label="Main navigation"><ul>{nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}</ul></nav>
+    <div class="header-actions">
+      <a class="lang-switch" href={switchHref} aria-label={lang === 'es' ? 'Switch to English' : 'Cambiar a español'}>{switchLabel}</a>
+      <a class="nav-contact" href={`${p}/contact/`}>{talk} <span>↗</span></a>
+      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span>
+      </button>
+    </div>
   </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation">
+    <ul>
+      {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      <li><a href={`${p}/contact/`}>{talk} ↗</a></li>
+      <li><a href={switchHref}>{lang === 'es' ? 'English' : 'Español'}</a></li>
+    </ul>
+  </nav>
 </header>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  toggle?.addEventListener('click', () => {
+    const open = document.body.classList.toggle('mobile-nav-open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  mobileNav?.querySelectorAll('a').forEach((link) =>
+    link.addEventListener('click', () => {
+      document.body.classList.remove('mobile-nav-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    })
+  );
+</script>

@@ -6,14 +6,23 @@ interface Props {
   title: string;
   description: string;
   path?: string;
+  lang?: 'en' | 'es';
 }
 
-const { title, description, path = '/' } = Astro.props;
-const canonical = new URL(path, Astro.site ?? 'https://ysidroalmonte.com').toString();
+const { title, description, path = '/', lang = 'en' } = Astro.props;
+const site = Astro.site ?? new URL('https://ysidroalmonte.com');
+const canonical = new URL(path, site).toString();
+
+// path is always the English path (e.g. "/work/"); the Spanish equivalent
+// just lives under /es, so alternates are derived from it rather than passed twice.
+const enPath = path.replace(/^\/es\/?/, '/');
+const esPath = '/es' + (enPath === '/' ? '/' : enPath);
+const enHref = new URL(enPath, site).toString();
+const esHref = new URL(esPath, site).toString();
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,11 +30,15 @@ const canonical = new URL(path, Astro.site ?? 'https://ysidroalmonte.com').toStr
     <meta name="description" content={description} />
     <meta name="author" content={person.fullName} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="es" href={esHref} />
+    <link rel="alternate" hreflang="x-default" href={enHref} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_DO' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -35,7 +48,7 @@ const canonical = new URL(path, Astro.site ?? 'https://ysidroalmonte.com').toStr
     <link rel="icon" href="/favicon-16x16.jpg" type="image/jpeg" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.jpg" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#0a0d0d" />
+    <meta name="theme-color" content="#08090c" />
 
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
@@ -47,7 +60,24 @@ const canonical = new URL(path, Astro.site ?? 'https://ysidroalmonte.com').toStr
       sameAs: [person.links.linkedin, person.links.github],
     })} />
   </head>
-  <body class="bg-ink-50 text-ink-900 font-sans antialiased">
+  <body>
     <slot />
+    <script>
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduced) {
+        const observer = new IntersectionObserver(
+          (entries) => entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }),
+          { threshold: 0.12 }
+        );
+        document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+      } else {
+        document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
   </body>
 </html>

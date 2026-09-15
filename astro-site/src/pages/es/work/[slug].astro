@@ -1,9 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
-import CaseStudy from '../../layouts/CaseStudy.astro';
+import CaseStudy from '../../../layouts/CaseStudy.astro';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('work');
+  const entries = await getCollection('workEs');
   return entries.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
@@ -23,6 +23,7 @@ const { Content } = await render(entry);
   githubUrl={entry.data.githubUrl}
   liveUrl={entry.data.liveUrl}
   heroImage={entry.data.heroImage}
+  lang="es"
 >
   <Content />
 </CaseStudy>

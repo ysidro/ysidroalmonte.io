@@ -245,6 +245,25 @@ export const mobileProjects = [
   },
 ];
 
+export const productsIntro = {
+  eyebrow: "Products",
+  headline: "Tools I've Shipped",
+  body:
+    "Self-directed products built end to end — from idea to a live, paying product — outside of client work.",
+};
+
+export const products = [
+  {
+    name: "CreaThink Tools",
+    status: "Live",
+    category: "Browser-based SaaS",
+    stack: ["Next.js", "React", "Client-side Processing"],
+    description:
+      "Fast, privacy-first browser tools — image compression, social image sizing, and QR code generation — with no account required and files processed entirely on-device.",
+    url: "https://creathinktools.com/",
+  },
+];
+
 export const education = {
   degree: "Bachelor’s Degree in Advertising",
   school: "APEC University, Dominican Republic",

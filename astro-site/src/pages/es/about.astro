@@ -1,31 +1,33 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { about, education, experience, person } from '../data/site';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { about, education, experience, person } from '../../data/site.es';
 ---
 
 <Layout
-  title="About — Ysidro Almonte"
-  description="Senior WordPress / PHP Engineer with a background in Advertising — combining software engineering, e-commerce, and marketing technology."
-  path="/about/"
+  title="Sobre mí — Ysidro Almonte"
+  description="Senior WordPress / PHP Engineer con formación en Publicidad — combinando ingeniería de software, e-commerce y tecnología de marketing."
+  path="/es/about/"
+  lang="es"
 >
-  <Header />
+  <Header lang="es" />
   <main class="section-shell">
     <section class="page-hero" data-reveal>
-      <p class="eyebrow">About</p>
-      <h1>Engineering with<br /><em>a product lens.</em></h1>
+      <p class="eyebrow">Sobre mí</p>
+      <h1>Ingeniería con<br /><em>visión de producto.</em></h1>
       <p class="lead">{about.paragraph}</p>
       <p class="lead" style="margin-top:18px">
-        My Bachelor's Degree in Advertising isn't a detour — it's why I build websites that are judged on
-        conversion and business impact, not just code quality. Eight years across agencies and remote product
-        teams taught me to sit at the intersection of engineering, e-commerce, and marketing technology, and to
-        treat performance and Core Web Vitals as product requirements, not afterthoughts.
+        Mi Licenciatura en Publicidad no es un desvío — es la razón por la que construyo sitios que se
+        evalúan por su impacto en conversión y negocio, no solo por la calidad del código. Ocho años entre
+        agencias y equipos de producto remotos me enseñaron a situarme en la intersección de la ingeniería,
+        el e-commerce y la tecnología de marketing, y a tratar el rendimiento y los Core Web Vitals como
+        requisitos de producto, no como detalles secundarios.
       </p>
     </section>
 
     <section class="experience" data-reveal>
-      <p class="section-index">Work &amp; education</p>
+      <p class="section-index">Experiencia y educación</p>
       <div class="experience-layout">
         <ol>
           {experience.map((job) => (
@@ -40,12 +42,12 @@ import { about, education, experience, person } from '../data/site';
         </ol>
         <div>
           <div style="padding:24px 0;border-top:1px solid var(--line)">
-            <span style="font:10px 'Geist Mono';color:#777a83">Education</span>
+            <span style="font:10px 'Geist Mono';color:#777a83">Educación</span>
             <h3 style="margin:6px 0 0;font-size:18px;font-weight:500">{education.degree}</h3>
             <p style="margin:5px 0 0;color:#878991;font-size:12px">{education.school} · {education.year}</p>
           </div>
           <div style="padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-            <span style="font:10px 'Geist Mono';color:#777a83">Training</span>
+            <span style="font:10px 'Geist Mono';color:#777a83">Formación</span>
             <ul style="margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;color:#a2a4ab;font-size:13px">
               {education.training.map((item) => <li>— {item}</li>)}
             </ul>
@@ -54,7 +56,7 @@ import { about, education, experience, person } from '../data/site';
       </div>
 
       <a href={person.links.resume} target="_blank" rel="noopener" class="button button-primary" style="display:inline-flex;margin-top:50px">
-        Download full résumé <span>↗</span>
+        Descargar currículum completo <span>↗</span>
       </a>
     </section>
   </main>

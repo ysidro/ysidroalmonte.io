@@ -3,6 +3,7 @@ name: "Woo Payment Gateway"
 summary: "Custom WooCommerce payment gateway built for the Dominican Republic market."
 role: "Sole engineer — architecture, implementation, and security review"
 stack: ["PHP", "WooCommerce", "JavaScript", "Payment APIs", "WordPress Hooks"]
+githubUrl: "https://github.com/ysidro/WooCommerce-CardNet-Payment-Gateway-Dominican-Republic-/blob/main/readme.md"
 featured: true
 order: 2
 results:

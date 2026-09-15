@@ -3,6 +3,7 @@ name: "Real Estate API Sync"
 summary: "Custom WordPress integration that keeps property listings synchronized from external real estate APIs."
 role: "Sole engineer — architecture, implementation, and maintenance"
 stack: ["PHP", "WordPress", "WP REST API", "Custom Post Types", "MySQL"]
+githubUrl: "https://github.com/ysidro/real-estate-sync/tree/main"
 featured: true
 order: 1
 results:

@@ -1,8 +1,8 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { mobileIntro, mobileProjects } from '../../data/site';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { mobileIntro, mobileProjects } from '../../../data/site.es';
 
 const screens: Record<string, string[]> = {
   'M Voy': [
@@ -20,10 +20,11 @@ const screens: Record<string, string[]> = {
 
 <Layout
   title={`${mobileIntro.headline} — Ysidro Almonte`}
-  description="Mobile and API engineering with Flutter, Dart, and Go — beyond the WordPress/PHP core."
-  path="/mobile/"
+  description="Ingeniería mobile y de APIs con Flutter, Dart y Go — más allá del núcleo WordPress/PHP."
+  path="/es/mobile/"
+  lang="es"
 >
-  <Header />
+  <Header lang="es" />
   <main>
     <section class="page-hero section-shell" data-reveal>
       <p class="eyebrow">{mobileIntro.eyebrow}</p>
@@ -31,7 +32,7 @@ const screens: Record<string, string[]> = {
       <p class="lead">{mobileIntro.body}</p>
     </section>
 
-    <section class="projects section-shell" aria-label="Mobile products">
+    <section class="projects section-shell" aria-label="Productos mobile">
       {mobileProjects.map((app) => {
         const images = screens[app.name];
         return (
@@ -42,16 +43,16 @@ const screens: Record<string, string[]> = {
               <p>{app.description}</p>
               <ul>{app.stack.map((tech) => <li>{tech}</li>)}</ul>
               <div class="project-links">
-                <a href={app.url} target="_blank" rel="noopener">Visit site <span>↗</span></a>
+                <a href={app.url} target="_blank" rel="noopener">Visitar sitio <span>↗</span></a>
               </div>
             </div>
             <div class={`project-visual ${images ? 'phone-stage' : 'visual-mark'}`}>
               {images ? (
-                images.map((src, i) => <img src={src} alt={`${app.name} application screen ${i + 1}`} loading="lazy" width="946" height="2048" />)
+                images.map((src, i) => <img src={src} alt={`Pantalla ${i + 1} de la app ${app.name}`} loading="lazy" width="946" height="2048" />)
               ) : (
                 <>
                   <span>{app.stack[0]}</span>
-                  <small>In active development</small>
+                  <small>En desarrollo activo</small>
                 </>
               )}
             </div>
