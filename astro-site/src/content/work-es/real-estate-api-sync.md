@@ -4,6 +4,7 @@ summary: "Integración WordPress a medida que mantiene sincronizados los listado
 role: "Ingeniero único — arquitectura, implementación y mantenimiento"
 stack: ["PHP", "WordPress", "WP REST API", "Custom Post Types", "MySQL"]
 githubUrl: "https://github.com/ysidro/real-estate-sync/tree/main"
+heroImage: "/images/work/diagrams/real-estate-api-sync.svg"
 featured: true
 order: 1
 results:

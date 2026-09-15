@@ -7,10 +7,10 @@ import { moreProjects } from '../../data/site';
 
 const caseStudies = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 
-const visuals: Record<string, { accent: string; image?: string }> = {
+const visuals: Record<string, { accent: string; image?: string; diagram?: string }> = {
   acrylicphotoprint: { accent: 'cyan', image: '/images/work/featured/acrylic-photo-print.png' },
-  'real-estate-api-sync': { accent: 'lime' },
-  'woo-payment-gateway': { accent: 'rose' },
+  'real-estate-api-sync': { accent: 'lime', diagram: '/images/work/diagrams/real-estate-api-sync.svg' },
+  'woo-payment-gateway': { accent: 'rose', diagram: '/images/work/diagrams/woo-payment-gateway.svg' },
   'marketing-landing-page-system': { accent: 'sky' },
 };
 ---
@@ -44,12 +44,14 @@ const visuals: Record<string, { accent: string; image?: string }> = {
                 {p.data.liveUrl && <a href={p.data.liveUrl} target="_blank" rel="noopener">Live project <span>↗</span></a>}
               </div>
             </div>
-            <div class={`project-visual ${visual.image ? 'browser-stage' : 'visual-mark'}`}>
+            <div class={`project-visual ${visual.image ? 'browser-stage' : visual.diagram ? 'diagram-stage' : 'visual-mark'}`}>
               {visual.image ? (
                 <div class="browser-frame">
                   <span class="browser-bar"><i></i><i></i><i></i></span>
                   <img src={visual.image} alt={`${p.data.name} product screenshot`} loading="lazy" />
                 </div>
+              ) : visual.diagram ? (
+                <img src={visual.diagram} alt={`${p.data.name} architecture diagram`} loading="lazy" />
               ) : (
                 <>
                   <span>{p.data.stack[0]}</span>

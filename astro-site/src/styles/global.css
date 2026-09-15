@@ -97,6 +97,7 @@ body.mobile-nav-open .nav-toggle span:last-child { transform:translateY(-3px) ro
 .browser-stage { display:grid; place-items:center; padding:7%; }.browser-frame { width:100%; overflow:hidden; border:1px solid rgba(255,255,255,.13); border-radius:18px; background:#e9e9e9; box-shadow:0 35px 80px rgba(0,0,0,.4); transform:rotate(1deg) scale(.94); transition:transform .8s cubic-bezier(.2,.8,.2,1); }.project:hover .browser-frame{transform:rotate(0) scale(.98)}
 .browser-bar { height:32px; padding:0 12px; display:flex; align-items:center; gap:5px; background:#17181d; }.browser-bar i{width:6px;height:6px;border-radius:50%;background:#4a4c53}.browser-frame img{display:block;width:100%;height:auto;max-height:600px;object-fit:cover;object-position:top}
 .visual-mark{display:grid;place-items:center;padding:40px;text-align:center}.visual-mark span{font:400 clamp(64px,10vw,150px)/1 Georgia,serif;color:color-mix(in srgb,var(--project-accent) 60%,transparent);letter-spacing:-.03em}.visual-mark small{display:block;margin-top:18px;font:11px "Geist Mono";letter-spacing:.13em;text-transform:uppercase;color:#787b84}
+.diagram-stage{display:flex}.diagram-stage img{width:100%;height:100%;object-fit:cover}
 
 /* Compact secondary-work row card, used on /work/ and /mobile/ for entries
    without a full case study or screenshot */
