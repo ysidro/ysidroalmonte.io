@@ -41,7 +41,7 @@ em { font-family: Georgia, serif; font-weight:400; color:#d6d0ff; }
 body.mobile-nav-open .nav-toggle span:first-child { transform:translateY(3px) rotate(45deg); }
 body.mobile-nav-open .nav-toggle span:last-child { transform:translateY(-3px) rotate(-45deg); }
 .mobile-nav { display:none; }
-
+main{overflow-x: hidden;}
 @media(max-width:900px){
   .nav-toggle { display:flex; }
   .mobile-nav {
