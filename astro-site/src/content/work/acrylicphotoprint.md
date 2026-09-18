@@ -54,4 +54,4 @@ A production e-commerce platform built around a workflow WooCommerce doesn't sup
 
 ## Key Takeaways
 
-This is the strongest evidence in the portfolio that WordPress, in the right hands, is a real engineering platform — capable of supporting a modern frontend (Svelte), a clean templating layer (Timber/Twig), and commerce logic well outside WooCommerce's defaults.
+The project demonstrates WordPress as an engineering platform: a modern interactive layer in Svelte, a maintainable Timber/Twig template architecture, and commerce logic that extends WooCommerce beyond its standard product model.

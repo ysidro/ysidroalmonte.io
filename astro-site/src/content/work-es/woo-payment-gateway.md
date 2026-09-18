@@ -10,7 +10,7 @@ order: 2
 results:
   - "El checkout soporta un procesador de pagos sin pasarela oficial de WooCommerce"
   - "Flujo de transacciones validado contra los entornos sandbox y producción del procesador"
-  - "Lanzado en producción sin un solo fallo de checkout reportado"
+  - "Los estados de pago confirmados por el servidor sustituyen la confianza en redirecciones del cliente"
 ---
 
 ## Resumen
@@ -49,8 +49,8 @@ Verificación de firma de webhooks, manejo idempotente de webhooks para evitar e
 
 ## Resultados
 
-La tienda salió a producción aceptando un método de pago que su mercado necesitaba, con un flujo de checkout que ha corrido sin un solo fallo reportado desde el lanzamiento.
+La tienda salió a producción con un método de pago requerido por su mercado. El estado del pedido depende de una confirmación verificada entre servidores, mientras las transacciones pendientes y fallidas permanecen diferenciadas para el equipo de soporte.
 
 ## Aprendizajes Clave
 
-Esta es la evidencia más clara de seniority en PHP dentro del portafolio — no theming, sino integridad transaccional, diseño consciente de la seguridad y un conocimiento profundo de los puntos de extensión de WooCommerce.
+El proyecto demuestra integridad transaccional, manejo idempotente de webhooks, validación en servidor y uso práctico de los puntos de extensión de WooCommerce.

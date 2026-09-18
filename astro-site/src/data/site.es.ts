@@ -10,7 +10,7 @@ export const hero = {
   eyebrow: "Hola, soy Ysidro Almonte",
   headline: "Senior WordPress / PHP Engineer",
   subhead:
-    "Construyo plataformas WordPress de alto rendimiento, soluciones WooCommerce, plugins a medida y productos digitales basados en APIs para equipos remotos en EE. UU. y a nivel internacional.",
+    "Construyo y mantengo plataformas WordPress de alto rendimiento, sistemas WooCommerce, plugins a medida y productos basados en APIs para agencias y equipos remotos en EE. UU. y otros mercados.",
   chips: [
     "8+ años de experiencia",
     "WordPress / PHP",
@@ -97,7 +97,34 @@ export const expertise = [
       "Go",
     ],
   },
+  {
+    name: "Ingeniería de producto asistida por IA",
+    stack: [
+      "Descubrimiento de producto",
+      "Arquitectura",
+      "Orquestación de agentes",
+      "Implementación",
+      "Revisión de código",
+      "Pruebas automatizadas",
+      "Documentación",
+      "Validación en producción",
+    ],
+  },
 ];
+
+export const aiWorkflow = {
+  eyebrow: "Ingeniería asistida por IA",
+  headline: "Mayor velocidad, con el criterio técnico siempre presente.",
+  body:
+    "Uso flujos de trabajo estructurados con IA para avanzar desde el descubrimiento hasta producción en WordPress, PHP, Go, Python, React, Node.js, Firebase y Flutter. La IA acelera investigación, implementación, pruebas, depuración y documentación; yo sigo siendo responsable de la arquitectura, seguridad, revisión de código, criterios de aceptación y validación en producción.",
+  stages: [
+    { number: "01", title: "Definir", text: "Aclarar el problema, las restricciones, los riesgos y los criterios medibles de aceptación antes de implementar." },
+    { number: "02", title: "Diseñar", text: "Elegir el stack, los límites del sistema, el modelo de datos, los controles de seguridad y el plan de entrega." },
+    { number: "03", title: "Orquestar", text: "Usar agentes especializados para acelerar tareas delimitadas de implementación, investigación, pruebas y documentación." },
+    { number: "04", title: "Verificar", text: "Revisar el código, ejecutar pruebas, inspeccionar rutas de fallo y validar el resultado contra los requisitos de producción." },
+  ],
+  note: "La IA aumenta la capacidad de entrega. La responsabilidad técnica sigue siendo mía.",
+};
 
 export const experience = [
   {
@@ -265,7 +292,7 @@ export const education = {
 
 export const about = {
   paragraph:
-    "Mi carrera combina la ingeniería de software con la tecnología de marketing. Tengo una Licenciatura en Publicidad, lo que influye en cómo abordo el desarrollo: no solo como código que funciona, sino como tecnología conectada a objetivos de negocio, rendimiento y experiencia de usuario. En más de 8 años trabajando con agencias y equipos de producto en EE. UU. y República Dominicana, he construido plataformas WordPress a medida, soluciones WooCommerce, integraciones de API y productos digitales enfocados en performance que soportan iniciativas de marketing a gran escala.",
+    "Mi carrera combina ingeniería de software, tecnología de marketing y desarrollo de producto. La Licenciatura en Publicidad me ayuda a conectar las decisiones técnicas con objetivos de negocio, rendimiento y experiencia de usuario. En más de 8 años trabajando con agencias y equipos de producto en EE. UU. y República Dominicana, he construido plataformas WordPress, sistemas WooCommerce, integraciones de API, aplicaciones móviles y productos propios. Hoy utilizo flujos estructurados asistidos por IA para cubrir alcances mayores sin renunciar a la revisión ni a la responsabilidad técnica.",
 };
 
 export const githubRepos = [
@@ -286,7 +313,7 @@ export const githubRepos = [
 ];
 
 export const closing = {
-  headline: "¿Buscas un Senior WordPress / PHP Engineer?",
+  headline: "¿Necesitas ingeniería WordPress senior con responsabilidad real?",
   body:
-    "Estoy disponible para oportunidades remotas con equipos de ingeniería en EE. UU. e internacionales.",
+    "Estoy disponible para soporte continuo a agencias, contratos de largo plazo, mejoras de plataformas y proyectos WordPress técnicamente exigentes con equipos de EE. UU. y otros mercados.",
 };

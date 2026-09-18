@@ -49,7 +49,7 @@ Sync runs are batched and rate-limited against the external API, and scheduled d
 
 ## Results
 
-Listings stay current without manual intervention, editorial teams stopped re-entering data by hand, and the sync has run in production without downtime.
+The integration replaced recurring manual listing entry with scheduled synchronization, preserved editorial overrides, and added retry and logging behavior for failed runs.
 
 ## Key Takeaways
 

@@ -10,7 +10,7 @@ order: 2
 results:
   - "Checkout supports a payment processor with no official WooCommerce gateway"
   - "Transaction workflow validated against the processor's sandbox and production environments"
-  - "Shipped without a single reported checkout failure in production"
+  - "Server-confirmed payment states replace trust in client-side redirects"
 ---
 
 ## Overview
@@ -49,8 +49,8 @@ Webhook signature verification, idempotent webhook handling to avoid double-proc
 
 ## Results
 
-The store went live accepting a payment method its market needed, with a checkout flow that has run without a reported failure since launch.
+The store went live with a payment method required by its market. Order status is based on verified server-to-server confirmation, while pending and failed transactions remain distinguishable for support staff.
 
 ## Key Takeaways
 
-This is the clearest evidence of PHP seniority in the portfolio — not theming, but transaction integrity, security-conscious design, and deep familiarity with WooCommerce's extension points.
+The project demonstrates transaction integrity, idempotent webhook handling, server-side validation, and practical use of WooCommerce's extension points.

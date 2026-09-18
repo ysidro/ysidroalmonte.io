@@ -20,7 +20,7 @@ export const hero = {
   eyebrow: "Hello, I'm Ysidro Almonte",
   headline: "Senior WordPress / PHP Engineer",
   subhead:
-    "Building high-performance WordPress platforms, WooCommerce solutions, custom plugins, and API-driven digital products for remote teams across the U.S. and internationally.",
+    "I build and maintain high-performance WordPress platforms, WooCommerce systems, custom plugins, and API-driven products for agencies and remote teams across the U.S. and internationally.",
   chips: [
     "8+ Years Experience",
     "WordPress / PHP",
@@ -107,7 +107,34 @@ export const expertise = [
       "Go",
     ],
   },
+  {
+    name: "AI-Assisted Product Engineering",
+    stack: [
+      "Product Discovery",
+      "Architecture",
+      "Agent Orchestration",
+      "Implementation",
+      "Code Review",
+      "Automated Testing",
+      "Documentation",
+      "Production Validation",
+    ],
+  },
 ];
+
+export const aiWorkflow = {
+  eyebrow: "AI-assisted engineering",
+  headline: "Faster delivery, with judgment still in the loop.",
+  body:
+    "I use structured AI workflows to move from discovery to production across WordPress, PHP, Go, Python, React, Node.js, Firebase, and Flutter. AI accelerates research, implementation, testing, debugging, and documentation; I remain responsible for architecture, security, code review, acceptance criteria, and production validation.",
+  stages: [
+    { number: "01", title: "Frame", text: "Define the problem, constraints, risks, and measurable acceptance criteria before implementation begins." },
+    { number: "02", title: "Architect", text: "Choose the stack, system boundaries, data model, security controls, and delivery plan." },
+    { number: "03", title: "Orchestrate", text: "Use specialized AI agents to accelerate bounded implementation, research, tests, and documentation." },
+    { number: "04", title: "Verify", text: "Review the code, run tests, inspect failure paths, and validate the result against production requirements." },
+  ],
+  note: "AI improves throughput. Technical accountability stays with me.",
+};
 
 export const experience = [
   {
@@ -278,7 +305,7 @@ export const education = {
 
 export const about = {
   paragraph:
-    "My career combines software engineering with marketing technology. I hold a Bachelor’s Degree in Advertising, which influences how I approach development: not only as working code, but as technology connected to business goals, performance, and user experience. Over 8+ years working with agencies and product teams in the U.S. and the Dominican Republic, I’ve built custom WordPress platforms, WooCommerce solutions, API integrations, and performance-focused digital products supporting large-scale marketing initiatives.",
+    "My career combines software engineering, marketing technology, and product delivery. A Bachelor’s Degree in Advertising helps me connect technical decisions with business goals, performance, and user experience. Over 8+ years working with agencies and product teams in the U.S. and the Dominican Republic, I’ve built custom WordPress platforms, WooCommerce systems, API integrations, mobile applications, and independent products. Today I use structured AI-assisted workflows to extend that experience across larger scopes without giving up technical review or accountability.",
 };
 
 export const githubRepos = [
@@ -299,7 +326,7 @@ export const githubRepos = [
 ];
 
 export const closing = {
-  headline: "Looking for a Senior WordPress / PHP Engineer?",
+  headline: "Need senior WordPress engineering that can own the work?",
   body:
-    "I’m open to remote opportunities with U.S. and international engineering teams.",
+    "I’m available for ongoing agency support, long-term contracts, platform improvements, and technically demanding WordPress projects with U.S. and international teams.",
 };

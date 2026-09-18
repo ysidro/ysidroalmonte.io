@@ -54,4 +54,4 @@ Una plataforma de e-commerce en producción construida alrededor de un flujo de 
 
 ## Aprendizajes Clave
 
-Esta es la evidencia más fuerte del portafolio de que WordPress, en las manos correctas, es una plataforma de ingeniería real — capaz de soportar un frontend moderno (Svelte), una capa de plantillas limpia (Timber/Twig) y lógica de comercio muy por fuera de los valores por defecto de WooCommerce.
+El proyecto demuestra el uso de WordPress como plataforma de ingeniería: una capa interactiva moderna en Svelte, una arquitectura mantenible de plantillas con Timber/Twig y lógica de comercio que extiende WooCommerce más allá de su modelo estándar de productos.

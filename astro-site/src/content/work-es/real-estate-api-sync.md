@@ -49,7 +49,7 @@ Las ejecuciones de sincronización se procesan en lotes y con límite de tasa co
 
 ## Resultados
 
-Los listados se mantienen actualizados sin intervención manual, los equipos editoriales dejaron de re-ingresar datos a mano, y la sincronización ha corrido en producción sin downtime.
+La integración sustituyó la entrada manual recurrente de listados por sincronización programada, preservó las modificaciones editoriales y agregó reintentos y registro de errores para las ejecuciones fallidas.
 
 ## Aprendizajes Clave
 

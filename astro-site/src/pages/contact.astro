@@ -11,18 +11,31 @@ import { person, closing } from '../data/site';
   path="/contact/"
 >
   <Header />
-  <main class="section-shell">
-    <section class="closing" data-reveal>
-      <p class="eyebrow">Available for selected opportunities</p>
-      <h2>{closing.headline}</h2>
-      <p>{closing.body}</p>
-      <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-top:10px">
+  <main class="contact-page section-shell">
+    <section class="contact-grid" data-reveal>
+      <div class="contact-intro">
+        <p class="eyebrow">Available for selected opportunities</p>
+        <h1>{closing.headline}</h1>
+        <p>{closing.body}</p>
+        <div class="contact-actions">
         <a class="button button-primary" href={`mailto:${person.email}`}>Contact me <span>↗</span></a>
         <a class="text-link" href={person.links.linkedin} target="_blank" rel="noopener">LinkedIn</a>
         <a class="text-link" href={person.links.github} target="_blank" rel="noopener">GitHub</a>
         <a class="text-link" href={person.links.resume} target="_blank" rel="noopener">Résumé</a>
+        </div>
+        <p class="contact-email">{person.email}</p>
       </div>
-      <p style="margin-top:40px;font:12px 'Geist Mono';color:#777a83">{person.email}</p>
+      <aside class="contact-brief">
+        <h2>Help me understand the work.</h2>
+        <p>A useful first message does not need to be long. Include the context that affects scope and fit.</p>
+        <ul>
+          <li><span>01</span>Project or platform you need help with</li>
+          <li><span>02</span>Current stack and production environment</li>
+          <li><span>03</span>Immediate problem or desired outcome</li>
+          <li><span>04</span>Expected timeline and engagement type</li>
+        </ul>
+        <p class="contact-availability">Best fit: ongoing agency support, long-term contracts, custom WordPress/WooCommerce development, integrations, and production troubleshooting.</p>
+      </aside>
     </section>
   </main>
   <Footer />
