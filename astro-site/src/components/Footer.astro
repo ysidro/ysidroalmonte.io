@@ -8,8 +8,8 @@ const { lang = 'en' } = Astro.props;
 const year = new Date().getFullYear();
 
 const colophon = lang === 'es'
-  ? `© ${year} ${person.fullName}. Ingeniero senior de WordPress y PHP, República Dominicana. Construido con Astro, tipografía Bricolage Grotesque e IBM Plex, alojado en Cloudflare Pages.`
-  : `© ${year} ${person.fullName}. Senior WordPress and PHP engineer, Dominican Republic. Built with Astro, set in Bricolage Grotesque and IBM Plex, hosted on Cloudflare Pages.`;
+  ? `© ${year} ${person.fullName}. Ingeniero senior de WordPress y PHP, República Dominicana.`
+  : `© ${year} ${person.fullName}. Senior WordPress and PHP engineer, Dominican Republic.`;
 ---
 
 <footer class="site-footer">

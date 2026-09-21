@@ -126,7 +126,7 @@ const t = lang === 'es'
             <div class="row-links">
               {project.caseStudy && <a class="link" href={project.caseStudy}>{t.readCase}</a>}
               {project.githubUrl && <a class="link" href={project.githubUrl} target="_blank" rel="noopener">GitHub</a>}
-              {project.url && <a class="link" href={project.url} target="_blank" rel="noopener">{t.visit}</a>}
+              {project.url && <a class="link" href={project.url} target="_blank" rel="noopener">{project.linkLabel ?? t.visit}</a>}
             </div>
           </li>
         ))}
