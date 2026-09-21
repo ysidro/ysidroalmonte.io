@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Diagram from '../components/Diagram.astro';
 
 interface Props {
   name: string;
@@ -12,75 +13,66 @@ interface Props {
   githubUrl?: string;
   liveUrl?: string;
   heroImage?: string;
+  slug?: string;
   lang?: 'en' | 'es';
 }
 
-const { name, summary, role, stack, results, githubUrl, liveUrl, heroImage, lang = 'en' } = Astro.props;
+const { name, summary, role, stack, results, githubUrl, liveUrl, heroImage, slug, lang = 'en' } = Astro.props;
+const p = lang === 'es' ? '/es' : '';
+const diagramName = slug === 'real-estate-api-sync' || slug === 'woo-payment-gateway' ? slug : undefined;
+const photo = heroImage && !heroImage.endsWith('.svg') ? heroImage : undefined;
 
 const t = lang === 'es'
-  ? {
-      caseStudy: 'Caso de estudio',
-      github: 'GitHub',
-      live: 'Proyecto en vivo',
-      private: 'Trabajo privado para cliente — código no disponible públicamente',
-      results: 'Resultados',
-      closingHeadline: '¿Buscas un Senior WordPress / PHP Engineer?',
-      closingBody: 'Estoy disponible para oportunidades remotas con equipos internacionales.',
-      contact: 'Contáctame',
-    }
-  : {
-      caseStudy: 'Case study',
-      github: 'GitHub',
-      live: 'Live project',
-      private: 'Private client work — code not publicly available',
-      results: 'Results',
-      closingHeadline: "Looking for a Senior WordPress / PHP Engineer?",
-      closingBody: "I'm available for remote opportunities with international teams.",
-      contact: 'Contact me',
-    };
+  ? { role: 'Rol', stack: 'Stack', links: 'Enlaces', github: 'GitHub', live: 'Proyecto en vivo', private: 'Trabajo privado para cliente, código no disponible públicamente', results: 'Resultados', closing: '¿Buscas un Senior WordPress / PHP Engineer?', closingBody: 'Estoy disponible para oportunidades remotas con equipos internacionales.', contact: 'Contáctame', back: 'Todos los proyectos' }
+  : { role: 'Role', stack: 'Stack', links: 'Links', github: 'GitHub', live: 'Live project', private: 'Private client work, code not publicly available', results: 'Results', closing: 'Looking for a Senior WordPress / PHP Engineer?', closingBody: 'I’m available for remote opportunities with international teams.', contact: 'Contact me', back: 'All projects' };
 ---
 
 <Layout title={`${name} — Ysidro Almonte`} description={summary} path={Astro.url.pathname} lang={lang}>
   <Header lang={lang} />
-  <main class="section-shell">
-    <section class="case-hero" data-reveal>
-      <p class="eyebrow">{t.caseStudy}</p>
-      <h1>{name}</h1>
-      <p class="lead">{summary}</p>
-      <ul>{stack.map((tech) => <li>{tech}</li>)}</ul>
+  <main class="wrap">
+    <header class="case-head">
+      <a class="link muted" href={`${p}/work/`}>← {t.back}</a>
+      <h1 style="margin-top: var(--space-md)">{name}</h1>
+      <p class="lede">{summary}</p>
+      <dl class="meta">
+        <div><dt>{t.role}</dt><dd>{role}</dd></div>
+        <div><dt>{t.stack}</dt><dd><ul class="tokens">{stack.map((s) => <li>{s}</li>)}</ul></dd></div>
+        <div>
+          <dt>{t.links}</dt>
+          <dd>
+            <span class="row-links">
+              {githubUrl && <a class="link" href={githubUrl} target="_blank" rel="noopener">{t.github}</a>}
+              {liveUrl && <a class="link" href={liveUrl} target="_blank" rel="noopener">{t.live}</a>}
+              {!githubUrl && !liveUrl && <span class="muted">{t.private}</span>}
+            </span>
+            {!githubUrl && liveUrl && <span class="muted" style="display:block; margin-top: var(--space-3xs)">{t.private}</span>}
+          </dd>
+        </div>
+      </dl>
+    </header>
 
-      <div class="case-meta">
-        <span>{role}</span>
-        {githubUrl && <a href={githubUrl} target="_blank" rel="noopener">{t.github} ↗</a>}
-        {liveUrl && <a href={liveUrl} target="_blank" rel="noopener">{t.live} ↗</a>}
-        {!githubUrl && <span>{t.private}</span>}
-      </div>
-    </section>
-
-    {heroImage && (
-      <figure class="case-figure" data-reveal>
-        <img src={heroImage} alt={`${name} product screenshot`} loading="eager" />
-      </figure>
+    {diagramName && <Diagram name={diagramName} />}
+    {!diagramName && photo && (
+      <figure class="figure"><img src={photo} alt={`${name}`} width="1440" height="900" loading="eager" /></figure>
     )}
 
-    <article class="prose-case" data-reveal>
+    <article class="prose-case">
       <slot />
     </article>
 
     {results.length > 0 && (
-      <div class="glass" style="margin:0 0 60px;border-radius:24px;padding:36px;max-width:720px" data-reveal>
-        <p class="section-index" style="margin:0 0 14px">{t.results}</p>
-        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;color:#c0c1c6;font-size:14px">
-          {results.map((r) => <li>— {r}</li>)}
-        </ul>
-      </div>
+      <aside class="results">
+        <h2>{t.results}</h2>
+        <ul>{results.map((r) => <li>{r}</li>)}</ul>
+      </aside>
     )}
 
-    <div class="glass glass-accent" style="margin:0 0 150px;border-radius:24px;padding:50px;text-align:center;max-width:720px" data-reveal>
-      <p style="margin:0;font:400 26px/1.3 Georgia,serif;color:#ddd7ff">{t.closingHeadline}</p>
-      <p style="margin:14px 0 0;color:#a2a4ab">{t.closingBody}</p>
-      <a class="button button-primary" href={lang === 'es' ? '/es/contact/' : '/contact/'} style="display:inline-flex;margin-top:28px">{t.contact} <span>↗</span></a>
-    </div>
+    <section class="section" style="border-top: var(--rule-hair) solid var(--color-rule)">
+      <div class="cta-band">
+        <div><h2>{t.closing}</h2><p>{t.closingBody}</p></div>
+        <div class="actions"><a class="btn btn-primary" href={`${p}/contact/`}>{t.contact}</a></div>
+      </div>
+    </section>
   </main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>

@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import * as en from '../data/site';
+import * as es from '../data/site.es';
+
+interface Props { lang: 'en' | 'es' }
+const { lang } = Astro.props;
+const d = lang === 'es' ? es : en;
+const p = lang === 'es' ? '/es' : '';
+
+const t = lang === 'es'
+  ? {
+      title: 'Sobre mí — Ysidro Almonte',
+      description: 'Senior WordPress / PHP Engineer con formación en Publicidad: ingeniería de software, e-commerce y tecnología de marketing.',
+      h1: 'Ingeniería con visión de producto.',
+      extra: 'Mi Licenciatura en Publicidad no es un desvío: es la razón por la que construyo sitios que se evalúan por su impacto en conversión y negocio, no solo por la calidad del código. Ocho años entre agencias y equipos de producto remotos me enseñaron a situarme en la intersección de la ingeniería, el e-commerce y la tecnología de marketing, y a tratar el rendimiento y los Core Web Vitals como requisitos de producto, no como detalles secundarios.',
+      work: 'Experiencia y educación',
+      education: 'Educación',
+      training: 'Formación',
+      resume: 'Descargar currículum completo',
+    }
+  : {
+      title: 'About — Ysidro Almonte',
+      description: 'Senior WordPress / PHP Engineer with a background in Advertising: software engineering, e-commerce, and marketing technology.',
+      h1: 'Engineering with a product lens.',
+      extra: 'My Bachelor’s Degree in Advertising isn’t a detour: it’s why I build websites that are judged on conversion and business impact, not just code quality. Eight years across agencies and remote product teams taught me to sit at the intersection of engineering, e-commerce, and marketing technology, and to treat performance and Core Web Vitals as product requirements, not afterthoughts.',
+      work: 'Work & education',
+      education: 'Education',
+      training: 'Training',
+      resume: 'Download full résumé',
+    };
+---
+
+<Layout title={t.title} description={t.description} path={`${p}/about/`} lang={lang}>
+  <Header lang={lang} />
+  <main>
+    <div class="wrap page-head">
+      <h1>{t.h1}</h1>
+    </div>
+
+    <section class="wrap section">
+      <div class="prose">
+        <p>{d.about.paragraph}</p>
+        <p>{t.extra}</p>
+      </div>
+    </section>
+
+    <section class="wrap section">
+      <div class="section-head"><h2>{t.work}</h2></div>
+      <ol class="timeline">
+        {d.experience.map((job) => (
+          <li>
+            <span class="period">{job.period}</span>
+            <div><h3>{job.company}</h3><p class="role">{job.role}</p></div>
+          </li>
+        ))}
+        <li>
+          <span class="period">{d.education.year}</span>
+          <div><h3>{d.education.degree}</h3><p class="role">{d.education.school}</p></div>
+        </li>
+      </ol>
+      <h3 class="subhead">{t.training}</h3>
+      <ul class="tokens">{d.education.training.map((item) => <li>{item}</li>)}</ul>
+      <div class="actions" style="margin-top: var(--space-xl)">
+        <a class="btn btn-primary" href={d.person.links.resume} target="_blank" rel="noopener">{t.resume}</a>
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>

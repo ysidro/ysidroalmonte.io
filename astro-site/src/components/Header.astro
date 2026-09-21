@@ -21,7 +21,7 @@ const nav = lang === 'es'
       { label: 'About', href: '/about/' },
     ];
 
-const talk = lang === 'es' ? 'Hablemos' : "Let's talk";
+const talk = lang === 'es' ? 'Hablemos' : 'Let’s talk';
 
 // Current path minus locale prefix, used to compute the equivalent URL in the other language.
 const currentPath = Astro.url.pathname;
@@ -30,13 +30,18 @@ const switchHref = lang === 'es' ? basePath : '/es' + (basePath === '/' ? '/' : 
 const switchLabel = lang === 'es' ? 'EN' : 'ES';
 ---
 <header class="site-header">
-  <div class="nav-glass">
-    <a href={lang === 'es' ? '/es/' : '/'} class="wordmark" aria-label="Ysidro Almonte, home"><img src="/apple-touch-icon.jpg" alt="" width="38" height="38" /><strong>Ysidro Almonte</strong></a>
-    <nav aria-label="Main navigation"><ul>{nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}</ul></nav>
+  <div class="wrap bar">
+    <a href={lang === 'es' ? '/es/' : '/'} class="wordmark" aria-label="Ysidro Almonte, home">
+      <img src="/apple-touch-icon.jpg" alt="" width="32" height="32" />
+      <span>Ysidro Almonte</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul>{nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}</ul>
+    </nav>
     <div class="header-actions">
       <a class="lang-switch" href={switchHref} aria-label={lang === 'es' ? 'Switch to English' : 'Cambiar a español'}>{switchLabel}</a>
-      <a class="nav-contact" href={`${p}/contact/`}>{talk} <span>↗</span></a>
-      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <a class="btn btn-primary header-cta" href={`${p}/contact/`}>{talk}</a>
+      <button type="button" class="nav-toggle" aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'} aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span>
       </button>
     </div>
@@ -44,8 +49,7 @@ const switchLabel = lang === 'es' ? 'EN' : 'ES';
   <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation">
     <ul>
       {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-      <li><a href={`${p}/contact/`}>{talk} ↗</a></li>
-      <li><a href={switchHref}>{lang === 'es' ? 'English' : 'Español'}</a></li>
+      <li><a href={`${p}/contact/`}>{talk}</a></li>
     </ul>
   </nav>
 </header>

@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import * as en from '../data/site';
+import * as es from '../data/site.es';
+
+interface Props { lang: 'en' | 'es' }
+const { lang } = Astro.props;
+const d = lang === 'es' ? es : en;
+const p = lang === 'es' ? '/es' : '';
+
+const screens: Record<string, string[]> = {
+  'M Voy': ['/images/work/mvoy/user-map.png', '/images/work/mvoy/user-offer.png', '/images/work/mvoy/user-request.png'],
+  Octanos: ['/images/work/octanos/login.png', '/images/work/octanos/address-map.png', '/images/work/octanos/fuel-order.png'],
+};
+
+const t = lang === 'es'
+  ? {
+      description: 'Ingeniería mobile y de APIs con Flutter, Dart y Go, más allá del núcleo WordPress/PHP.',
+      visit: 'Visitar sitio',
+      alt: (name: string, i: number) => `Pantalla ${i} de la app ${name}`,
+    }
+  : {
+      description: 'Mobile and API engineering with Flutter, Dart, and Go — beyond the WordPress/PHP core.',
+      visit: 'Visit site',
+      alt: (name: string, i: number) => `${name} application screen ${i}`,
+    };
+---
+
+<Layout title={`${d.mobileIntro.headline} — Ysidro Almonte`} description={t.description} path={`${p}/mobile/`} lang={lang}>
+  <Header lang={lang} />
+  <main>
+    <div class="wrap page-head">
+      <p class="label">{d.mobileIntro.eyebrow}</p>
+      <h1>{d.mobileIntro.headline}</h1>
+      <p class="lede">{d.mobileIntro.body}</p>
+    </div>
+
+    {d.mobileProjects.map((app) => (
+      <section class="wrap section" aria-label={app.name}>
+        <div class="feature">
+          <div>
+            <p class="label">{app.status} · {app.category}</p>
+            <h2 style="margin-top: var(--space-2xs)">{app.name}</h2>
+            <p>{app.description}</p>
+            <ul class="tokens">{app.stack.map((s) => <li>{s}</li>)}</ul>
+            <div class="row-links"><a class="link" href={app.url} target="_blank" rel="noopener">{t.visit}</a></div>
+          </div>
+          <div class="screens">
+            {screens[app.name]?.map((src, i) => (
+              <img src={src} alt={t.alt(app.name, i + 1)} width="946" height="2048" loading="lazy" />
+            ))}
+          </div>
+        </div>
+      </section>
+    ))}
+  </main>
+  <Footer lang={lang} />
+</Layout>

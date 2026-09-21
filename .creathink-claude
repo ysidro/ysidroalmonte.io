@@ -1,0 +1,6 @@
+project=ysidroalmonte
+type=saas-web
+stack=astro,tailwind
+mode=reference
+skills=mvp-maturity-orchestrator codebase-investigator spec-driven-development debugging-specialist project-architect product-ux-designer product-ui-designer stitch-design-workflow api-contract-engineer security-privacy-engineer qa-test-engineer devops-sre production-readiness-auditor release-manager technical-documentation tailwind-ui-engineer
+agents=product-manager product-designer stitch-designer tech-lead backend-engineer frontend-engineer database-engineer security-engineer qa-engineer devops-engineer release-manager technical-writer

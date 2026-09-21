@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import * as en from '../data/site';
+import * as es from '../data/site.es';
+
+interface Props { lang: 'en' | 'es' }
+const { lang } = Astro.props;
+const d = lang === 'es' ? es : en;
+const p = lang === 'es' ? '/es' : '';
+
+const t = lang === 'es'
+  ? {
+      title: 'Contacto — Ysidro Almonte',
+      description: 'Contacta a Ysidro Almonte, Senior WordPress / PHP Engineer disponible para oportunidades remotas.',
+      contact: 'Contáctame',
+      resume: 'Currículum',
+      briefTitle: 'Ayúdame a entender el trabajo.',
+      briefLead: 'El primer mensaje no necesita ser largo. Incluye el contexto que afecta el alcance y la compatibilidad.',
+      items: ['Proyecto o plataforma en la que necesitas ayuda', 'Stack actual y entorno de producción', 'Problema inmediato o resultado esperado', 'Plazo y tipo de contratación'],
+      fit: 'Mejor encaje: soporte continuo a agencias, contratos de largo plazo, desarrollo WordPress/WooCommerce a medida, integraciones y resolución de problemas en producción.',
+    }
+  : {
+      title: 'Contact — Ysidro Almonte',
+      description: 'Get in touch with Ysidro Almonte, Senior WordPress / PHP Engineer available for remote opportunities.',
+      contact: 'Contact me',
+      resume: 'Résumé',
+      briefTitle: 'Help me understand the work.',
+      briefLead: 'A useful first message does not need to be long. Include the context that affects scope and fit.',
+      items: ['Project or platform you need help with', 'Current stack and production environment', 'Immediate problem or desired outcome', 'Expected timeline and engagement type'],
+      fit: 'Best fit: ongoing agency support, long-term contracts, custom WordPress/WooCommerce development, integrations, and production troubleshooting.',
+    };
+---
+
+<Layout title={t.title} description={t.description} path={`${p}/contact/`} lang={lang}>
+  <Header lang={lang} />
+  <main class="wrap contact-grid">
+    <div>
+      <h1>{d.closing.headline}</h1>
+      <p class="lede">{d.closing.body}</p>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href={`mailto:${d.person.email}`}>{t.contact}</a>
+        <a class="link" href={d.person.links.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <a class="link" href={d.person.links.github} target="_blank" rel="noopener">GitHub</a>
+        <a class="link" href={d.person.links.resume} target="_blank" rel="noopener">{t.resume}</a>
+      </div>
+      <p class="contact-email">{d.person.email}</p>
+    </div>
+    <aside class="brief">
+      <h2>{t.briefTitle}</h2>
+      <p>{t.briefLead}</p>
+      <ol>
+        {t.items.map((item, i) => <li><span>{String(i + 1).padStart(2, '0')}</span>{item}</li>)}
+      </ol>
+      <p class="fit muted">{t.fit}</p>
+    </aside>
+  </main>
+  <Footer lang={lang} />
+</Layout>

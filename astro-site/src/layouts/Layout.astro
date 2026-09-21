@@ -25,6 +25,7 @@ const esHref = new URL(esPath, site).toString();
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -48,7 +49,9 @@ const esHref = new URL(esPath, site).toString();
     <link rel="icon" href="/favicon-16x16.jpg" type="image/jpeg" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.jpg" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#08090c" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f8f8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d1416" media="(prefers-color-scheme: dark)" />
 
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
@@ -63,20 +66,15 @@ const esHref = new URL(esPath, site).toString();
   <body>
     <slot />
     <script>
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduced) {
-        const observer = new IntersectionObserver(
-          (entries) => entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          }),
-          { threshold: 0.12 }
-        );
-        document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+      const targets = document.querySelectorAll('main .section, main .prose-case, main .results, main .figure');
+      const reveal = (el: Element) => el.classList.add('is-visible');
+      if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        targets.forEach(reveal);
       } else {
-        document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
+        }, { threshold: 0.06, rootMargin: '0px 0px -6% 0px' });
+        targets.forEach((el) => io.observe(el));
       }
     </script>
   </body>

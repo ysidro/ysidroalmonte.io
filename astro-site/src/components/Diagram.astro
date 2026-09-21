@@ -1,0 +1,94 @@
+---
+// Inline SVG architecture diagrams. Styled by .dg-* classes in global.css so they
+// follow the light/dark tokens (an <img> SVG cannot read the page's CSS variables).
+interface Props {
+  name: 'real-estate-api-sync' | 'woo-payment-gateway';
+}
+const { name } = Astro.props;
+---
+
+{name === 'real-estate-api-sync' && (
+  <figure class="diagram figure" aria-label="Real Estate API Sync architecture: external API to PHP sync layer to WordPress Custom Post Types to MySQL">
+    <svg viewBox="0 0 960 400" role="img" aria-hidden="true">
+      <defs>
+        <marker id="dg-a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="dg-head" d="M0,0 L10,5 L0,10 z" /></marker>
+      </defs>
+      <g>
+        <rect class="dg-box" x="40" y="90" width="180" height="110" rx="6" />
+        <text class="dg-title" x="130" y="136" text-anchor="middle">External API</text>
+        <text class="dg-text" x="130" y="160" text-anchor="middle">Real estate data source</text>
+        <text class="dg-text" x="130" y="176" text-anchor="middle">prices, availability</text>
+      </g>
+      <line class="dg-arrow" x1="220" y1="145" x2="268" y2="145" marker-end="url(#dg-a1)" />
+      <g>
+        <rect class="dg-box-hot" x="272" y="70" width="240" height="150" rx="6" />
+        <text class="dg-mono" x="392" y="102" text-anchor="middle">PHP</text>
+        <text class="dg-title" x="392" y="126" text-anchor="middle">Sync layer</text>
+        <text class="dg-text" x="392" y="152" text-anchor="middle">Fetch → Diff → Write</text>
+        <text class="dg-text" x="392" y="176" text-anchor="middle">Matched by a stable external ID,</text>
+        <text class="dg-text" x="392" y="192" text-anchor="middle">never by title or slug</text>
+      </g>
+      <line class="dg-arrow" x1="512" y1="145" x2="560" y2="145" marker-end="url(#dg-a1)" />
+      <g>
+        <rect class="dg-box" x="564" y="90" width="190" height="110" rx="6" />
+        <text class="dg-title" x="659" y="136" text-anchor="middle">Custom Post Types</text>
+        <text class="dg-text" x="659" y="160" text-anchor="middle">WordPress</text>
+        <text class="dg-text" x="659" y="176" text-anchor="middle">structured listing fields</text>
+      </g>
+      <line class="dg-arrow" x1="754" y1="145" x2="802" y2="145" marker-end="url(#dg-a1)" />
+      <g>
+        <rect class="dg-box" x="806" y="90" width="114" height="110" rx="6" />
+        <text class="dg-title" x="863" y="136" text-anchor="middle">MySQL</text>
+        <text class="dg-text" x="863" y="160" text-anchor="middle">indexed for</text>
+        <text class="dg-text" x="863" y="176" text-anchor="middle">fast matching</text>
+      </g>
+      <path class="dg-arrow-dash" d="M392,220 C392,280 290,280 280,226" marker-end="url(#dg-a1)" />
+      <text class="dg-caption" x="336" y="312" text-anchor="middle">Failed runs log and retry. Never partial writes.</text>
+      <text class="dg-caption" x="40" y="368">Only changed fields are written, so editorial overrides and SEO metadata survive every sync.</text>
+    </svg>
+  </figure>
+)}
+
+{name === 'woo-payment-gateway' && (
+  <figure class="diagram figure" aria-label="Woo Payment Gateway architecture: checkout to processor, confirmed by a verified server-to-server webhook that updates the order status">
+    <svg viewBox="0 0 960 400" role="img" aria-hidden="true">
+      <defs>
+        <marker id="dg-a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="dg-head" d="M0,0 L10,5 L0,10 z" /></marker>
+      </defs>
+      <g>
+        <rect class="dg-box" x="40" y="80" width="190" height="120" rx="6" />
+        <text class="dg-title" x="135" y="122" text-anchor="middle">Checkout UI</text>
+        <text class="dg-text" x="135" y="146" text-anchor="middle">WooCommerce hooks</text>
+        <text class="dg-text" x="135" y="162" text-anchor="middle">client-side validation,</text>
+        <text class="dg-text" x="135" y="178" text-anchor="middle">re-checked on the server</text>
+      </g>
+      <line class="dg-arrow" x1="230" y1="140" x2="270" y2="140" marker-end="url(#dg-a2)" />
+      <g>
+        <rect class="dg-box" x="274" y="80" width="190" height="120" rx="6" />
+        <text class="dg-title" x="369" y="122" text-anchor="middle">Payment processor</text>
+        <text class="dg-text" x="369" y="146" text-anchor="middle">Dominican Republic</text>
+        <text class="dg-text" x="369" y="162" text-anchor="middle">market processor,</text>
+        <text class="dg-text" x="369" y="178" text-anchor="middle">no official plugin</text>
+      </g>
+      <line class="dg-arrow" x1="464" y1="140" x2="504" y2="140" marker-end="url(#dg-a2)" />
+      <g>
+        <rect class="dg-box-hot" x="508" y="60" width="220" height="160" rx="6" />
+        <text class="dg-mono" x="618" y="92" text-anchor="middle">SERVER TO SERVER</text>
+        <text class="dg-title" x="618" y="116" text-anchor="middle">Webhook endpoint</text>
+        <text class="dg-text" x="618" y="146" text-anchor="middle">Verifies the processor signature</text>
+        <text class="dg-text" x="618" y="170" text-anchor="middle">Idempotent, safe against</text>
+        <text class="dg-text" x="618" y="186" text-anchor="middle">retried callbacks</text>
+      </g>
+      <line class="dg-arrow" x1="728" y1="140" x2="772" y2="140" marker-end="url(#dg-a2)" />
+      <g>
+        <rect class="dg-box" x="776" y="80" width="144" height="120" rx="6" />
+        <text class="dg-title" x="848" y="126" text-anchor="middle">Order status</text>
+        <text class="dg-text" x="848" y="150" text-anchor="middle">paid, pending</text>
+        <text class="dg-text" x="848" y="166" text-anchor="middle">or declined</text>
+      </g>
+      <path class="dg-arrow-dash" d="M369,200 C369,270 135,270 135,206" marker-end="url(#dg-a2)" />
+      <text class="dg-caption" x="252" y="300" text-anchor="middle">Redirect response alone is never trusted.</text>
+      <text class="dg-caption" x="40" y="360">Order status changes only from the verified webhook. Failed and pending stay distinct states.</text>
+    </svg>
+  </figure>
+)}

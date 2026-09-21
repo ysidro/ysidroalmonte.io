@@ -1,15 +1,24 @@
 ---
 import { person } from '../data/site';
+
+interface Props {
+  lang?: 'en' | 'es';
+}
+const { lang = 'en' } = Astro.props;
 const year = new Date().getFullYear();
+
+const colophon = lang === 'es'
+  ? `© ${year} ${person.fullName}. Ingeniero senior de WordPress y PHP, República Dominicana. Construido con Astro, tipografía Bricolage Grotesque e IBM Plex, alojado en Cloudflare Pages.`
+  : `© ${year} ${person.fullName}. Senior WordPress and PHP engineer, Dominican Republic. Built with Astro, set in Bricolage Grotesque and IBM Plex, hosted on Cloudflare Pages.`;
 ---
 
-<footer class="site-footer section-shell">
-  <div>
-    <p>&copy; {year} {person.fullName}</p>
-    <div class="flex gap-4">
-      <a href={person.links.linkedin} target="_blank" rel="noopener" class="hover:text-ink-900">LinkedIn</a>
-      <a href={person.links.github} target="_blank" rel="noopener" class="hover:text-ink-900">GitHub</a>
-      <a href={`mailto:${person.email}`} class="hover:text-ink-900">{person.email}</a>
-    </div>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>{colophon}</p>
+    <nav aria-label={lang === 'es' ? 'Contacto' : 'Contact'}>
+      <a class="link" href={person.links.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+      <a class="link" href={person.links.github} target="_blank" rel="noopener">GitHub</a>
+      <a class="link" href={`mailto:${person.email}`}>{person.email}</a>
+    </nav>
   </div>
 </footer>

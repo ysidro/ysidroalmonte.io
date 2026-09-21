@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { moreProjects as moreEn } from '../data/site';
+import { moreProjects as moreEs } from '../data/site.es';
+
+interface Props { lang: 'en' | 'es' }
+const { lang } = Astro.props;
+const p = lang === 'es' ? '/es' : '';
+const caseStudies = (await getCollection(lang === 'es' ? 'workEs' : 'work')).sort((a, b) => a.data.order - b.data.order);
+const more = lang === 'es' ? moreEs : moreEn;
+
+const t = lang === 'es'
+  ? {
+      title: 'Trabajo de Ingeniería — Ysidro Almonte',
+      description: 'Casos de estudio de ingeniería en WordPress: plugins a medida, WooCommerce, integraciones de API y trabajo de rendimiento.',
+      h1: 'Sistemas seleccionados, no solo pantallas.',
+      lede: 'Cada proyecto a continuación es un caso de estudio técnico: rol, arquitectura, retos de ingeniería y resultados medibles.',
+      read: 'Leer caso de estudio',
+      live: 'Proyecto en vivo',
+      moreTitle: 'Otro trabajo con clientes',
+      moreLead: 'Sitios en producción sin un caso de estudio técnico completo, trabajo real igualmente.',
+      visitSite: 'Visitar sitio',
+    }
+  : {
+      title: 'Engineering Work — Ysidro Almonte',
+      description: 'Case studies in WordPress engineering: custom plugins, WooCommerce, API integrations, and performance work.',
+      h1: 'Selected systems, not just screens.',
+      lede: 'Every project below is a technical case study: role, architecture, engineering challenges, and measurable results.',
+      read: 'Read case study',
+      live: 'Live project',
+      moreTitle: 'Additional client work',
+      moreLead: 'Production sites without a full engineering write-up, still real, shipped work.',
+      visitSite: 'Visit site',
+    };
+---
+
+<Layout title={t.title} description={t.description} path={`${p}/work/`} lang={lang}>
+  <Header lang={lang} />
+  <main>
+    <div class="wrap page-head">
+      <h1>{t.h1}</h1>
+      <p class="lede">{t.lede}</p>
+    </div>
+
+    <section class="wrap section" aria-label={t.h1}>
+      <ol class="index">
+        {caseStudies.map((c, i) => (
+          <li class="index-row">
+            <span class="no">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{c.data.name}</h3>
+              <p>{c.data.summary}</p>
+              <p class="role">{c.data.role}</p>
+            </div>
+            <ul class="tokens">{c.data.stack.map((s) => <li>{s}</li>)}</ul>
+            <div class="row-links">
+              <a class="link" href={`${p}/work/${c.id}/`}>{t.read}</a>
+              {c.data.githubUrl && <a class="link" href={c.data.githubUrl} target="_blank" rel="noopener">GitHub</a>}
+              {c.data.liveUrl && <a class="link" href={c.data.liveUrl} target="_blank" rel="noopener">{t.live}</a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="wrap section">
+      <div class="section-head">
+        <h2>{t.moreTitle}</h2>
+        <p>{t.moreLead}</p>
+      </div>
+      <ul class="index">
+        {more.map((m) => (
+          <li class="index-row has-thumb">
+            <div class="thumb"><img src={m.image} alt="" width="900" height="720" loading="lazy" /></div>
+            <div>
+              <p class="label">{m.category}</p>
+              <h3>{m.name}</h3>
+              <p>{m.description}</p>
+            </div>
+            <ul class="tokens">{m.tags.map((s) => <li>{s}</li>)}</ul>
+            <div class="row-links">{m.url && <a class="link" href={m.url} target="_blank" rel="noopener">{t.visitSite}</a>}</div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>

@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props { lang: 'en' | 'es' }
+const { lang } = Astro.props;
+const p = lang === 'es' ? '/es' : '';
+const t = lang === 'es'
+  ? { title: 'Página no encontrada — Ysidro Almonte', description: 'Esta página no existe.', h1: 'Página no encontrada', text: 'La página que buscas no existe o fue movida.', back: 'Volver al inicio' }
+  : { title: 'Page Not Found — Ysidro Almonte', description: 'This page doesn’t exist.', h1: 'Page not found', text: 'The page you’re looking for doesn’t exist or has moved.', back: 'Back to home' };
+---
+
+<Layout title={t.title} description={t.description} path={`${p}/404/`} lang={lang}>
+  <Header lang={lang} />
+  <main class="wrap notfound">
+    <p class="label">404</p>
+    <h1>{t.h1}</h1>
+    <p class="muted">{t.text}</p>
+    <a class="btn btn-primary" href={`${p}/`}>{t.back}</a>
+  </main>
+  <Footer lang={lang} />
+</Layout>

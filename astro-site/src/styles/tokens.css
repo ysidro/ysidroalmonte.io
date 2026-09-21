@@ -1,0 +1,65 @@
+/* Hallmark · genre: modern-minimal · macrostructure: Index-First (home, work) + Long Document (case studies, about)
+ * theme: custom "engineering spec sheet" · anchor hue 195 (brand teal from the YA monogram)
+ * paper-band: light (dark variant via prefers-color-scheme) · display: grotesk-sans · accent: chromatic-other (teal)
+ * design-system: design.md · designed-as-app
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Neutrals are tinted toward the anchor hue (195). Never pure black or white. */
+  --color-paper:      oklch(97.5% 0.006 195);
+  --color-paper-2:    oklch(94.5% 0.008 195);
+  --color-rule:       oklch(85%   0.010 200);
+  --color-muted:      oklch(44%   0.018 210);
+  --color-ink:        oklch(21%   0.020 215);
+  --color-accent:     oklch(50%   0.110 185);
+  --color-accent-ink: oklch(98%   0.005 195);
+  --color-focus:      oklch(50%   0.130 185);
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, sans-serif;
+  --font-body:    "IBM Plex Sans", ui-sans-serif, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2rem;
+  --space-xl:  3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 7rem;
+
+  /* Major-third scale (1.25) anchored on 1.0625rem body */
+  --text-xs:  0.78rem;
+  --text-sm:  0.875rem;
+  --text-md:  1.0625rem;
+  --text-lg:  1.33rem;
+  --text-xl:  1.66rem;
+  --text-2xl: 2.08rem;
+  --text-display-s: clamp(2rem, 3.4vw + 0.4rem, 2.9rem);
+  --text-display:   clamp(2.25rem, 4.4vw + 0.4rem, 3.75rem);
+
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-short: 160ms;
+
+  --radius: 6px;
+  --rule-hair: 1px;
+  --page-gutter: clamp(1rem, 4vw, 2rem);
+  --page-max: 1200px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Same hue, only lightness and chroma move. Higher surface = lighter. */
+    --color-paper:      oklch(15% 0.012 205);
+    --color-paper-2:    oklch(19% 0.014 205);
+    --color-rule:       oklch(31% 0.012 205);
+    --color-muted:      oklch(72% 0.012 205);
+    --color-ink:        oklch(94% 0.008 195);
+    --color-accent:     oklch(78% 0.100 185);
+    --color-accent-ink: oklch(18% 0.020 205);
+    --color-focus:      oklch(78% 0.100 185);
+  }
+}
