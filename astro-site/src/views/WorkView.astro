@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StickyProjects from '../components/StickyProjects.astro';
 import { moreProjects as moreEn } from '../data/site';
 import { moreProjects as moreEs } from '../data/site.es';
 
@@ -71,20 +72,7 @@ const t = lang === 'es'
         <h2>{t.moreTitle}</h2>
         <p>{t.moreLead}</p>
       </div>
-      <ul class="index">
-        {more.map((m) => (
-          <li class="index-row has-thumb">
-            <div class="thumb"><img src={m.image} alt="" width="900" height="720" loading="lazy" /></div>
-            <div>
-              <p class="label">{m.category}</p>
-              <h3>{m.name}</h3>
-              <p>{m.description}</p>
-            </div>
-            <ul class="tokens">{m.tags.map((s) => <li>{s}</li>)}</ul>
-            <div class="row-links">{m.url && <a class="link" href={m.url} target="_blank" rel="noopener">{t.visitSite}</a>}</div>
-          </li>
-        ))}
-      </ul>
+      <StickyProjects items={more.map((m) => ({ name: m.name, category: m.category, description: m.description, tags: m.tags, url: m.url, image: m.image }))} visit={t.visitSite} />
     </section>
   </main>
   <Footer lang={lang} />

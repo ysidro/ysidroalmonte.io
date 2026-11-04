@@ -1,0 +1,105 @@
+---
+// Pinned visual + free-scrolling text (the "Fusion" pattern): the screenshot
+// frame stays in place on the left while each project's text scrolls past on
+// the right. A strip of screenshots slides continuously with the scroll, so
+// the image tracks whichever text block is crossing the viewport centre.
+// Stacked (text + image per project) on small screens, reduced motion, or no JS.
+interface Item { name: string; category: string; description: string; tags: string[]; url?: string; image: string }
+interface Props { items: Item[]; visit: string }
+const { items, visit } = Astro.props;
+---
+
+<div class="proj" data-proj style={`--n:${items.length}`}>
+  <div class="proj-media" aria-hidden="true">
+    <div class="proj-frame">
+      <div class="proj-strip" data-proj-strip>
+        {items.map((m) => <img src={m.image} alt="" width="900" height="720" loading="lazy" decoding="async" />)}
+      </div>
+    </div>
+  </div>
+  <ol class="proj-list">
+    {items.map((m, i) => (
+      <li class:list={['proj-item', i === 0 && 'is-active']} data-proj-item>
+        <img class="proj-inline" src={m.image} alt="" width="900" height="720" loading="lazy" decoding="async" />
+        <p class="label">{m.category}</p>
+        <h3>{m.name}</h3>
+        <p class="proj-desc">{m.description}</p>
+        <ul class="tokens">{m.tags.map((s) => <li>{s}</li>)}</ul>
+        {m.url && <p><a class="link" href={m.url} target="_blank" rel="noopener">{visit}</a></p>}
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-proj]').forEach((root) => {
+    const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
+    const strip = root.querySelector<HTMLElement>('[data-proj-strip]')!;
+    const items = [...root.querySelectorAll<HTMLElement>('[data-proj-item]')];
+    const n = items.length;
+    let raf = 0, on = false, active = -1;
+
+    const update = () => {
+      raf = 0;
+      const c = window.innerHeight / 2;
+      const mid = items.map((el) => { const r = el.getBoundingClientRect(); return r.top + r.height / 2; });
+      // Fractional index: where the viewport centre sits between two text blocks.
+      let f = 0;
+      if (c >= mid[n - 1]) f = n - 1;
+      else if (c > mid[0]) {
+        let i = 0; while (i < n - 2 && c >= mid[i + 1]) i++;
+        f = i + (c - mid[i]) / (mid[i + 1] - mid[i]);
+      }
+      strip.style.transform = `translate3d(0, ${(-(f / n) * 100).toFixed(3)}%, 0)`;
+      const near = Math.round(f);
+      if (near !== active) { active = near; items.forEach((el, i) => el.classList.toggle('is-active', i === near)); }
+    };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const enable = () => {
+      if (on) return; on = true; root.classList.add('is-live');
+      root.querySelectorAll('img').forEach((im) => (im.loading = 'eager'));
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', queue);
+      update();
+    };
+    const disable = () => {
+      if (!on) return; on = false; root.classList.remove('is-live');
+      window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue);
+      strip.style.transform = '';
+    };
+    const sync = () => (mq.matches ? enable() : disable());
+    mq.addEventListener('change', sync);
+    sync();
+  });
+</script>
+
+<style is:global>
+  /* Default (stacked): image above each project's text. */
+  .proj-media { display: none; }
+  .proj-list { display: grid; gap: var(--space-xl); }
+  .proj-item .proj-inline { width: 100%; height: auto; border-radius: var(--radius); margin-bottom: var(--space-sm); }
+  .proj-item h3 { font-size: var(--text-xl); margin: var(--space-3xs) 0 var(--space-xs); }
+  .proj-desc { color: var(--color-muted); max-width: 52ch; margin-bottom: var(--space-sm); }
+  .proj-item .tokens { margin-bottom: var(--space-sm); }
+
+  /* Live: pinned frame left, long scrolling text right. */
+  .proj.is-live { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-2xl); align-items: start; }
+  .proj.is-live .proj-media { display: grid; align-items: center; position: sticky; top: 0; height: 100vh; }
+  .proj.is-live .proj-frame {
+    width: min(100%, calc(72vh * 1.25)); aspect-ratio: 5 / 4; overflow: hidden;
+    border-radius: var(--radius); background: var(--color-paper-2);
+  }
+  .proj.is-live .proj-strip { display: flex; flex-direction: column; height: 100%; will-change: transform; }
+  /* The strip is n frames tall; each image fills exactly one frame. */
+  .proj.is-live .proj-strip { height: calc(var(--n, 1) * 100%); }
+  .proj.is-live .proj-strip img { flex: 1 1 0; min-height: 0; width: 100%; object-fit: cover; object-position: top; display: block; }
+  .proj.is-live .proj-list { gap: 0; }
+  .proj.is-live .proj-item {
+    min-height: 80vh; display: flex; flex-direction: column; justify-content: center;
+    opacity: 0.32; transition: opacity 360ms var(--ease-out);
+  }
+  .proj.is-live .proj-item.is-active { opacity: 1; }
+  .proj.is-live .proj-inline { display: none; }
+  .proj.is-live .proj-item h3 { font-size: var(--text-2xl); }
+  @media (max-width: 860px), (prefers-reduced-motion: reduce) { .proj.is-live { display: block; } }
+</style>

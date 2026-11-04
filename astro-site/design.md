@@ -29,6 +29,8 @@ Kept small, opacity + transform only, all off under `prefers-reduced-motion`:
 - Hero: one staggered rise on load (title, lede, facts, actions, proof strip).
 - Scroll reveal: sections, prose, results and figures fade up once. Content is only hidden when JS is present (`.js` on `<html>`).
 - Hover: index rows tint and nudge the title 6px; the featured screenshot zooms 3%.
+- Sticky walkthrough (`StickyWalkthrough.astro`, case studies with `walkthrough` frontmatter): a tall track holds a sticky stage; scroll progress slides one vertical strip of screenshots through the frame (translate only: pan down tall ones, then glide to the next) while the text panel cross-fades. Live only at ≥861px with motion allowed and JS on; otherwise steps render stacked (text, then its screenshot). Max 12 steps. Screenshots are real captures in a hairline frame, never drawn chrome.
+- Pinned-visual list (`StickyProjects.astro`, /work/ "Additional client work"): the frame stays pinned on the left while long text blocks scroll on the right; a strip of images slides continuously with the block crossing the viewport centre, non-active text dims to 32%. Stacked (image above text) under 861px, reduced motion, or no JS.
 - Colour/underline transitions at 160 ms; `:focus-visible` ring is instant.
 - Glass: the sticky header and mobile menu use a translucent paper + `backdrop-filter` blur (purposeful, it floats over content). Nowhere else.
 

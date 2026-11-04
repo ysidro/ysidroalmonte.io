@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Diagram from '../components/Diagram.astro';
+import StickyWalkthrough from '../components/StickyWalkthrough.astro';
 
 interface Props {
   name: string;
@@ -13,11 +14,14 @@ interface Props {
   githubUrl?: string;
   liveUrl?: string;
   heroImage?: string;
+  walkthrough?: { tag: string; title: string; body: string; image: string; alt: string }[];
+  walkthroughTitle?: string;
+  walkthroughLede?: string;
   slug?: string;
   lang?: 'en' | 'es';
 }
 
-const { name, summary, role, stack, results, githubUrl, liveUrl, heroImage, slug, lang = 'en' } = Astro.props;
+const { name, summary, role, stack, results, githubUrl, liveUrl, heroImage, walkthrough = [], walkthroughTitle, walkthroughLede, slug, lang = 'en' } = Astro.props;
 const p = lang === 'es' ? '/es' : '';
 const diagramName = slug === 'real-estate-api-sync' || slug === 'woo-payment-gateway' ? slug : undefined;
 const photo = heroImage && !heroImage.endsWith('.svg') ? heroImage : undefined;
@@ -52,7 +56,8 @@ const t = lang === 'es'
     </header>
 
     {diagramName && <Diagram name={diagramName} />}
-    {!diagramName && photo && (
+    {walkthrough.length > 0 && <StickyWalkthrough title={walkthroughTitle} lede={walkthroughLede} steps={walkthrough} lang={lang} />}
+    {!diagramName && walkthrough.length === 0 && photo && (
       <figure class="figure"><img src={photo} alt={`${name}`} width="1440" height="900" loading="eager" /></figure>
     )}
 

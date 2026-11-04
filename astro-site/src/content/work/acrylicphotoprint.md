@@ -4,18 +4,70 @@ summary: "Custom product-personalization platform on WooCommerce, rebuilt on a m
 role: "Sole engineer — platform architecture, custom plugins, and storefront rebuild"
 stack: ["WooCommerce", "Custom Plugins", "Timber", "Twig", "Svelte", "Tailwind CSS", "AWS", "Cloudflare"]
 liveUrl: "https://acrylicphotoprint.com"
-heroImage: "/images/work/featured/acrylic-photo-print.png"
+heroImage: "/images/work/acrylicphotoprint/home-hero.jpg"
 featured: true
 order: 0
 results:
   - "Custom image upload and processing pipeline handling customer photos at checkout"
   - "Cart and checkout logic extended for personalized, made-to-order products"
   - "Rebuilt on Timber + Twig + Svelte for a modern, maintainable WordPress frontend"
+walkthroughTitle: "Page by page: how the storefront guides a purchase"
+walkthroughLede: "Scroll through the live storefront. Each step is a real section of acrylicphotoprint.com and what it does for the customer."
+walkthrough:
+  - tag: "Home · Hero"
+    title: "Promise and next action"
+    body: "The hero states the product and the city (local Miami business), then offers two paths: upload a photo now, or view sizes and prices. A trust strip (secure checkout, local business, high-resolution printing, fast turnaround) answers the first objections before any scroll."
+    image: "/images/work/acrylicphotoprint/home-hero.jpg"
+    alt: "Acrylicphotoprint.com home page hero with headline, two calls to action and a framed acrylic print"
+  - tag: "Home · Choose your print"
+    title: "Product routing"
+    body: "Four product families (acrylic, canvas, collage, personalized gifts) as entry points, so each visitor reaches the right configurator in one click instead of browsing a generic shop grid."
+    image: "/images/work/acrylicphotoprint/home-choose.jpg"
+    alt: "Home page section for choosing between acrylic, canvas, collage and personalized gifts"
+  - tag: "Home · How it works"
+    title: "The process, upfront"
+    body: "A short explanation of the flow from upload to delivery. It sets expectations for a made-to-order product, where the customer supplies the image."
+    image: "/images/work/acrylicphotoprint/home-how.jpg"
+    alt: "Home page how-it-works section"
+  - tag: "Home · Best sellers"
+    title: "Merchandising from the catalog"
+    body: "A best-sellers grid surfaces the products that already convert, linking straight into the matching product page."
+    image: "/images/work/acrylicphotoprint/home-best.jpg"
+    alt: "Home page best sellers product grid"
+  - tag: "Home · Acrylic vs. canvas"
+    title: "Comparison that answers the buying question"
+    body: "A side-by-side of the two materials. It helps undecided buyers choose and keeps them on the site instead of leaving to research."
+    image: "/images/work/acrylicphotoprint/home-vs.jpg"
+    alt: "Home page comparison between acrylic and canvas prints"
+  - tag: "Home · Gallery and FAQ"
+    title: "Social proof and objection handling"
+    body: "A gallery of finished prints builds trust in print quality, and the FAQ answers common questions before they turn into support emails."
+    image: "/images/work/acrylicphotoprint/home-gallery.jpg"
+    alt: "Home page gallery of memories section"
+  - tag: "Product · Acrylic Photo Prints"
+    title: "A configurator, not a product page"
+    body: "Image gallery, seven sizes with live prices, portrait or landscape orientation, a high-resolution upload dropzone (300 DPI guidance) and a purchase button that updates with the chosen price. The uploaded image becomes order data that travels through cart and checkout."
+    image: "/images/work/acrylicphotoprint/acrylic-product.jpg"
+    alt: "Acrylic Photo Prints product page with size selector, orientation toggle and upload area"
+  - tag: "Product · Acrylic benefits"
+    title: "Specs that justify the price"
+    body: "Crystal-clear quality, fade-resistance, the floating effect and high-resolution printing, followed by customer reviews and a closing call to action on the same page."
+    image: "/images/work/acrylicphotoprint/acrylic-benefits.jpg"
+    alt: "Acrylic Photo Prints benefits and testimonials section"
+  - tag: "Product · Collage Picture"
+    title: "Four-step builder with per-slot photos"
+    body: "Choose one of six layouts, upload photos into each slot, pick one of eight backgrounds, then size and checkout. A progress counter and a disabled add-to-cart button (\"Upload 5 more photos to continue\") keep an incomplete design from reaching the cart."
+    image: "/images/work/acrylicphotoprint/collage-product.jpg"
+    alt: "Collage Picture builder with layouts, photo slots, backgrounds and size selection"
 ---
 
 ## Overview
 
 AcrylicPhotoPrint sells personalized acrylic photo prints — every order starts with a customer-uploaded image, which makes it a product-personalization platform first and an e-commerce store second.
+
+## Storefront and Product Pages
+
+The walkthrough above is built from full-page captures of the live site. The home page routes visitors to the right product, and the two product pages are where the platform earns its keep: the **Acrylic Photo Prints** page behaves like a configurator (size, orientation, high-resolution upload, live price), while the **Collage Picture** page is a four-step builder with per-slot photo upload, backgrounds and sizes, gated so an incomplete design cannot be added to the cart.
 
 ## The Challenge
 

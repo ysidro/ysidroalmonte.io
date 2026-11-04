@@ -12,6 +12,11 @@ const workSchema = z.object({
   order: z.number().default(0),
   results: z.array(z.string()).default([]),
   heroImage: z.string().optional(),
+  walkthroughTitle: z.string().optional(),
+  walkthroughLede: z.string().optional(),
+  walkthrough: z
+    .array(z.object({ tag: z.string(), title: z.string(), body: z.string(), image: z.string(), alt: z.string() }))
+    .default([]),
 });
 
 const work = defineCollection({

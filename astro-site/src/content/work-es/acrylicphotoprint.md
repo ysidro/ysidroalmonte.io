@@ -4,18 +4,70 @@ summary: "Plataforma de personalización de producto a medida sobre WooCommerce,
 role: "Ingeniero único — arquitectura de plataforma, plugins a medida y reconstrucción del storefront"
 stack: ["WooCommerce", "Custom Plugins", "Timber", "Twig", "Svelte", "Tailwind CSS", "AWS", "Cloudflare"]
 liveUrl: "https://acrylicphotoprint.com"
-heroImage: "/images/work/featured/acrylic-photo-print.png"
+heroImage: "/images/work/acrylicphotoprint/home-hero.jpg"
 featured: true
 order: 0
 results:
   - "Pipeline de subida y procesamiento de imágenes gestionando fotos de clientes en el checkout"
   - "Lógica de carrito y checkout extendida para productos personalizados hechos a pedido"
   - "Reconstruido sobre Timber + Twig + Svelte para un frontend WordPress moderno y mantenible"
+walkthroughTitle: "Página por página: cómo el storefront guía la compra"
+walkthroughLede: "Recorre el storefront en producción. Cada paso es una sección real de acrylicphotoprint.com y lo que hace por el cliente."
+walkthrough:
+  - tag: "Inicio · Hero"
+    title: "Promesa y siguiente acción"
+    body: "El hero presenta el producto y la ciudad (negocio local en Miami) y ofrece dos caminos: subir una foto ya, o ver tamaños y precios. Una franja de confianza (pago seguro, negocio local, impresión en alta resolución, entrega rápida) responde las primeras objeciones antes de hacer scroll."
+    image: "/images/work/acrylicphotoprint/home-hero.jpg"
+    alt: "Hero de la página de inicio de Acrylicphotoprint.com con titular, dos llamadas a la acción y una impresión en acrílico"
+  - tag: "Inicio · Elige tu impresión"
+    title: "Enrutamiento de producto"
+    body: "Cuatro familias de producto (acrílico, canvas, collage y regalos personalizados) como puntos de entrada, para que cada visitante llegue al configurador correcto en un clic en lugar de navegar una cuadrícula genérica."
+    image: "/images/work/acrylicphotoprint/home-choose.jpg"
+    alt: "Sección del inicio para elegir entre acrílico, canvas, collage y regalos personalizados"
+  - tag: "Inicio · Cómo funciona"
+    title: "El proceso, por adelantado"
+    body: "Una explicación corta del flujo desde la subida hasta la entrega. Fija expectativas para un producto hecho a pedido, donde el cliente aporta la imagen."
+    image: "/images/work/acrylicphotoprint/home-how.jpg"
+    alt: "Sección cómo funciona del inicio"
+  - tag: "Inicio · Más vendidos"
+    title: "Merchandising desde el catálogo"
+    body: "Una cuadrícula de más vendidos destaca los productos que ya convierten, con enlace directo a su página de producto."
+    image: "/images/work/acrylicphotoprint/home-best.jpg"
+    alt: "Cuadrícula de productos más vendidos del inicio"
+  - tag: "Inicio · Acrílico vs. canvas"
+    title: "Comparación que responde la pregunta de compra"
+    body: "Una comparación lado a lado de ambos materiales. Ayuda a quien duda a decidir y evita que salga del sitio a investigar."
+    image: "/images/work/acrylicphotoprint/home-vs.jpg"
+    alt: "Comparación entre impresiones en acrílico y canvas en el inicio"
+  - tag: "Inicio · Galería y FAQ"
+    title: "Prueba social y manejo de objeciones"
+    body: "Una galería de impresiones terminadas genera confianza en la calidad, y el FAQ responde las dudas comunes antes de que se conviertan en correos de soporte."
+    image: "/images/work/acrylicphotoprint/home-gallery.jpg"
+    alt: "Sección galería de recuerdos del inicio"
+  - tag: "Producto · Acrylic Photo Prints"
+    title: "Un configurador, no una ficha de producto"
+    body: "Galería de imágenes, siete tamaños con precio en vivo, orientación vertical u horizontal, una zona de subida en alta resolución (guía de 300 DPI) y un botón de compra que se actualiza con el precio elegido. La imagen subida se convierte en datos del pedido que viajan por carrito y checkout."
+    image: "/images/work/acrylicphotoprint/acrylic-product.jpg"
+    alt: "Página de producto Acrylic Photo Prints con selector de tamaño, orientación y zona de subida"
+  - tag: "Producto · Beneficios del acrílico"
+    title: "Especificaciones que justifican el precio"
+    body: "Calidad cristalina, resistencia al desvanecimiento, efecto flotante e impresión en alta resolución, seguidos de reseñas de clientes y una llamada a la acción final en la misma página."
+    image: "/images/work/acrylicphotoprint/acrylic-benefits.jpg"
+    alt: "Sección de beneficios y testimonios de Acrylic Photo Prints"
+  - tag: "Producto · Collage Picture"
+    title: "Constructor de cuatro pasos con foto por espacio"
+    body: "Elige uno de seis diseños, sube fotos a cada espacio, escoge uno de ocho fondos y luego tamaño y checkout. Un contador de progreso y un botón de añadir al carrito deshabilitado (\"Upload 5 more photos to continue\") evitan que un diseño incompleto llegue al carrito."
+    image: "/images/work/acrylicphotoprint/collage-product.jpg"
+    alt: "Constructor de Collage Picture con diseños, espacios de foto, fondos y tamaños"
 ---
 
 ## Resumen
 
 AcrylicPhotoPrint vende impresiones fotográficas personalizadas sobre acrílico — cada pedido empieza con una imagen subida por el cliente, lo que la convierte primero en una plataforma de personalización de producto, y en segundo lugar en una tienda de e-commerce.
+
+## Storefront y Páginas de Producto
+
+El recorrido de arriba está construido con capturas completas del sitio en producción. El inicio dirige a cada visitante al producto correcto, y las dos páginas de producto son donde la plataforma demuestra su valor: la página de **Acrylic Photo Prints** funciona como un configurador (tamaño, orientación, subida en alta resolución, precio en vivo), mientras que **Collage Picture** es un constructor de cuatro pasos con subida de foto por espacio, fondos y tamaños, restringido para que un diseño incompleto no pueda añadirse al carrito.
 
 ## El Desafío
 

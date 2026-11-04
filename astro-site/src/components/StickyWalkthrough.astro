@@ -1,0 +1,181 @@
+---
+// Sticky section layout: a tall track holds a viewport-height sticky stage.
+// Scroll progress through the track picks the active step (text swaps on the
+// left, screenshot swaps on the right) and slowly pans tall screenshots.
+// Without JS, on small screens, or with reduced motion, steps render stacked.
+interface Step { tag: string; title: string; body: string; image: string; alt: string }
+interface Props { title?: string; lede?: string; steps: Step[]; lang?: 'en' | 'es' }
+
+const { title, lede, steps, lang = 'en' } = Astro.props;
+const of = lang === 'es' ? 'de' : 'of';
+---
+
+<section class="walk" data-walk data-count={steps.length} aria-label={title}>
+  {(title || lede) && (
+    <header class="walk-head">
+      {title && <h2>{title}</h2>}
+      {lede && <p>{lede}</p>}
+    </header>
+  )}
+  <div class="walk-track" style={`--steps:${steps.length}`}>
+    <div class="walk-stage">
+      <div class="walk-panel">
+        <p class="walk-count" aria-hidden="true"><span data-walk-now>1</span> {of} {steps.length}</p>
+        <div class="walk-texts">
+          {steps.map((s, i) => (
+            <div class:list={['walk-text', i === 0 && 'is-active']} data-walk-text>
+              <p class="walk-tag">{s.tag}</p>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          ))}
+        </div>
+        <div class="walk-bar" aria-hidden="true"><span data-walk-bar></span></div>
+      </div>
+      <div class="walk-media">
+        <div class="walk-strip" data-walk-strip>
+          {steps.map((s, i) => (
+            <figure class:list={['walk-shot', i === 0 && 'is-active']} data-walk-shot>
+              <img src={s.image} alt={s.alt} width="1440" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-walk]').forEach((root) => {
+    const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
+    const track = root.querySelector<HTMLElement>('.walk-track')!;
+    const texts = [...root.querySelectorAll<HTMLElement>('[data-walk-text]')];
+    const shots = [...root.querySelectorAll<HTMLElement>('[data-walk-shot]')];
+    const now = root.querySelector<HTMLElement>('[data-walk-now]')!;
+    const bar = root.querySelector<HTMLElement>('[data-walk-bar]')!;
+    const n = texts.length;
+    let active = -1, raf = 0, on = false;
+
+    const strip = root.querySelector<HTMLElement>('[data-walk-strip]')!;
+    const frame = strip.parentElement!;
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+    const DWELL = 0.72; // share of each step spent reading the screenshot; the rest is the slide to the next one
+    // Camera keyframes per step: where the strip sits when the screenshot starts / ends being read.
+    let from: number[] = [], to: number[] = [];
+    const measure = () => {
+      const F = frame.clientHeight;
+      from = []; to = [];
+      shots.forEach((sh) => {
+        const h = sh.offsetHeight, top = sh.offsetTop;
+        if (h > F) { from.push(top); to.push(top + h - F); }       // tall: pan top to bottom
+        else { const c = top - (F - h) / 2; from.push(c); to.push(c); } // short: sit centred
+      });
+    };
+
+    const update = () => {
+      raf = 0;
+      if (!from.length) measure();
+      const r = track.getBoundingClientRect();
+      const span = r.height - window.innerHeight;
+      const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+      const idx = Math.min(n - 1, Math.floor(p * n));
+      const local = Math.min(1, Math.max(0, p * n - idx));
+      let y: number;
+      if (idx === n - 1) y = from[idx] + (to[idx] - from[idx]) * local;
+      else if (local < DWELL) y = from[idx] + (to[idx] - from[idx]) * (local / DWELL);
+      else y = to[idx] + (from[idx + 1] - to[idx]) * ease((local - DWELL) / (1 - DWELL));
+      strip.style.transform = `translate3d(0, ${(-y).toFixed(1)}px, 0)`;
+      // Text follows whichever screenshot the camera is closest to.
+      const shown = idx < n - 1 && local > 0.85 ? idx + 1 : idx;
+      if (shown !== active) {
+        active = shown;
+        texts.forEach((t, i) => { t.classList.toggle('is-active', i === shown); t.setAttribute('aria-hidden', String(i !== shown)); });
+        now.textContent = String(shown + 1);
+      }
+      bar.style.transform = `scaleX(${p})`;
+    };
+    const onResize = () => { from = []; queue(); };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const enable = () => {
+      if (on) return; on = true; root.classList.add('is-live'); active = -1;
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', onResize);
+      shots.forEach((sh) => { const im = sh.querySelector('img')!; im.loading = 'eager'; if (!im.complete) im.addEventListener('load', onResize, { once: true }); });
+      measure(); update();
+    };
+    const disable = () => {
+      if (!on) return; on = false; root.classList.remove('is-live');
+      window.removeEventListener('scroll', queue); window.removeEventListener('resize', onResize);
+      texts.forEach((t) => t.removeAttribute('aria-hidden'));
+      strip.style.transform = '';
+    };
+    const sync = () => (mq.matches ? enable() : disable());
+    mq.addEventListener('change', sync);
+    sync();
+  });
+</script>
+
+<style is:global>
+  .walk { margin: var(--space-xl) 0; }
+  .walk-head { max-width: 65ch; margin-bottom: var(--space-lg); }
+  .walk-head h2 { font-size: var(--text-xl); margin-bottom: var(--space-xs); }
+  .walk-head p { color: var(--color-muted); }
+
+  /* Default (stacked): every step is a text block followed by its screenshot. */
+  .walk-stage, .walk-panel, .walk-media, .walk-texts, .walk-strip { display: contents; }
+  .walk-count, .walk-bar { display: none; }
+  .walk-text { margin: var(--space-xl) 0 var(--space-sm); max-width: 65ch; }
+  .walk-text h3 { font-size: var(--text-lg); margin: var(--space-3xs) 0 var(--space-xs); }
+  .walk-text p:not(.walk-tag) { color: var(--color-muted); }
+  .walk-tag { font: 500 var(--text-xs) var(--font-mono); color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.04em; }
+  .walk-shot { margin: 0; }
+  .walk-shot img { width: 100%; height: auto; border-radius: var(--radius); }
+  /* Stacked order: pair each text with its shot by DOM order via flex column on track. */
+  .walk-track { display: grid; }
+  .walk-text:nth-child(n), .walk-shot:nth-child(n) { grid-column: 1; }
+  /* explicit interleave for up to 12 steps */
+  .walk-text:nth-child(1) { order: 1 } .walk-shot:nth-child(1) { order: 2 }
+  .walk-text:nth-child(2) { order: 3 } .walk-shot:nth-child(2) { order: 4 }
+  .walk-text:nth-child(3) { order: 5 } .walk-shot:nth-child(3) { order: 6 }
+  .walk-text:nth-child(4) { order: 7 } .walk-shot:nth-child(4) { order: 8 }
+  .walk-text:nth-child(5) { order: 9 } .walk-shot:nth-child(5) { order: 10 }
+  .walk-text:nth-child(6) { order: 11 } .walk-shot:nth-child(6) { order: 12 }
+  .walk-text:nth-child(7) { order: 13 } .walk-shot:nth-child(7) { order: 14 }
+  .walk-text:nth-child(8) { order: 15 } .walk-shot:nth-child(8) { order: 16 }
+  .walk-text:nth-child(9) { order: 17 } .walk-shot:nth-child(9) { order: 18 }
+  .walk-text:nth-child(10) { order: 19 } .walk-shot:nth-child(10) { order: 20 }
+  .walk-text:nth-child(11) { order: 21 } .walk-shot:nth-child(11) { order: 22 }
+  .walk-text:nth-child(12) { order: 23 } .walk-shot:nth-child(12) { order: 24 }
+
+  /* Live (JS + desktop + motion allowed): sticky stage driven by scroll progress. */
+  .walk.is-live .walk-track { display: block; height: calc(var(--steps) * 85vh + 100vh); }
+  .walk.is-live .walk-stage {
+    display: grid; grid-template-columns: minmax(0, 0.36fr) minmax(0, 1fr); gap: var(--space-md);
+    position: sticky; top: max(5rem, calc(50vh - 22rem)); height: min(calc(100vh - 6.5rem), 44rem); min-height: 28rem;
+  }
+  .walk.is-live .walk-panel {
+    display: flex; flex-direction: column; gap: var(--space-md); min-width: 0;
+    padding: var(--space-md); background: var(--color-paper-2); border-radius: var(--radius);
+  }
+  .walk.is-live .walk-count { display: block; font: 500 var(--text-xs) var(--font-mono); color: var(--color-muted); }
+  .walk.is-live .walk-texts { display: grid; flex: 1; align-content: center; }
+  .walk.is-live .walk-text {
+    grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden; transform: translateY(14px);
+    transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out), visibility 0s 420ms;
+  }
+  .walk.is-live .walk-text.is-active { opacity: 1; visibility: visible; transform: none; transition-delay: 90ms, 90ms, 0s; }
+  .walk.is-live .walk-bar { display: block; height: 2px; background: var(--color-rule); }
+  .walk.is-live .walk-bar span { display: block; height: 100%; background: var(--color-accent); transform-origin: left; transform: scaleX(0); }
+  .walk.is-live .walk-media {
+    display: block; position: relative; min-width: 0; overflow: hidden;
+    border-radius: var(--radius); background: var(--color-paper-2);
+  }
+  /* Image scroll: all screenshots sit in one vertical strip that slides through the frame. */
+  .walk.is-live .walk-strip { display: flex; flex-direction: column; gap: var(--space-lg); will-change: transform; }
+  .walk.is-live .walk-shot { display: block; }
+  .walk.is-live .walk-shot img { border: 0; border-radius: 0; display: block; }
+
+  @media (max-width: 860px), (prefers-reduced-motion: reduce) {
+    .walk.is-live .walk-track { height: auto; }
+  }
+</style>
