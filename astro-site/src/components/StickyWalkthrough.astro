@@ -3,14 +3,17 @@
 // Scroll progress through the track picks the active step (text swaps on the
 // left, screenshot swaps on the right) and slowly pans tall screenshots.
 // Without JS, on small screens, or with reduced motion, steps render stacked.
-interface Step { tag: string; title: string; body: string; image: string; alt: string }
-interface Props { title?: string; lede?: string; steps: Step[]; lang?: 'en' | 'es' }
+// Diagram mode (`diagram` set): one architecture diagram stays pinned and each
+// step lights up the nodes listed in its `focus`, instead of sliding screenshots.
+import Diagram from './Diagram.astro';
+interface Step { tag: string; title: string; body: string; image?: string; alt?: string; focus?: number[] }
+interface Props { title?: string; lede?: string; steps: Step[]; diagram?: 'real-estate-api-sync' | 'woo-payment-gateway'; lang?: 'en' | 'es' }
 
-const { title, lede, steps, lang = 'en' } = Astro.props;
+const { title, lede, steps, diagram, lang = 'en' } = Astro.props;
 const of = lang === 'es' ? 'de' : 'of';
 ---
 
-<section class="walk" data-walk data-count={steps.length} aria-label={title}>
+<section class:list={['walk', diagram && 'walk-diagram']} data-walk data-count={steps.length} aria-label={title}>
   {(title || lede) && (
     <header class="walk-head">
       {title && <h2>{title}</h2>}
@@ -23,7 +26,7 @@ const of = lang === 'es' ? 'de' : 'of';
         <p class="walk-count" aria-hidden="true"><span data-walk-now>1</span> {of} {steps.length}</p>
         <div class="walk-texts">
           {steps.map((s, i) => (
-            <div class:list={['walk-text', i === 0 && 'is-active']} data-walk-text>
+            <div class:list={['walk-text', i === 0 && 'is-active']} data-walk-text data-focus={(s.focus ?? []).join(' ')}>
               <p class="walk-tag">{s.tag}</p>
               <h3>{s.title}</h3>
               <p>{s.body}</p>
@@ -33,13 +36,14 @@ const of = lang === 'es' ? 'de' : 'of';
         <div class="walk-bar" aria-hidden="true"><span data-walk-bar></span></div>
       </div>
       <div class="walk-media">
-        <div class="walk-strip" data-walk-strip>
+        {diagram && <Diagram name={diagram} />}
+        {!diagram && <div class="walk-strip" data-walk-strip>
           {steps.map((s, i) => (
             <figure class:list={['walk-shot', i === 0 && 'is-active']} data-walk-shot>
               <img src={s.image} alt={s.alt} width="1440" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
             </figure>
           ))}
-        </div>
+        </div>}
       </div>
     </div>
   </div>
@@ -56,13 +60,16 @@ const of = lang === 'es' ? 'de' : 'of';
     const n = texts.length;
     let active = -1, raf = 0, on = false;
 
-    const strip = root.querySelector<HTMLElement>('[data-walk-strip]')!;
-    const frame = strip.parentElement!;
+    const strip = root.querySelector<HTMLElement>('[data-walk-strip]');
+    const diagramEl = root.querySelector<HTMLElement>('.diagram');
+    const nodes = diagramEl ? [...diagramEl.querySelectorAll<SVGElement>('[data-node]')] : [];
+    const frame = root.querySelector<HTMLElement>('.walk-media')!;
     const ease = (t: number) => 1 - Math.pow(1 - t, 3);
     const DWELL = 0.72; // share of each step spent reading the screenshot; the rest is the slide to the next one
     // Camera keyframes per step: where the strip sits when the screenshot starts / ends being read.
     let from: number[] = [], to: number[] = [];
     const measure = () => {
+      if (!strip) { from = [0]; return; }
       const F = frame.clientHeight;
       from = []; to = [];
       shots.forEach((sh) => {
@@ -80,11 +87,24 @@ const of = lang === 'es' ? 'de' : 'of';
       const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
       const idx = Math.min(n - 1, Math.floor(p * n));
       const local = Math.min(1, Math.max(0, p * n - idx));
+      if (!strip) {
+        // Diagram mode: light up the nodes this step talks about.
+        if (idx !== active) {
+          active = idx;
+          texts.forEach((t, i) => { t.classList.toggle('is-active', i === idx); t.setAttribute('aria-hidden', String(i !== idx)); });
+          now.textContent = String(idx + 1);
+          const focus = (texts[idx].dataset.focus ?? '').split(' ').filter(Boolean);
+          diagramEl!.classList.add('is-focusing');
+          nodes.forEach((nd) => nd.classList.toggle('is-focus', (nd.getAttribute('data-node') ?? '').split(' ').some((k) => focus.includes(k))));
+        }
+        bar.style.transform = `scaleX(${p})`;
+        return;
+      }
       let y: number;
       if (idx === n - 1) y = from[idx] + (to[idx] - from[idx]) * local;
       else if (local < DWELL) y = from[idx] + (to[idx] - from[idx]) * (local / DWELL);
       else y = to[idx] + (from[idx + 1] - to[idx]) * ease((local - DWELL) / (1 - DWELL));
-      strip.style.transform = `translate3d(0, ${(-y).toFixed(1)}px, 0)`;
+      strip!.style.transform = `translate3d(0, ${(-y).toFixed(1)}px, 0)`;
       // Text follows whichever screenshot the camera is closest to.
       const shown = idx < n - 1 && local > 0.85 ? idx + 1 : idx;
       if (shown !== active) {
@@ -101,13 +121,16 @@ const of = lang === 'es' ? 'de' : 'of';
       window.addEventListener('scroll', queue, { passive: true });
       window.addEventListener('resize', onResize);
       shots.forEach((sh) => { const im = sh.querySelector('img')!; im.loading = 'eager'; if (!im.complete) im.addEventListener('load', onResize, { once: true }); });
+      active = -1;
       measure(); update();
     };
     const disable = () => {
       if (!on) return; on = false; root.classList.remove('is-live');
       window.removeEventListener('scroll', queue); window.removeEventListener('resize', onResize);
       texts.forEach((t) => t.removeAttribute('aria-hidden'));
-      strip.style.transform = '';
+      if (strip) strip.style.transform = '';
+      diagramEl?.classList.remove('is-focusing');
+      nodes.forEach((nd) => nd.classList.remove('is-focus'));
     };
     const sync = () => (mq.matches ? enable() : disable());
     mq.addEventListener('change', sync);
@@ -174,6 +197,18 @@ const of = lang === 'es' ? 'de' : 'of';
   .walk.is-live .walk-strip { display: flex; flex-direction: column; gap: var(--space-lg); will-change: transform; }
   .walk.is-live .walk-shot { display: block; }
   .walk.is-live .walk-shot img { border: 0; border-radius: 0; display: block; }
+
+  /* Diagram mode: pinned diagram, nodes outside the step's focus dim. */
+  .walk-diagram .diagram { margin: 0 0 var(--space-md); order: 0; }
+  .walk-diagram .walk-text:nth-child(n) { order: initial; }
+  .walk-diagram .walk-text { margin-top: var(--space-md); }
+  .walk-diagram.is-live .walk-stage { height: min(calc(100vh - 6.5rem), 32rem); top: max(5rem, calc(50vh - 16rem)); min-height: 0; }
+  .walk-diagram.is-live .walk-media { display: grid; align-items: center; padding: var(--space-md); }
+  .walk-diagram.is-live .diagram { margin: 0; width: 100%; }
+  .walk-diagram.is-live .diagram svg { width: 100%; height: auto; display: block; }
+  .walk-diagram.is-live .diagram [data-node] { transition: opacity 360ms var(--ease-out); }
+  .walk-diagram.is-live .diagram.is-focusing [data-node]:not(.is-focus) { opacity: 0.16; }
+  .walk-diagram.is-live .walk-track { height: calc(var(--steps) * 70vh + 100vh); }
 
   @media (max-width: 860px), (prefers-reduced-motion: reduce) {
     .walk.is-live .walk-track { height: auto; }

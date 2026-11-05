@@ -11,6 +11,33 @@ results:
   - "Structured Custom Post Types replaced manual listing entry across the platform"
   - "Improved data consistency between the external source and production content"
   - "Reduced editorial workload on listing management"
+walkthroughTitle: "Walkthrough: from external API to listing"
+walkthroughLede: "Scroll through the sync architecture. The diagram stays pinned and lights up the part each step explains."
+walkthrough:
+  - tag: "Source"
+    title: "Data WordPress doesn't understand"
+    body: "Prices, availability and property details live in an external real estate API. They change constantly and arrive in a schema I don't control."
+    focus: [0]
+  - tag: "Sync layer"
+    title: "Fetch, diff, write"
+    body: "A dedicated PHP sync layer fetches, diffs and writes. It only touches fields that changed instead of overwriting whole posts, so editorial overrides and SEO metadata survive every run. API client, mapping and write layers are separate classes."
+    focus: [1]
+  - tag: "Reconciliation"
+    title: "The hard part: matching"
+    body: "Properties can be renamed, re-listed under a new ID or temporarily removed upstream. Matching on a stable external identifier, not title or slug, makes reconciliation deterministic and prevents duplicates and orphaned posts."
+    focus: [1]
+  - tag: "WordPress"
+    title: "Structured Custom Post Types"
+    body: "Listings live as Custom Post Types with structured fields mapped to the external schema. WP REST API endpoints expose the synced data to other internal tools."
+    focus: [2]
+  - tag: "Database"
+    title: "Indexed for fast matching"
+    body: "MySQL indexes on the fields used for matching keep diffing fast as the listing count grows."
+    focus: [3]
+  - tag: "Failure path"
+    title: "Retry, never partially apply"
+    body: "A failed run logs and retries instead of applying changes halfway, so the site is never left inconsistent. Runs are batched, rate-limited and scheduled for low-traffic windows."
+    focus: [4]
 ---
 
 ## Overview

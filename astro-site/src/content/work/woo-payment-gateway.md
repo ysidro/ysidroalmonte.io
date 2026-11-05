@@ -11,6 +11,29 @@ results:
   - "Checkout supports a payment processor with no official WooCommerce gateway"
   - "Transaction workflow validated against the processor's sandbox and production environments"
   - "Server-confirmed payment states replace trust in client-side redirects"
+walkthroughTitle: "Walkthrough: how a payment becomes a paid order"
+walkthroughLede: "Scroll through the payment flow. The diagram stays pinned and lights up the part each step explains."
+walkthrough:
+  - tag: "Checkout"
+    title: "Collect and validate"
+    body: "The gateway extends WC_Payment_Gateway and hooks into checkout. Custom fields are validated in JavaScript and always re-validated on the server, never trusting the client."
+    focus: [0]
+  - tag: "Processor"
+    title: "A processor WooCommerce doesn't support"
+    body: "A processor common in the Dominican Republic with its own transaction lifecycle, validation rules and webhook-based confirmation, and no existing WooCommerce plugin."
+    focus: [1]
+  - tag: "The trap"
+    title: "Never trust the redirect"
+    body: "Marking an order paid because the customer reached the thank-you page would be forgeable. The redirect response alone is never trusted."
+    focus: [4]
+  - tag: "Webhook"
+    title: "Server-to-server confirmation"
+    body: "A webhook endpoint verifies the processor's signature before touching any order, and handles retried callbacks idempotently so nothing is processed twice."
+    focus: [2]
+  - tag: "Order status"
+    title: "Paid, pending or declined"
+    body: "Order status changes only from the verified webhook. Failed and pending stay distinct states, so support can tell declined from awaiting confirmation."
+    focus: [3]
 ---
 
 ## Overview

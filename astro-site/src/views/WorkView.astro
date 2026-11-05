@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StickyList from '../components/StickyList.astro';
 import StickyProjects from '../components/StickyProjects.astro';
 import { moreProjects as moreEn } from '../data/site';
 import { moreProjects as moreEs } from '../data/site.es';
@@ -41,38 +42,20 @@ const t = lang === 'es'
 <Layout title={t.title} description={t.description} path={`${p}/work/`} lang={lang}>
   <Header lang={lang} />
   <main>
-    <div class="wrap page-head">
-      <h1>{t.h1}</h1>
-      <p class="lede">{t.lede}</p>
-    </div>
 
     <section class="wrap section" aria-label={t.h1}>
-      <ol class="index">
-        {caseStudies.map((c, i) => (
-          <li class="index-row">
-            <span class="no">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3>{c.data.name}</h3>
-              <p>{c.data.summary}</p>
-              <p class="role">{c.data.role}</p>
-            </div>
-            <ul class="tokens">{c.data.stack.map((s) => <li>{s}</li>)}</ul>
-            <div class="row-links">
-              <a class="link" href={`${p}/work/${c.id}/`}>{t.read}</a>
-              {c.data.githubUrl && <a class="link" href={c.data.githubUrl} target="_blank" rel="noopener">GitHub</a>}
-              {c.data.liveUrl && <a class="link" href={c.data.liveUrl} target="_blank" rel="noopener">{t.live}</a>}
-            </div>
-          </li>
-        ))}
-      </ol>
+      <StickyList label={t.h1} level={1} title={t.h1} lead={t.lede} items={caseStudies.map((c) => ({
+        title: c.data.name, kicker: c.data.role, body: c.data.summary, tags: c.data.stack,
+        links: [
+          { href: `${p}/work/${c.id}/`, label: t.read },
+          ...(c.data.githubUrl ? [{ href: c.data.githubUrl, label: 'GitHub', external: true }] : []),
+          ...(c.data.liveUrl ? [{ href: c.data.liveUrl, label: t.live, external: true }] : []),
+        ],
+      }))} />
     </section>
 
     <section class="wrap section">
-      <div class="section-head">
-        <h2>{t.moreTitle}</h2>
-        <p>{t.moreLead}</p>
-      </div>
-      <StickyProjects items={more.map((m) => ({ name: m.name, category: m.category, description: m.description, tags: m.tags, url: m.url, image: m.image }))} visit={t.visitSite} />
+      <StickyProjects title={t.moreTitle} lead={t.moreLead} items={more.map((m) => ({ name: m.name, category: m.category, description: m.description, tags: m.tags, url: m.url, image: m.image, fullpage: (m as { fullpage?: string }).fullpage }))} visit={t.visitSite} lang={lang} />
     </section>
   </main>
   <Footer lang={lang} />

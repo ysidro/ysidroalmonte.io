@@ -15,7 +15,7 @@ const workSchema = z.object({
   walkthroughTitle: z.string().optional(),
   walkthroughLede: z.string().optional(),
   walkthrough: z
-    .array(z.object({ tag: z.string(), title: z.string(), body: z.string(), image: z.string(), alt: z.string() }))
+    .array(z.object({ tag: z.string(), title: z.string(), body: z.string(), image: z.string().optional(), alt: z.string().optional(), focus: z.array(z.number()).default([]) }))
     .default([]),
 });
 

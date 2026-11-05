@@ -11,6 +11,29 @@ results:
   - "El checkout soporta un procesador de pagos sin pasarela oficial de WooCommerce"
   - "Flujo de transacciones validado contra los entornos sandbox y producción del procesador"
   - "Los estados de pago confirmados por el servidor sustituyen la confianza en redirecciones del cliente"
+walkthroughTitle: "Recorrido: cómo un pago se convierte en un pedido pagado"
+walkthroughLede: "Recorre el flujo de pago. El diagrama queda fijo e ilumina la parte que explica cada paso."
+walkthrough:
+  - tag: "Checkout"
+    title: "Recolectar y validar"
+    body: "La pasarela extiende WC_Payment_Gateway y se engancha al checkout. Los campos personalizados se validan en JavaScript y siempre se revalidan en el servidor, sin confiar en el cliente."
+    focus: [0]
+  - tag: "Procesador"
+    title: "Un procesador que WooCommerce no soporta"
+    body: "Un procesador común en República Dominicana con su propio ciclo de transacción, reglas de validación y confirmación por webhook, y sin plugin existente para WooCommerce."
+    focus: [1]
+  - tag: "La trampa"
+    title: "Nunca confiar en la redirección"
+    body: "Marcar un pedido como pagado porque el cliente llegó a la página de agradecimiento sería falsificable. La respuesta de redirección por sí sola nunca es confiable."
+    focus: [4]
+  - tag: "Webhook"
+    title: "Confirmación servidor a servidor"
+    body: "Un endpoint de webhook verifica la firma del procesador antes de tocar cualquier pedido, y maneja callbacks reintentados de forma idempotente para que nada se procese dos veces."
+    focus: [2]
+  - tag: "Estado del pedido"
+    title: "Pagado, pendiente o rechazado"
+    body: "El estado del pedido cambia solo desde el webhook verificado. Fallido y pendiente son estados distintos, así soporte distingue rechazado de en espera de confirmación."
+    focus: [3]
 ---
 
 ## Resumen

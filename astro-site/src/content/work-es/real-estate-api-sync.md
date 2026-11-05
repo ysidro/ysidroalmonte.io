@@ -11,6 +11,33 @@ results:
   - "Custom Post Types estructurados reemplazaron la entrada manual de listados en toda la plataforma"
   - "Mejoró la consistencia de datos entre la fuente externa y el contenido en producción"
   - "Redujo la carga de trabajo editorial en la gestión de listados"
+walkthroughTitle: "Recorrido: de la API externa al listado"
+walkthroughLede: "Recorre la arquitectura de sincronización. El diagrama queda fijo e ilumina la parte que explica cada paso."
+walkthrough:
+  - tag: "Origen"
+    title: "Datos que WordPress no entiende"
+    body: "Precios, disponibilidad y detalles de propiedades viven en una API inmobiliaria externa. Cambian constantemente y llegan en un esquema que no controlo."
+    focus: [0]
+  - tag: "Capa de sincronización"
+    title: "Obtener, comparar, escribir"
+    body: "Una capa de sincronización en PHP obtiene, compara y escribe. Solo toca los campos que cambiaron en lugar de sobrescribir posts completos, así los ajustes editoriales y el SEO sobreviven a cada ejecución. Cliente de API, mapeo y escritura son clases separadas."
+    focus: [1]
+  - tag: "Reconciliación"
+    title: "Lo difícil: emparejar"
+    body: "Las propiedades pueden renombrarse, republicarse con otro ID o retirarse temporalmente. Emparejar por un identificador externo estable, no por título o slug, hace la reconciliación determinística y evita duplicados y posts huérfanos."
+    focus: [1]
+  - tag: "WordPress"
+    title: "Custom Post Types estructurados"
+    body: "Los listados viven como Custom Post Types con campos estructurados mapeados al esquema externo. Endpoints de la WP REST API exponen los datos sincronizados a otras herramientas internas."
+    focus: [2]
+  - tag: "Base de datos"
+    title: "Indexada para emparejar rápido"
+    body: "Los índices MySQL en los campos usados para emparejar mantienen rápida la comparación a medida que crece el número de listados."
+    focus: [3]
+  - tag: "Ruta de fallo"
+    title: "Reintentar, nunca aplicar a medias"
+    body: "Una ejecución fallida registra y reintenta en vez de aplicar cambios a medias, así el sitio nunca queda inconsistente. Las ejecuciones van en lotes, con límite de tasa y en ventanas de poco tráfico."
+    focus: [4]
 ---
 
 ## Resumen

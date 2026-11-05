@@ -14,7 +14,7 @@ interface Props {
   githubUrl?: string;
   liveUrl?: string;
   heroImage?: string;
-  walkthrough?: { tag: string; title: string; body: string; image: string; alt: string }[];
+  walkthrough?: { tag: string; title: string; body: string; image?: string; alt?: string; focus?: number[] }[];
   walkthroughTitle?: string;
   walkthroughLede?: string;
   slug?: string;
@@ -55,8 +55,8 @@ const t = lang === 'es'
       </dl>
     </header>
 
-    {diagramName && <Diagram name={diagramName} />}
-    {walkthrough.length > 0 && <StickyWalkthrough title={walkthroughTitle} lede={walkthroughLede} steps={walkthrough} lang={lang} />}
+    {diagramName && walkthrough.length === 0 && <Diagram name={diagramName} />}
+    {walkthrough.length > 0 && <StickyWalkthrough title={walkthroughTitle} lede={walkthroughLede} steps={walkthrough} diagram={diagramName} lang={lang} />}
     {!diagramName && walkthrough.length === 0 && photo && (
       <figure class="figure"><img src={photo} alt={`${name}`} width="1440" height="900" loading="eager" /></figure>
     )}

@@ -179,6 +179,7 @@ export const moreProjects = [
     "Headless WordPress and Gatsby implementation where WordPress manages structured content through WPGraphQL and Gatsby generates optimized static pages.",
   url: "https://chevrolet.com.do/",
   image: "/images/work/legacy/chevrolet-w900-h720.png",
+  fullpage: "/images/work/fullpage/chevrolet.jpg",
 },
   {
   name: "Suzuki.com.do",
@@ -188,6 +189,7 @@ export const moreProjects = [
     "Headless Gatsby and WordPress implementation with ACF-powered vehicle data and automated deployment workflows triggered by CMS content updates.",
   url: "https://suzuki.com.do/",
   image: "/images/work/legacy/suzuki-w900-h720.png",
+  fullpage: "/images/work/fullpage/suzuki.jpg",
 },
   {
   name: "CoachCarolinTaveras.com",
@@ -197,6 +199,7 @@ export const moreProjects = [
     "WooCommerce-powered coaching platform supporting session packages, digital products, and booking workflows with Calendly integration.",
   url: "https://coachcarolintaveras.com",
   image: "/images/work/legacy/coachcarolin.png",
+  fullpage: "/images/work/fullpage/coachcarolin.jpg",
 },
  {
   name: "Argos.com.do",
@@ -206,6 +209,7 @@ export const moreProjects = [
     "Custom WordPress theme with ACF flexible content fields, giving the internal team structured control over content while preserving the approved visual system.",
   url: "https://argos.com.do/",
   image: "/images/work/legacy/argos.jpg",
+  fullpage: "/images/work/fullpage/argos.jpg",
 },
   {
     name: "Seer.bio",
@@ -215,6 +219,7 @@ export const moreProjects = [
       "Custom WordPress theme and ACF architecture for a proteomics biotech company's corporate marketing site.",
     url: "https://seer.bio/",
     image: "/images/work/live/seer-bio.png",
+    fullpage: "/images/work/fullpage/seer.jpg",
   },
   {
   name: "M Voy — Marketing Site",
@@ -224,6 +229,7 @@ export const moreProjects = [
     "Product marketing site for the M Voy mobility platform, built with Next.js and React to communicate app functionality and drive App Store and Google Play downloads.",
   url: "https://mvoyrd.com/",
   image: "/images/work/live/mvoyrd.png",
+  fullpage: "/images/work/fullpage/mvoy.jpg",
 },
   {
   name: "GetWiredForPurpose.com",

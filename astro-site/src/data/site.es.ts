@@ -167,6 +167,7 @@ export const moreProjects = [
       "Implementación headless de WordPress y Gatsby, donde WordPress gestiona el contenido estructurado a través de WPGraphQL y Gatsby genera páginas estáticas optimizadas.",
     url: "https://chevrolet.com.do/",
     image: "/images/work/legacy/chevrolet-w900-h720.png",
+    fullpage: "/images/work/fullpage/chevrolet.jpg",
   },
   {
     name: "Suzuki.com.do",
@@ -176,6 +177,7 @@ export const moreProjects = [
       "Implementación headless de Gatsby y WordPress con datos de vehículos gestionados vía ACF y despliegues automáticos activados por cambios de contenido en el CMS.",
     url: "https://suzuki.com.do/",
     image: "/images/work/legacy/suzuki-w900-h720.png",
+    fullpage: "/images/work/fullpage/suzuki.jpg",
   },
   {
     name: "CoachCarolinTaveras.com",
@@ -185,6 +187,7 @@ export const moreProjects = [
       "Plataforma de coaching impulsada por WooCommerce, con paquetes de sesiones, productos digitales y flujos de reserva integrados con Calendly.",
     url: "https://coachcarolintaveras.com",
     image: "/images/work/legacy/coachcarolin.png",
+    fullpage: "/images/work/fullpage/coachcarolin.jpg",
   },
   {
     name: "Argos.com.do",
@@ -194,6 +197,7 @@ export const moreProjects = [
       "Tema WordPress a medida con campos flexibles de ACF, dando al equipo interno control estructurado sobre el contenido sin perder el sistema visual aprobado.",
     url: "https://argos.com.do/",
     image: "/images/work/legacy/argos.jpg",
+    fullpage: "/images/work/fullpage/argos.jpg",
   },
   {
     name: "Seer.bio",
@@ -203,6 +207,7 @@ export const moreProjects = [
       "Tema WordPress y arquitectura ACF a medida para el sitio de marketing corporativo de una empresa de proteómica.",
     url: "https://seer.bio/",
     image: "/images/work/live/seer-bio.png",
+    fullpage: "/images/work/fullpage/seer.jpg",
   },
   {
     name: "M Voy — Sitio de marketing",
@@ -212,6 +217,7 @@ export const moreProjects = [
       "Sitio de marketing de producto para la plataforma de movilidad M Voy, construido con Next.js y React para comunicar la funcionalidad de la app e impulsar descargas en App Store y Google Play.",
     url: "https://mvoyrd.com/",
     image: "/images/work/live/mvoyrd.png",
+    fullpage: "/images/work/fullpage/mvoy.jpg",
   },
   {
     name: "GetWiredForPurpose.com",

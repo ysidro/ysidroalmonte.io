@@ -1,0 +1,106 @@
+---
+// Horizontal timeline driven by vertical scroll: the stage stays pinned and the
+// track of entries slides sideways along a progress line. Stacked list on small
+// screens, reduced motion, or no JS.
+interface Item { period: string; title: string; kicker?: string; body: string }
+interface Props { items: Item[]; label: string; title?: string; lead?: string }
+const { items, label, title, lead } = Astro.props;
+---
+
+<div class="tl" data-tl>
+  <div class="tl-track">
+    <div class="tl-stage">
+      {title && (
+        <header class="pin-head">
+          <h2>{title}</h2>
+          {lead && <p>{lead}</p>}
+        </header>
+      )}
+      <ol class="tl-row" data-tl-row aria-label={label}>
+        {items.map((it) => (
+          <li class="tl-item" data-tl-item>
+            <span class="tl-period">{it.period}</span>
+            <span class="tl-dot" aria-hidden="true"></span>
+            <h3>{it.title}</h3>
+            {it.kicker && <p class="tl-kicker">{it.kicker}</p>}
+            <p class="tl-body">{it.body}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="tl-line" aria-hidden="true"><i data-tl-fill></i></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tl]').forEach((root) => {
+    const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
+    const track = root.querySelector<HTMLElement>('.tl-track')!;
+    const stage = root.querySelector<HTMLElement>('.tl-stage')!;
+    const row = root.querySelector<HTMLElement>('[data-tl-row]')!;
+    const items = [...root.querySelectorAll<HTMLElement>('[data-tl-item]')];
+    const fill = root.querySelector<HTMLElement>('[data-tl-fill]')!;
+    let raf = 0, on = false, max = 0;
+
+    const measure = () => {
+      max = Math.max(0, row.scrollWidth - stage.clientWidth);
+      // vertical distance = horizontal distance, so the sideways speed feels natural
+      track.style.height = `${max + window.innerHeight}px`;
+    };
+    const update = () => {
+      raf = 0;
+      const r = track.getBoundingClientRect();
+      const span = r.height - window.innerHeight;
+      const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+      row.style.transform = `translate3d(${(-p * max).toFixed(1)}px, 0, 0)`;
+      fill.style.transform = `scaleX(${p.toFixed(4)})`;
+      const edge = stage.getBoundingClientRect().left + stage.clientWidth * 0.7;
+      items.forEach((el) => el.classList.toggle('is-on', el.getBoundingClientRect().left <= edge));
+    };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const onResize = () => { measure(); queue(); };
+    const enable = () => {
+      if (on) return; on = true; root.classList.add('is-live');
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', onResize);
+      measure(); update();
+    };
+    const disable = () => {
+      if (!on) return; on = false; root.classList.remove('is-live');
+      window.removeEventListener('scroll', queue); window.removeEventListener('resize', onResize);
+      row.style.transform = ''; track.style.height = ''; items.forEach((el) => el.classList.remove('is-on'));
+    };
+    const sync = () => (mq.matches ? enable() : disable());
+    mq.addEventListener('change', sync);
+    sync();
+  });
+</script>
+
+<style is:global>
+  /* Default (stacked): vertical list. */
+  .tl-row { display: grid; gap: var(--space-lg); }
+  .tl-line, .tl-dot { display: none; }
+  .tl-period { color: var(--color-muted); font: 500 var(--text-sm) var(--font-mono); }
+  .tl-item h3 { font-size: var(--text-lg); margin-top: var(--space-3xs); }
+  .tl-kicker { margin-top: var(--space-3xs); color: var(--color-muted); font-size: var(--text-sm); }
+  .tl-body { margin-top: var(--space-xs); max-width: 52ch; }
+
+  /* Live: pinned stage, entries slide sideways along a progress line. */
+  .tl.is-live .tl-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-start; gap: var(--space-xl); padding-top: 5rem; }
+  .tl.is-live .tl-row { display: flex; gap: var(--space-2xl); width: max-content; will-change: transform; padding-right: var(--space-xl); }
+  .tl.is-live .tl-item { width: min(26rem, 80vw); flex: none; opacity: 0.35; transition: opacity .4s ease; }
+  .tl.is-live .tl-item.is-on { opacity: 1; }
+  .tl.is-live .tl-period { display: block; font: 700 clamp(2.5rem, 5vw, 4rem) / 1 var(--font-display); letter-spacing: -0.03em; color: var(--color-accent); margin-bottom: var(--space-lg); }
+  .tl.is-live .tl-dot { display: block; position: absolute; left: 0; top: calc(100% - 0px); }
+  .tl.is-live .tl-item h3 { font-size: var(--text-xl); }
+  /* the line sits under the periods; dots are drawn on it via the item's ::before */
+  .tl.is-live .tl-item { position: relative; padding-top: var(--space-lg); }
+  .tl.is-live .tl-item::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: var(--color-muted); opacity: 0.3; }
+  .tl.is-live .tl-item::after { content: ""; position: absolute; left: 0; top: -5px; width: 12px; height: 12px; border-radius: 50%; background: var(--color-paper); box-shadow: 0 0 0 2px var(--color-muted); transition: background .3s, box-shadow .3s; }
+  .tl.is-live .tl-item.is-on::after { background: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent); }
+  .tl.is-live .tl-item.is-on::before { background: var(--color-accent); opacity: 1; }
+  .tl.is-live .tl-dot { display: none; }
+  .tl.is-live .tl-line { display: block; position: relative; left: 0; right: 0; height: 3px; background: var(--color-muted); opacity: .25; }
+  .tl.is-live .tl-line i { display: block; height: 100%; background: var(--color-accent); transform-origin: left; transform: scaleX(0); }
+  @media (max-width: 860px), (prefers-reduced-motion: reduce) { .tl.is-live { display: block; } }
+</style>

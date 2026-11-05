@@ -281,6 +281,27 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .shot img { transition: transform 600ms var(--ease-out); }
 .shot:hover img { transform: scale(1.03); }
 
+/* Project index: scroll-driven (pure CSS). As a row enters the viewport its number
+   counts up from 00 and its text rises in, staggered. Browsers without
+   animation-timeline just show the static rows. */
+@property --num { syntax: "<integer>"; initial-value: 0; inherits: false; }
+@keyframes index-count { from { --num: 0; } to { --num: var(--n, 0); } }
+@keyframes index-rise { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .index-row:not(.has-thumb) .no {
+      font-size: 0; counter-reset: num var(--num);
+      animation: index-count linear both; animation-timeline: view(); animation-range: cover 0% cover 30%;
+    }
+    .index-row:not(.has-thumb) .no::before { content: counter(num, decimal-leading-zero); font-size: var(--text-md); }
+    .index-row:not(.has-thumb) > :not(.no) {
+      animation: index-rise ease-out both; animation-timeline: view(); animation-range: cover 2% cover 24%;
+    }
+    .index-row:not(.has-thumb) > .tokens { animation-range: cover 6% cover 28%; }
+    .index-row:not(.has-thumb) > .row-links { animation-range: cover 10% cover 32%; }
+  }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .site-nav { display: none; }
@@ -318,3 +339,4 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .index-row:hover h3, .shot:hover img { transform: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+.more-work { margin-top: var(--space-lg); }

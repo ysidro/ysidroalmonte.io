@@ -1,0 +1,123 @@
+---
+// Text-only pinned list (the Beacon "at work" pattern, without the images).
+// A stage stays pinned while scrolling: a large ghost number, an "NN / NN" tag,
+// the active item's copy and progress segments. Stacked list on small screens,
+// reduced motion, or no JS.
+interface Link { href: string; label: string; external?: boolean }
+interface Item { tag?: string; title: string; kicker?: string; body: string; tags?: string[]; links?: Link[] }
+interface Props { items: Item[]; label: string; title?: string; lead?: string; level?: 1 | 2 | 3 }
+const { items, label, title, lead, level = 2 } = Astro.props;
+const H = `h${level}` as 'h1' | 'h2' | 'h3';
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<div class="sl" data-sl style={`--sl-n:${items.length}`}>
+  <div class="sl-track">
+    <div class="sl-stage">
+      {title && (
+        <header class="pin-head">
+          <H>{title}</H>
+          {lead && <p>{lead}</p>}
+        </header>
+      )}
+      <div class="sl-main">
+      <div class="sl-side" aria-hidden="true">
+        <span class="sl-ghost" data-sl-ghost>01</span>
+        <div class="sl-bar">{items.map(() => <i />)}</div>
+      </div>
+      <ol class="sl-items" aria-label={label}>
+        {items.map((it, i) => (
+          <li class={`sl-item${i === 0 ? ' is-active' : ''}`} data-sl-item>
+            <p class="sl-tag"><span>{pad(i + 1)} / {pad(items.length)}</span>{it.tag && <span class="sl-period">{it.tag}</span>}</p>
+            <h3>{it.title}</h3>
+            {it.kicker && <p class="sl-kicker">{it.kicker}</p>}
+            <p class="sl-body">{it.body}</p>
+            {it.tags && <ul class="tokens">{it.tags.map((s) => <li>{s}</li>)}</ul>}
+            {it.links && it.links.length > 0 && (
+              <div class="row-links">
+                {it.links.map((l) => <a class="link" href={l.href} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>{l.label}</a>)}
+              </div>
+            )}
+          </li>
+        ))}
+      </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-sl]').forEach((root) => {
+    const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
+    const track = root.querySelector<HTMLElement>('.sl-track')!;
+    const items = [...root.querySelectorAll<HTMLElement>('[data-sl-item]')];
+    const segs = [...root.querySelectorAll<HTMLElement>('.sl-bar i')];
+    const ghost = root.querySelector<HTMLElement>('[data-sl-ghost]')!;
+    const n = items.length;
+    let raf = 0, on = false, active = -1;
+
+    const update = () => {
+      raf = 0;
+      const r = track.getBoundingClientRect();
+      const span = r.height - window.innerHeight;
+      const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+      const idx = Math.min(n - 1, Math.floor(p * n));
+      if (idx === active) return;
+      active = idx;
+      items.forEach((el, i) => { el.classList.toggle('is-active', i === idx); el.classList.toggle('is-past', i < idx); });
+      segs.forEach((s, i) => s.classList.toggle('is-on', i <= idx));
+      ghost.textContent = String(idx + 1).padStart(2, '0');
+    };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const enable = () => {
+      if (on) return; on = true; root.classList.add('is-live');
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', queue);
+      active = -1; update();
+    };
+    const disable = () => {
+      if (!on) return; on = false; root.classList.remove('is-live');
+      window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue);
+      items.forEach((el) => el.classList.remove('is-active', 'is-past'));
+    };
+    const sync = () => (mq.matches ? enable() : disable());
+    mq.addEventListener('change', sync);
+    sync();
+  });
+</script>
+
+<style is:global>
+  .pin-head { margin-bottom: var(--space-lg); }
+  .pin-head h1 { font-size: clamp(2rem, 4vw, 3.25rem); max-width: 22ch; }
+  .pin-head h2, .pin-head h3 { font-size: var(--text-2xl); }
+  .pin-head p { color: var(--color-muted); max-width: 60ch; margin-top: var(--space-2xs); }
+  .sl.is-live .pin-head, .tl.is-live .pin-head { margin-bottom: 0; }
+  /* Default (stacked): plain list, ghost number and bar hidden. */
+  .sl-side { display: none; }
+  .sl-items { display: grid; gap: var(--space-xl); }
+  .sl-item h3 { font-size: var(--text-xl); margin: var(--space-2xs) 0; }
+  .sl-tag { display: flex; gap: var(--space-sm); font: 500 var(--text-xs) var(--font-mono); color: var(--color-muted); }
+  .sl-kicker { color: var(--color-muted); margin-bottom: var(--space-xs); }
+  .sl-body { max-width: 52ch; margin-bottom: var(--space-sm); }
+  .sl-item .tokens { margin-bottom: var(--space-sm); }
+
+  /* Live: pinned stage, one item visible at a time. */
+  .sl.is-live .sl-track { height: calc(var(--sl-n) * 70vh + 30vh); }
+  .sl.is-live .sl-stage {
+    position: sticky; top: 0; height: 100vh; padding-top: 5.5rem;
+    display: flex; flex-direction: column; justify-content: flex-start; gap: var(--space-xl);
+  }
+  .sl.is-live .sl-main { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-2xl); align-items: center; }
+  .sl.is-live .sl-side { display: flex; flex-direction: column; gap: var(--space-md); }
+  .sl.is-live .sl-ghost { font: 700 clamp(5rem, 12vw, 10rem) / 0.9 var(--font-display, var(--font-body)); color: var(--color-accent); opacity: 0.16; letter-spacing: -0.04em; }
+  .sl.is-live .sl-bar { display: flex; gap: var(--space-2xs); max-width: 18rem; }
+  .sl.is-live .sl-bar i { flex: 1; height: 3px; background: var(--color-muted); opacity: 0.3; border-radius: 2px; transition: opacity .4s, background .4s; }
+  .sl.is-live .sl-bar i.is-on { background: var(--color-accent); opacity: 1; }
+  .sl.is-live .sl-items { display: grid; gap: 0; }
+  .sl.is-live .sl-item { grid-area: 1 / 1; opacity: 0; transform: translateY(1.25rem); pointer-events: none; transition: opacity .5s ease, transform .5s ease; }
+  .sl.is-live .sl-item.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  .sl.is-live .sl-item.is-past { transform: translateY(-1.25rem); }
+  .sl.is-live .sl-item h3 { font-size: var(--text-2xl); }
+  .sl.is-live .sl-tag { margin-bottom: var(--space-xs); }
+  @media (max-width: 860px), (prefers-reduced-motion: reduce) { .sl.is-live { display: block; } }
+</style>
