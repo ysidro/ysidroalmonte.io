@@ -1,0 +1,159 @@
+---
+// Home hero. Desktop: a pinned stage whose video (portrait → push in over the
+// shoulder → laptop screen → black) is scrubbed by the scroll. The first frame
+// introduces the person (the page's only h1); the black end reveals the first
+// selected project, which is where "Selected work" begins. Small screens, reduced
+// motion, or no JS: the still portrait, the same intro text and the project as a
+// plain block — and the video file is never requested.
+interface Link { label: string; href: string; external?: boolean }
+interface Feature { label: string; name: string; body: string; image: string; imageAlt: string; cta: string; href: string }
+interface Props { name: string; role: string; phrase: string; links: Link[]; feature: Feature; alt: string; scroll: string }
+const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
+---
+
+<section class="intro" data-intro aria-label={name}>
+  <div class="intro-track">
+    <div class="intro-stage">
+      <img class="intro-poster" src="/video/portfolio-intro-poster.jpg" alt={alt} width="1920" height="1276" fetchpriority="high" decoding="async" />
+      <video class="intro-video" muted playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="/video/portfolio-intro.mp4" poster="/video/portfolio-intro-poster.jpg"></video>
+
+      <div class="intro-copy intro-a">
+        <h1 class="intro-name">{name}</h1>
+        <p class="intro-role">{role}</p>
+        <p class="intro-phrase">{phrase}</p>
+        <p class="intro-links">
+          {links.map((l, i) => (
+            <a class={i === 0 ? 'intro-cta' : 'link'} href={l.href} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>{l.label}</a>
+          ))}
+        </p>
+        <p class="intro-scroll" aria-hidden="true">{scroll} ↓</p>
+      </div>
+
+      <article class="intro-copy intro-c" id="featured">
+        <figure class="intro-shot"><img src={feature.image} alt={feature.imageAlt} width="1440" height="853" loading="lazy" decoding="async" /></figure>
+        <div class="intro-feature">
+          <p class="intro-label">{feature.label}</p>
+          <h2>{feature.name}</h2>
+          <p class="intro-body">{feature.body}</p>
+          <a class="intro-cta" href={feature.href}>{feature.cta}</a>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="intro-bridge" aria-hidden="true"></div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-intro]').forEach((root) => {
+    const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
+    const track = root.querySelector<HTMLElement>('.intro-track')!;
+    const video = root.querySelector<HTMLVideoElement>('.intro-video')!;
+    const clamp = (v: number) => Math.min(1, Math.max(0, v));
+    // fade in over [a, b], out over [c, d]
+    const win = (p: number, a: number, b: number, c: number, d: number) => clamp((p - a) / (b - a)) * (1 - clamp((p - c) / (d - c)));
+    let on = false, raf = 0, ready = false, target = 0, cur = 0;
+
+    const progress = () => {
+      const r = track.getBoundingClientRect();
+      const span = r.height - window.innerHeight;
+      return span > 0 ? clamp(-r.top / span) : 0;
+    };
+
+    const tick = () => {
+      raf = 0;
+      const p = progress();
+      const a = win(p, -1, 0, 0.14, 0.26);
+      const c = win(p, 0.84, 0.94, 2, 3);
+      root.style.setProperty('--a', a.toFixed(3));
+      root.style.setProperty('--c', c.toFixed(3));
+      // faded-out copy must not stay clickable or focusable
+      root.classList.toggle('a-off', a < 0.04);
+      root.classList.toggle('c-off', c < 0.04);
+      if (ready && video.duration) {
+        target = p * video.duration;
+        cur += (target - cur) * 0.2;
+        if (Math.abs(target - cur) < 0.004) cur = target;
+        if (!video.seeking && Math.abs(video.currentTime - cur) > 0.002) video.currentTime = cur;
+        if (cur !== target) raf = requestAnimationFrame(tick);
+      }
+    };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(tick); };
+
+    // "View selected work": while pinned, jump to the end of the track where the project is revealed.
+    const jump = (e: Event) => {
+      if (!on) return;
+      e.preventDefault();
+      const end = track.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
+      window.scrollTo({ top: end, behavior: 'smooth' });
+    };
+    root.querySelectorAll<HTMLAnchorElement>('a[href="#featured"]').forEach((l) => l.addEventListener('click', jump));
+
+    const enable = () => {
+      if (on) return; on = true; root.classList.add('is-live');
+      if (!video.getAttribute('src')) {
+        video.src = video.dataset.src!;
+        video.addEventListener('loadeddata', () => { ready = true; root.classList.add('is-ready'); cur = 0; queue(); }, { once: true });
+        video.load();
+      } else { ready = true; }
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', queue);
+      queue();
+    };
+    const disable = () => {
+      if (!on) return; on = false; root.classList.remove('is-live', 'a-off', 'c-off');
+      window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue);
+      ['--a', '--c'].forEach((k) => root.style.removeProperty(k));
+    };
+    const sync = () => (mq.matches ? enable() : disable());
+    mq.addEventListener('change', sync);
+    sync();
+  });
+</script>
+
+<style is:global>
+  /* Default (still): the portrait, the intro text and the project as plain blocks. Nothing else loads. */
+  .intro { --intro-ink: oklch(21% 0.020 215); --intro-muted: oklch(38% 0.020 215); --intro-light: oklch(97.5% 0.006 195); }
+  .intro-stage { position: relative; }
+  .intro-poster { display: block; width: 100%; height: auto; max-height: 70vh; object-fit: cover; object-position: 36% center; }
+  .intro-video, .intro-scroll, .intro-bridge { display: none; }
+  .intro-copy { padding: var(--space-lg) var(--page-gutter) 0; }
+  .intro-name { font-size: var(--text-2xl); letter-spacing: -0.03em; }
+  .intro-role { color: var(--color-muted); font-size: var(--text-sm); margin-top: var(--space-3xs); }
+  .intro-phrase { margin-top: var(--space-sm); max-width: 52ch; font-size: var(--text-lg); }
+  .intro-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); margin-top: var(--space-md); }
+  .intro-cta { font-weight: 600; border-bottom: 2px solid var(--color-accent); padding-bottom: 2px; }
+  .intro-c { display: grid; gap: var(--space-md); padding-block: var(--space-xl) var(--space-lg); }
+  .intro-shot img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+  .intro-label { font: 500 var(--text-xs) var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); }
+  .intro-feature h2 { font-size: var(--text-2xl); margin: var(--space-2xs) 0; }
+  .intro-body { max-width: 52ch; color: var(--color-muted); margin-bottom: var(--space-sm); }
+
+  /* Live: pinned, scrubbed. */
+  .intro.is-live .intro-track { height: 380vh; }
+  .intro.is-live .intro-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; background: #000; }
+  .intro.is-live .intro-poster, .intro.is-live .intro-video { position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; object-fit: cover; object-position: 38% center; }
+  .intro.is-live .intro-video { display: block; opacity: 0; transition: opacity 400ms var(--ease-out); }
+  .intro.is-live.is-ready .intro-video { opacity: 1; }
+  .intro.is-live .intro-copy { position: absolute; padding: 0; }
+  .intro.is-live.a-off .intro-a, .intro.is-live.c-off .intro-c { visibility: hidden; }
+
+  .intro.is-live .intro-a { right: 7vw; top: 22vh; width: max-content; max-width: min(34vw, 30rem); opacity: var(--a, 1); transform: translateY(calc((1 - var(--a, 1)) * -1.5rem)); }
+  .intro.is-live .intro-name { font-size: clamp(2.25rem, 4.2vw, 4rem); line-height: 1.02; color: var(--intro-ink); margin-left: -0.04em; }
+  .intro.is-live .intro-role { margin-top: var(--space-xs); font-size: var(--text-lg); color: var(--intro-muted); }
+  .intro.is-live .intro-phrase { margin-top: var(--space-sm); font-size: var(--text-base); color: var(--intro-ink); max-width: 32ch; }
+  .intro.is-live .intro-cta { color: var(--intro-ink); }
+  .intro.is-live .intro-cta:hover { color: var(--color-accent); }
+  .intro.is-live .intro-a .link { color: var(--intro-ink); }
+  .intro.is-live .intro-scroll { display: block; text-align: right; margin-top: var(--space-lg); font: 500 var(--text-xs) var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--intro-muted); }
+
+  /* Project reveal over the black end: the start of Selected work. */
+  .intro.is-live .intro-c { inset: 0; padding: 5.5rem 8vw 2rem; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--space-2xl); align-items: center; opacity: var(--c, 0); transform: translateY(calc((1 - var(--c, 0)) * 1.5rem)); }
+  .intro.is-live .intro-shot img { max-height: 62vh; object-fit: cover; object-position: top; }
+  .intro.is-live .intro-label { color: oklch(78% 0.01 195); }
+  .intro.is-live .intro-feature h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.04; letter-spacing: -0.03em; color: var(--intro-light); }
+  .intro.is-live .intro-body { color: oklch(84% 0.008 195); margin-bottom: var(--space-md); }
+  .intro.is-live .intro-c .intro-cta { color: var(--intro-light); font-size: var(--text-lg); }
+  .intro.is-live .intro-c .intro-cta:hover { color: var(--color-accent); }
+  .intro.is-live .intro-bridge { display: block; height: 14vh; margin-top: -1px; background: linear-gradient(#000, var(--color-paper)); }
+  @media (max-width: 860px), (prefers-reduced-motion: reduce) { .intro.is-live .intro-track { height: auto; } }
+</style>

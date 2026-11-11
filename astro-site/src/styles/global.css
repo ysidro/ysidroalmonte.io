@@ -125,6 +125,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .proof span { display: block; margin-top: var(--space-2xs); font-size: var(--text-sm); color: var(--color-muted); }
 
 /* ---------- Sections ---------- */
+/* Pinned-section headers (StickyList / StickyTimeline / StickyProjects): same title scale as every other section. */
+.pin-head { margin-bottom: var(--space-lg); }
+.pin-head h1 { font-size: clamp(2rem, 4vw, 3.25rem); max-width: 22ch; }
+.pin-head h2, .pin-head h3 { font-size: var(--text-display-s); }
+.pin-head p { color: var(--color-muted); max-width: 60ch; margin-top: var(--space-2xs); }
+.sl.is-live .pin-head, .tl.is-live .pin-head { margin-bottom: 0; }
+
 .section { padding-block: var(--space-2xl); }
 .section + .section { border-top: var(--rule-hair) solid var(--color-rule); }
 .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-lg); align-items: end; margin-bottom: var(--space-xl); }
@@ -216,7 +223,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .meta dd { margin: 0; }
 .figure { margin: var(--space-lg) 0 var(--space-xl); }
 .figure img { width: 100%; border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius); }
-.results { max-width: 65ch; margin-bottom: var(--space-xl); padding: var(--space-md); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius); background: var(--color-paper-2); }
+.results { max-width: 65ch; margin-bottom: var(--space-xl); padding: var(--space-md); border-radius: var(--radius); background: var(--color-paper-2); }
 .results h2 { font-size: var(--text-lg); margin-bottom: var(--space-xs); }
 .results li { padding: var(--space-2xs) 0; border-top: var(--rule-hair) solid var(--color-rule); font-size: var(--text-sm); }
 .results li:first-child { border-top: 0; }

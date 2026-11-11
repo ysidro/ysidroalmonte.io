@@ -172,6 +172,16 @@ export const experience = [
 // featured engineering projects above.
 export const moreProjects = [
   {
+  name: "AcrylicPhotoPrint.com",
+  category: "E-commerce / Custom Products",
+  tags: ["WooCommerce", "Timber", "Twig", "Svelte"],
+  description:
+    "Made-to-order photo-print storefront on WooCommerce with a custom upload pipeline, rebuilt on Timber, Twig and Svelte for a fast, maintainable frontend.",
+  url: "https://acrylicphotoprint.com",
+  image: "/images/work/acrylicphotoprint/home-hero.jpg",
+  fullpage: "/images/work/fullpage/acrylicphotoprint.jpg",
+},
+  {
   name: "Chevrolet.com.do",
   category: "Automotive / Headless CMS",
   tags: ["Gatsby.js", "WordPress", "GraphQL"],

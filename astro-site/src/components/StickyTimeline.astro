@@ -86,7 +86,7 @@ const { items, label, title, lead } = Astro.props;
   .tl-body { margin-top: var(--space-xs); max-width: 52ch; }
 
   /* Live: pinned stage, entries slide sideways along a progress line. */
-  .tl.is-live .tl-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-start; gap: var(--space-xl); padding-top: 5rem; }
+  .tl.is-live .tl-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: var(--space-xl); padding-block: 5rem 2rem; }
   .tl.is-live .tl-row { display: flex; gap: var(--space-2xl); width: max-content; will-change: transform; padding-right: var(--space-xl); }
   .tl.is-live .tl-item { width: min(26rem, 80vw); flex: none; opacity: 0.35; transition: opacity .4s ease; }
   .tl.is-live .tl-item.is-on { opacity: 1; }

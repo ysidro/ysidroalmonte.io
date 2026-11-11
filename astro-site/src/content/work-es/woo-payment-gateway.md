@@ -1,6 +1,6 @@
 ---
 name: "Woo Payment Gateway"
-summary: "Pasarela de pago a medida para WooCommerce, construida para el mercado de República Dominicana."
+summary: "Pasarela de pago a medida para WooCommerce, para un procesador común en República Dominicana que no tenía plugin ni integración confiable."
 role: "Ingeniero único — arquitectura, implementación y revisión de seguridad"
 stack: ["PHP", "WooCommerce", "JavaScript", "Payment APIs", "WordPress Hooks"]
 githubUrl: "https://github.com/ysidro/WooCommerce-CardNet-Payment-Gateway-Dominican-Republic-/blob/main/readme.md"

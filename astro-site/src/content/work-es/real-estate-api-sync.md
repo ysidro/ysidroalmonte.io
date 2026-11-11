@@ -1,6 +1,6 @@
 ---
 name: "Real Estate API Sync"
-summary: "Integración WordPress a medida que mantiene sincronizados los listados de propiedades desde APIs inmobiliarias externas."
+summary: "Integración WordPress que mantiene sincronizados los listados de propiedades desde APIs inmobiliarias externas, sin reingresar precios ni disponibilidad."
 role: "Ingeniero único — arquitectura, implementación y mantenimiento"
 stack: ["PHP", "WordPress", "WP REST API", "Custom Post Types", "MySQL"]
 githubUrl: "https://github.com/ysidro/real-estate-sync/tree/main"

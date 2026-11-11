@@ -1,6 +1,6 @@
 ---
 name: "Marketing Landing Page System"
-summary: "Sistema de componentes WordPress reutilizables para landing pages de campaña enfocadas en conversión."
+summary: "Sistema de componentes WordPress reutilizables para landing pages de campaña enfocadas en conversión, sin perder velocidad de carga ni consistencia de marca."
 role: "Ingeniero único — arquitectura de componentes y rendimiento"
 stack: ["WordPress", "PHP", "JavaScript", "ACF", "HTML5", "CSS3"]
 featured: true

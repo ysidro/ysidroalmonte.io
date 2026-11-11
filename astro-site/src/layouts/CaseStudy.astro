@@ -55,6 +55,13 @@ const t = lang === 'es'
       </dl>
     </header>
 
+    {results.length > 0 && (
+      <aside class="results">
+        <h2>{t.results}</h2>
+        <ul>{results.map((r) => <li>{r}</li>)}</ul>
+      </aside>
+    )}
+
     {diagramName && walkthrough.length === 0 && <Diagram name={diagramName} />}
     {walkthrough.length > 0 && <StickyWalkthrough title={walkthroughTitle} lede={walkthroughLede} steps={walkthrough} diagram={diagramName} lang={lang} />}
     {!diagramName && walkthrough.length === 0 && photo && (
@@ -64,13 +71,6 @@ const t = lang === 'es'
     <article class="prose-case">
       <slot />
     </article>
-
-    {results.length > 0 && (
-      <aside class="results">
-        <h2>{t.results}</h2>
-        <ul>{results.map((r) => <li>{r}</li>)}</ul>
-      </aside>
-    )}
 
     <section class="section" style="border-top: var(--rule-hair) solid var(--color-rule)">
       <div class="cta-band">

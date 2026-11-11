@@ -3,7 +3,7 @@
 // the left; a strip of full-page captures slides through it. While a project's
 // block crosses the viewport its page scrolls top to bottom inside the frame
 // and the description stays put, then the strip glides to the next project
-// across a visible gap. Stacked (poster + text) on small screens, reduced
+// across a visible gap. Nothing moves until the section is pinned at the top. Stacked (poster + text) on small screens, reduced
 // motion, or no JS.
 interface Item { name: string; category: string; description: string; tags: string[]; url?: string; image: string; fullpage?: string }
 interface Props { items: Item[]; visit: string; lang?: 'en' | 'es'; title?: string; lead?: string }
@@ -73,8 +73,10 @@ const of = lang === 'es' ? 'de' : 'of';
     const update = () => {
       raf = 0;
       if (!from.length) measure();
-      const c = window.innerHeight / 2;
       const rects = items.map((el) => el.getBoundingClientRect());
+      // Reference line = the viewport top once the section is pinned, so the pages start moving
+      // only after the section reaches the top (before that the line follows the first block: progress 0).
+      const c = Math.max(0, rects[0].top);
       let idx = rects.findIndex((r) => c < r.bottom);
       if (idx < 0) idx = n - 1;
       const r = rects[idx];
@@ -131,7 +133,7 @@ const of = lang === 'es' ? 'de' : 'of';
   .proj.is-live .proj-strip { display: flex; flex-direction: column; gap: var(--space-2xl); will-change: transform; }
   .proj.is-live .proj-strip img { width: 100%; height: auto; display: block; border-radius: var(--radius); flex: none; }
   .proj.is-live .proj-cap { font: 500 var(--text-xs) var(--font-mono); color: var(--color-muted); }
-  .proj.is-live .proj-list { gap: 0; grid-column: 2; grid-row: 1; }
+  .proj.is-live .proj-list { gap: 0; grid-column: 2; grid-row: 1; padding-bottom: 50vh; }
   .proj.is-live .proj-item { min-height: 120vh; }
   .proj.is-live .proj-body { position: sticky; top: calc(50vh - 9rem); }
   .proj.is-live .proj-inline { display: none; }

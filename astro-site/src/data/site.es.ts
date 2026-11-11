@@ -160,6 +160,16 @@ export const experience = [
 // Secondary client work — mirrors moreProjects in site.ts.
 export const moreProjects = [
   {
+    name: "AcrylicPhotoPrint.com",
+    category: "E-commerce / Productos personalizados",
+    tags: ["WooCommerce", "Timber", "Twig", "Svelte"],
+    description:
+      "Tienda de impresiones fotográficas hechas a pedido sobre WooCommerce, con un pipeline de subida a medida, reconstruida con Timber, Twig y Svelte para un frontend rápido y mantenible.",
+    url: "https://acrylicphotoprint.com",
+    image: "/images/work/acrylicphotoprint/home-hero.jpg",
+    fullpage: "/images/work/fullpage/acrylicphotoprint.jpg",
+  },
+  {
     name: "Chevrolet.com.do",
     category: "Automotriz / Headless CMS",
     tags: ["Gatsby.js", "WordPress", "GraphQL"],

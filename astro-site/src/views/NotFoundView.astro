@@ -11,7 +11,7 @@ const t = lang === 'es'
   : { title: 'Page Not Found — Ysidro Almonte', description: 'This page doesn’t exist.', h1: 'Page not found', text: 'The page you’re looking for doesn’t exist or has moved.', back: 'Back to home' };
 ---
 
-<Layout title={t.title} description={t.description} path={`${p}/404/`} lang={lang}>
+<Layout title={t.title} description={t.description} path={`${p}/404/`} lang={lang} noindex>
   <Header lang={lang} />
   <main class="wrap notfound">
     <p class="label">404</p>

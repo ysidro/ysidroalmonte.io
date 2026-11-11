@@ -1,6 +1,6 @@
 ---
 name: "Marketing Landing Page System"
-summary: "A reusable WordPress component system for conversion-focused campaign landing pages."
+summary: "A reusable WordPress component system for conversion-focused campaign landing pages, built to ship fast without losing load speed or brand consistency."
 role: "Sole engineer — component architecture and performance"
 stack: ["WordPress", "PHP", "JavaScript", "ACF", "HTML5", "CSS3"]
 featured: true

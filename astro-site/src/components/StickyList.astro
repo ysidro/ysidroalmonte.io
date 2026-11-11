@@ -87,11 +87,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
 </script>
 
 <style is:global>
-  .pin-head { margin-bottom: var(--space-lg); }
-  .pin-head h1 { font-size: clamp(2rem, 4vw, 3.25rem); max-width: 22ch; }
-  .pin-head h2, .pin-head h3 { font-size: var(--text-2xl); }
-  .pin-head p { color: var(--color-muted); max-width: 60ch; margin-top: var(--space-2xs); }
-  .sl.is-live .pin-head, .tl.is-live .pin-head { margin-bottom: 0; }
   /* Default (stacked): plain list, ghost number and bar hidden. */
   .sl-side { display: none; }
   .sl-items { display: grid; gap: var(--space-xl); }
@@ -104,8 +99,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
   /* Live: pinned stage, one item visible at a time. */
   .sl.is-live .sl-track { height: calc(var(--sl-n) * 70vh + 30vh); }
   .sl.is-live .sl-stage {
-    position: sticky; top: 0; height: 100vh; padding-top: 5.5rem;
-    display: flex; flex-direction: column; justify-content: flex-start; gap: var(--space-xl);
+    position: sticky; top: 0; height: 100vh; padding-block: 5.5rem 2rem;
+    display: flex; flex-direction: column; justify-content: center; gap: var(--space-xl);
   }
   .sl.is-live .sl-main { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-2xl); align-items: center; }
   .sl.is-live .sl-side { display: flex; flex-direction: column; gap: var(--space-md); }
