@@ -32,14 +32,14 @@ const switchLabel = lang === 'es' ? 'EN' : 'ES';
 <header class="site-header">
   <div class="wrap bar">
     <a href={lang === 'es' ? '/es/' : '/'} class="wordmark" aria-label="Ysidro Almonte, home">
-      <img src="/apple-touch-icon.jpg" alt="" width="32" height="32" />
+      <img src="/logo-64.webp" alt="" width="32" height="32" decoding="async" />
       <span>Ysidro Almonte</span>
     </a>
     <nav class="site-nav" aria-label="Main navigation">
       <ul>{nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}</ul>
     </nav>
     <div class="header-actions">
-      <a class="lang-switch" href={switchHref} aria-label={lang === 'es' ? 'Switch to English' : 'Cambiar a español'}>{switchLabel}</a>
+      <a class="lang-switch" href={switchHref} aria-label={lang === 'es' ? 'EN: Switch to English' : 'ES: Cambiar a español'} hreflang={lang === 'es' ? 'en' : 'es'}>{switchLabel}</a>
       <a class="btn btn-primary header-cta" href={`${p}/contact/`}>{talk}</a>
       <button type="button" class="nav-toggle" aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'} aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span>

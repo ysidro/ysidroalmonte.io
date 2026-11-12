@@ -6,11 +6,13 @@
 // Diagram mode (`diagram` set): one architecture diagram stays pinned and each
 // step lights up the nodes listed in its `focus`, instead of sliding screenshots.
 import Diagram from './Diagram.astro';
+import { imageSize } from '../scripts/image-size';
 interface Step { tag: string; title: string; body: string; image?: string; alt?: string; focus?: number[] }
 interface Props { title?: string; lede?: string; steps: Step[]; diagram?: 'real-estate-api-sync' | 'woo-payment-gateway'; lang?: 'en' | 'es' }
 
 const { title, lede, steps, diagram, lang = 'en' } = Astro.props;
 const of = lang === 'es' ? 'de' : 'of';
+const sizes = await Promise.all(steps.map((s) => imageSize(s.image)));
 ---
 
 <section class:list={['walk', diagram && 'walk-diagram']} data-walk data-count={steps.length} aria-label={title}>
@@ -40,7 +42,7 @@ const of = lang === 'es' ? 'de' : 'of';
         {!diagram && <div class="walk-strip" data-walk-strip>
           {steps.map((s, i) => (
             <figure class:list={['walk-shot', i === 0 && 'is-active']} data-walk-shot>
-              <img src={s.image} alt={s.alt} width="1440" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+              <img src={s.image} alt={s.alt} width={sizes[i]?.width ?? 1440} height={sizes[i]?.height} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
             </figure>
           ))}
         </div>}
@@ -50,6 +52,7 @@ const of = lang === 'es' ? 'de' : 'of';
 </section>
 
 <script>
+  import { onScrollNear } from '../scripts/scroll-near';
   document.querySelectorAll<HTMLElement>('[data-walk]').forEach((root) => {
     const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
     const track = root.querySelector<HTMLElement>('.walk-track')!;
@@ -116,9 +119,10 @@ const of = lang === 'es' ? 'de' : 'of';
     };
     const onResize = () => { from = []; queue(); };
     const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    let stopScroll: (() => void) | undefined;
     const enable = () => {
       if (on) return; on = true; root.classList.add('is-live'); active = -1;
-      window.addEventListener('scroll', queue, { passive: true });
+      stopScroll = onScrollNear(root, queue);
       window.addEventListener('resize', onResize);
       shots.forEach((sh) => { const im = sh.querySelector('img')!; im.loading = 'eager'; if (!im.complete) im.addEventListener('load', onResize, { once: true }); });
       active = -1;
@@ -126,7 +130,7 @@ const of = lang === 'es' ? 'de' : 'of';
     };
     const disable = () => {
       if (!on) return; on = false; root.classList.remove('is-live');
-      window.removeEventListener('scroll', queue); window.removeEventListener('resize', onResize);
+      stopScroll?.(); stopScroll = undefined; window.removeEventListener('resize', onResize);
       texts.forEach((t) => t.removeAttribute('aria-hidden'));
       if (strip) strip.style.transform = '';
       diagramEl?.classList.remove('is-focusing');

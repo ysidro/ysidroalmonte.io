@@ -178,8 +178,8 @@ export const moreProjects = [
   description:
     "Made-to-order photo-print storefront on WooCommerce with a custom upload pipeline, rebuilt on Timber, Twig and Svelte for a fast, maintainable frontend.",
   url: "https://acrylicphotoprint.com",
-  image: "/images/work/acrylicphotoprint/home-hero.jpg",
-  fullpage: "/images/work/fullpage/acrylicphotoprint.jpg",
+  image: "/images/work/acrylicphotoprint/home-hero.webp",
+  fullpage: "/images/work/fullpage/acrylicphotoprint.webp",
 },
   {
   name: "Chevrolet.com.do",
@@ -188,8 +188,8 @@ export const moreProjects = [
   description:
     "Headless WordPress and Gatsby implementation where WordPress manages structured content through WPGraphQL and Gatsby generates optimized static pages.",
   url: "https://chevrolet.com.do/",
-  image: "/images/work/legacy/chevrolet-w900-h720.png",
-  fullpage: "/images/work/fullpage/chevrolet.jpg",
+  image: "/images/work/legacy/chevrolet-w900-h720.webp",
+  fullpage: "/images/work/fullpage/chevrolet.webp",
 },
   {
   name: "Suzuki.com.do",
@@ -198,8 +198,8 @@ export const moreProjects = [
   description:
     "Headless Gatsby and WordPress implementation with ACF-powered vehicle data and automated deployment workflows triggered by CMS content updates.",
   url: "https://suzuki.com.do/",
-  image: "/images/work/legacy/suzuki-w900-h720.png",
-  fullpage: "/images/work/fullpage/suzuki.jpg",
+  image: "/images/work/legacy/suzuki-w900-h720.webp",
+  fullpage: "/images/work/fullpage/suzuki.webp",
 },
   {
   name: "CoachCarolinTaveras.com",
@@ -208,8 +208,8 @@ export const moreProjects = [
   description:
     "WooCommerce-powered coaching platform supporting session packages, digital products, and booking workflows with Calendly integration.",
   url: "https://coachcarolintaveras.com",
-  image: "/images/work/legacy/coachcarolin.png",
-  fullpage: "/images/work/fullpage/coachcarolin.jpg",
+  image: "/images/work/legacy/coachcarolin.webp",
+  fullpage: "/images/work/fullpage/coachcarolin.webp",
 },
  {
   name: "Argos.com.do",
@@ -218,8 +218,8 @@ export const moreProjects = [
   description:
     "Custom WordPress theme with ACF flexible content fields, giving the internal team structured control over content while preserving the approved visual system.",
   url: "https://argos.com.do/",
-  image: "/images/work/legacy/argos.jpg",
-  fullpage: "/images/work/fullpage/argos.jpg",
+  image: "/images/work/legacy/argos.webp",
+  fullpage: "/images/work/fullpage/argos.webp",
 },
   {
     name: "Seer.bio",
@@ -228,8 +228,8 @@ export const moreProjects = [
     description:
       "Custom WordPress theme and ACF architecture for a proteomics biotech company's corporate marketing site.",
     url: "https://seer.bio/",
-    image: "/images/work/live/seer-bio.png",
-    fullpage: "/images/work/fullpage/seer.jpg",
+    image: "/images/work/live/seer-bio.webp",
+    fullpage: "/images/work/fullpage/seer.webp",
   },
   {
   name: "M Voy — Marketing Site",
@@ -238,8 +238,8 @@ export const moreProjects = [
   description:
     "Product marketing site for the M Voy mobility platform, built with Next.js and React to communicate app functionality and drive App Store and Google Play downloads.",
   url: "https://mvoyrd.com/",
-  image: "/images/work/live/mvoyrd.png",
-  fullpage: "/images/work/fullpage/mvoy.jpg",
+  image: "/images/work/live/mvoyrd.webp",
+  fullpage: "/images/work/fullpage/mvoy.webp",
 },
   {
   name: "GetWiredForPurpose.com",
@@ -247,7 +247,7 @@ export const moreProjects = [
   tags: ["WordPress", "ACF", "Figma", "PHP"],
   description:
     "Custom WordPress theme developed directly from Figma without a page builder, using ACF to provide structured editorial control over reusable page sections.",
-  image: "/images/work/legacy/getwiredforpurpose.jpg",
+  image: "/images/work/legacy/getwiredforpurpose.webp",
 },
   {
     name: "Imwhile.com",
@@ -255,7 +255,7 @@ export const moreProjects = [
     tags: ["WordPress", "Gutenberg", "PHP"],
     description:
       "Custom block-based theme built on Gutenberg for full editorial control, with clean semantic markup and optimized assets.",
-    image: "/images/work/legacy/imwhile.png",
+    image: "/images/work/legacy/imwhile.webp",
   },
   
 ];

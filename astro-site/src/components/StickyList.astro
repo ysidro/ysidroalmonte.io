@@ -47,6 +47,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 </div>
 
 <script>
+  import { onScrollNear } from '../scripts/scroll-near';
   document.querySelectorAll<HTMLElement>('[data-sl]').forEach((root) => {
     const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
     const track = root.querySelector<HTMLElement>('.sl-track')!;
@@ -69,15 +70,16 @@ const pad = (n: number) => String(n).padStart(2, '0');
       ghost.textContent = String(idx + 1).padStart(2, '0');
     };
     const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+    let stopScroll: (() => void) | undefined;
     const enable = () => {
       if (on) return; on = true; root.classList.add('is-live');
-      window.addEventListener('scroll', queue, { passive: true });
+      stopScroll = onScrollNear(root, queue);
       window.addEventListener('resize', queue);
       active = -1; update();
     };
     const disable = () => {
       if (!on) return; on = false; root.classList.remove('is-live');
-      window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue);
+      stopScroll?.(); stopScroll = undefined; window.removeEventListener('resize', queue);
       items.forEach((el) => el.classList.remove('is-active', 'is-past'));
     };
     const sync = () => (mq.matches ? enable() : disable());

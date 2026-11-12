@@ -33,6 +33,7 @@ const { items, label, title, lead } = Astro.props;
 </div>
 
 <script>
+  import { onScrollNear } from '../scripts/scroll-near';
   document.querySelectorAll<HTMLElement>('[data-tl]').forEach((root) => {
     const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
     const track = root.querySelector<HTMLElement>('.tl-track')!;
@@ -59,15 +60,16 @@ const { items, label, title, lead } = Astro.props;
     };
     const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
     const onResize = () => { measure(); queue(); };
+    let stopScroll: (() => void) | undefined;
     const enable = () => {
       if (on) return; on = true; root.classList.add('is-live');
-      window.addEventListener('scroll', queue, { passive: true });
+      stopScroll = onScrollNear(root, queue);
       window.addEventListener('resize', onResize);
       measure(); update();
     };
     const disable = () => {
       if (!on) return; on = false; root.classList.remove('is-live');
-      window.removeEventListener('scroll', queue); window.removeEventListener('resize', onResize);
+      stopScroll?.(); stopScroll = undefined; window.removeEventListener('resize', onResize);
       row.style.transform = ''; track.style.height = ''; items.forEach((el) => el.classList.remove('is-on'));
     };
     const sync = () => (mq.matches ? enable() : disable());

@@ -5,10 +5,12 @@
 // and the description stays put, then the strip glides to the next project
 // across a visible gap. Nothing moves until the section is pinned at the top. Stacked (poster + text) on small screens, reduced
 // motion, or no JS.
+import { imageSize } from '../scripts/image-size';
 interface Item { name: string; category: string; description: string; tags: string[]; url?: string; image: string; fullpage?: string }
 interface Props { items: Item[]; visit: string; lang?: 'en' | 'es'; title?: string; lead?: string }
 const { items, visit, lang = 'en', title, lead } = Astro.props;
 const of = lang === 'es' ? 'de' : 'of';
+const sizes = await Promise.all(items.map((m) => imageSize(m.fullpage ?? m.image)));
 ---
 
 <div class="proj" data-proj data-of={of}>
@@ -21,7 +23,7 @@ const of = lang === 'es' ? 'de' : 'of';
   <div class="proj-media" aria-hidden="true">
     <div class="proj-frame">
       <div class="proj-strip" data-proj-strip>
-        {items.map((m) => <img src={m.fullpage ?? m.image} alt="" width="1280" loading="lazy" decoding="async" />)}
+        {items.map((m, i) => <img src={m.fullpage ?? m.image} alt="" width={sizes[i]?.width ?? 1280} height={sizes[i]?.height} loading="lazy" decoding="async" />)}
       </div>
     </div>
     <p class="proj-cap" data-proj-cap>{`01 ${of} ${String(items.length).padStart(2, '0')} · ${items[0]?.name}`}</p>
@@ -43,6 +45,7 @@ const of = lang === 'es' ? 'de' : 'of';
 </div>
 
 <script>
+  import { onScrollNear } from '../scripts/scroll-near';
   document.querySelectorAll<HTMLElement>('[data-proj]').forEach((root) => {
     const mq = window.matchMedia('(min-width: 861px) and (prefers-reduced-motion: no-preference)');
     const strip = root.querySelector<HTMLElement>('[data-proj-strip]')!;
@@ -94,16 +97,17 @@ const of = lang === 'es' ? 'de' : 'of';
     };
     const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
     const onResize = () => { from = []; queue(); };
+    let stopScroll: (() => void) | undefined;
     const enable = () => {
       if (on) return; on = true; root.classList.add('is-live');
-      window.addEventListener('scroll', queue, { passive: true });
+      stopScroll = onScrollNear(root, queue);
       window.addEventListener('resize', onResize);
       shots.forEach((im) => { im.loading = 'eager'; if (!im.complete) im.addEventListener('load', onResize, { once: true }); });
       measure(); update();
     };
     const disable = () => {
       if (!on) return; on = false; root.classList.remove('is-live');
-      window.removeEventListener('scroll', queue); window.removeEventListener('resize', onResize);
+      stopScroll?.(); stopScroll = undefined; window.removeEventListener('resize', onResize);
       strip.style.transform = ''; items.forEach((el) => (el.style.minHeight = ''));
     };
     const sync = () => (mq.matches ? enable() : disable());

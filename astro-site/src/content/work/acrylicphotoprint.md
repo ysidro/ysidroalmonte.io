@@ -4,7 +4,7 @@ summary: "Custom product-personalization platform on WooCommerce, rebuilt on a m
 role: "Sole engineer — platform architecture, custom plugins, and storefront rebuild"
 stack: ["WooCommerce", "Custom Plugins", "Timber", "Twig", "Svelte", "Tailwind CSS", "AWS", "Cloudflare"]
 liveUrl: "https://acrylicphotoprint.com"
-heroImage: "/images/work/acrylicphotoprint/home-hero.jpg"
+heroImage: "/images/work/acrylicphotoprint/home-hero.webp"
 featured: true
 order: 0
 results:
@@ -18,12 +18,12 @@ walkthrough:
   - tag: "Home · Hero"
     title: "Promise and next action"
     body: "The hero states the product and the city (local Miami business), then offers two paths: upload a photo now, or view sizes and prices. A trust strip (secure checkout, local business, high-resolution printing, fast turnaround) answers the first objections before any scroll."
-    image: "/images/work/acrylicphotoprint/home-hero.jpg"
+    image: "/images/work/acrylicphotoprint/home-hero.webp"
     alt: "Acrylicphotoprint.com home page hero with headline, two calls to action and a framed acrylic print"
   - tag: "Home · Choose your print"
     title: "Product routing"
     body: "Four product families (acrylic, canvas, collage, personalized gifts) as entry points, so each visitor reaches the right configurator in one click instead of browsing a generic shop grid."
-    image: "/images/work/acrylicphotoprint/home-choose.jpg"
+    image: "/images/work/acrylicphotoprint/home-choose.webp"
     alt: "Home page section for choosing between acrylic, canvas, collage and personalized gifts"
   - tag: "Home · How it works"
     title: "The process, upfront"
@@ -33,32 +33,32 @@ walkthrough:
   - tag: "Home · Best sellers"
     title: "Merchandising from the catalog"
     body: "A best-sellers grid surfaces the products that already convert, linking straight into the matching product page."
-    image: "/images/work/acrylicphotoprint/home-best.jpg"
+    image: "/images/work/acrylicphotoprint/home-best.webp"
     alt: "Home page best sellers product grid"
   - tag: "Home · Acrylic vs. canvas"
     title: "Comparison that answers the buying question"
     body: "A side-by-side of the two materials. It helps undecided buyers choose and keeps them on the site instead of leaving to research."
-    image: "/images/work/acrylicphotoprint/home-vs.jpg"
+    image: "/images/work/acrylicphotoprint/home-vs.webp"
     alt: "Home page comparison between acrylic and canvas prints"
   - tag: "Home · Gallery and FAQ"
     title: "Social proof and objection handling"
     body: "A gallery of finished prints builds trust in print quality, and the FAQ answers common questions before they turn into support emails."
-    image: "/images/work/acrylicphotoprint/home-gallery.jpg"
+    image: "/images/work/acrylicphotoprint/home-gallery.webp"
     alt: "Home page gallery of memories section"
   - tag: "Product · Acrylic Photo Prints"
     title: "A configurator, not a product page"
     body: "Image gallery, seven sizes with live prices, portrait or landscape orientation, a high-resolution upload dropzone (300 DPI guidance) and a purchase button that updates with the chosen price. The uploaded image becomes order data that travels through cart and checkout."
-    image: "/images/work/acrylicphotoprint/acrylic-product.jpg"
+    image: "/images/work/acrylicphotoprint/acrylic-product.webp"
     alt: "Acrylic Photo Prints product page with size selector, orientation toggle and upload area"
   - tag: "Product · Acrylic benefits"
     title: "Specs that justify the price"
     body: "Crystal-clear quality, fade-resistance, the floating effect and high-resolution printing, followed by customer reviews and a closing call to action on the same page."
-    image: "/images/work/acrylicphotoprint/acrylic-benefits.jpg"
+    image: "/images/work/acrylicphotoprint/acrylic-benefits.webp"
     alt: "Acrylic Photo Prints benefits and testimonials section"
   - tag: "Product · Collage Picture"
     title: "Four-step builder with per-slot photos"
     body: "Choose one of six layouts, upload photos into each slot, pick one of eight backgrounds, then size and checkout. A progress counter and a disabled add-to-cart button (\"Upload 5 more photos to continue\") keep an incomplete design from reaching the cart."
-    image: "/images/work/acrylicphotoprint/collage-product.jpg"
+    image: "/images/work/acrylicphotoprint/collage-product.webp"
     alt: "Collage Picture builder with layouts, photo slots, backgrounds and size selection"
 ---
 
@@ -112,9 +112,9 @@ Lab results for the live home page, run on Nov 10, 2026 (Lighthouse, simulated c
 
 Desktop metrics: First Contentful Paint 0.3 s, Largest Contentful Paint 0.6 s, Total Blocking Time 120 ms, Cumulative Layout Shift 0.009, Speed Index 0.8 s. The mobile performance score is the one with headroom; its metric breakdown was not captured in this run. No field data (real-user) was available for the page yet.
 
-<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-desktop.jpg" alt="PageSpeed Insights desktop report for acrylicphotoprint.com: Performance 98, Accessibility 100, Best Practices 100, SEO 100, with FCP 0.3 s, LCP 0.6 s, TBT 120 ms, CLS 0.009 and Speed Index 0.8 s" width="1400" height="1179" loading="lazy" /></figure>
+<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-desktop.webp" alt="PageSpeed Insights desktop report for acrylicphotoprint.com: Performance 98, Accessibility 100, Best Practices 100, SEO 100, with FCP 0.3 s, LCP 0.6 s, TBT 120 ms, CLS 0.009 and Speed Index 0.8 s" width="1400" height="1179" loading="lazy" /></figure>
 
-<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-mobile.jpg" alt="PageSpeed Insights mobile report for acrylicphotoprint.com: Performance 77, Accessibility 100, Best Practices 100, SEO 100" width="1400" height="1194" loading="lazy" /></figure>
+<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-mobile.webp" alt="PageSpeed Insights mobile report for acrylicphotoprint.com: Performance 77, Accessibility 100, Best Practices 100, SEO 100" width="1400" height="1194" loading="lazy" /></figure>
 
 ## Results
 

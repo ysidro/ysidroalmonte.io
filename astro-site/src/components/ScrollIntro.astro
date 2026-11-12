@@ -16,8 +16,8 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
   <div class="intro-track">
     <div class="intro-stage">
       <picture>
-        <source media="(max-width: 860px)" srcset="/video/portfolio-intro-mobile-poster.jpg" width="720" height="1280" />
-        <img class="intro-poster" src="/video/portfolio-intro-poster.jpg" alt={alt} width="1920" height="1276" fetchpriority="high" decoding="async" />
+        <source media="(max-width: 860px)" srcset="/video/portfolio-intro-mobile-poster.webp" width="720" height="1280" />
+        <img class="intro-poster" src="/video/portfolio-intro-poster.webp" alt={alt} width="1920" height="1276" fetchpriority="high" decoding="async" />
       </picture>
       <video class="intro-video" muted playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="/video/portfolio-intro.mp4" data-src-mobile="/video/portfolio-intro-mobile.mp4"></video>
 
@@ -48,6 +48,7 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
 </section>
 
 <script>
+  import { onScrollNear } from '../scripts/scroll-near';
   document.querySelectorAll<HTMLElement>('[data-intro]').forEach((root) => {
     const mq = window.matchMedia('(prefers-reduced-motion: no-preference)');
     const mqSmall = window.matchMedia('(max-width: 860px)');
@@ -98,6 +99,16 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
     };
     root.querySelectorAll<HTMLAnchorElement>('a[href="#featured"]').forEach((l) => l.addEventListener('click', jump));
 
+    let queued = false;
+    // Chrome counts a video's first frame as an LCP candidate, so a multi-MB video requested at load would
+    // become the page's LCP (and cost bandwidth for visitors who never scroll). The poster is frame 0, so the
+    // video is requested on the first real input instead; LCP is frozen by then.
+    const onFirstInput = (fn: () => void) => {
+      if (window.scrollY > 0) return fn();
+      const events = ['scroll', 'wheel', 'touchstart', 'keydown', 'pointerdown'];
+      const run = () => { events.forEach((e) => window.removeEventListener(e, run)); fn(); };
+      events.forEach((e) => window.addEventListener(e, run, { passive: true }));
+    };
     const source = () => (mqSmall.matches ? video.dataset.srcMobile! : video.dataset.src!);
     const load = () => {
       ready = false; cur = 0; root.classList.remove('is-ready');
@@ -107,16 +118,21 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
     };
     // phone <-> desktop (rotation, resize): swap to the matching cut
     mqSmall.addEventListener('change', () => { if (on) load(); });
+    let stopScroll: (() => void) | undefined;
     const enable = () => {
       if (on) return; on = true; root.classList.add('is-live');
-      if (!video.getAttribute('src')) load(); else ready = true;
-      window.addEventListener('scroll', queue, { passive: true });
+      if (video.getAttribute('src')) ready = true;
+      else if (!queued) {
+        queued = true;
+        onFirstInput(() => { queued = false; if (on && !video.getAttribute('src')) load(); });
+      }
+      stopScroll = onScrollNear(root, queue);
       window.addEventListener('resize', queue);
       queue();
     };
     const disable = () => {
       if (!on) return; on = false; root.classList.remove('is-live', 'a-off', 'c-off');
-      window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue);
+      stopScroll?.(); stopScroll = undefined; window.removeEventListener('resize', queue);
       ['--a', '--c'].forEach((k) => root.style.removeProperty(k));
     };
     const sync = () => (mq.matches && !saveData ? enable() : disable());
@@ -147,7 +163,7 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
   .intro.is-live .intro-track { height: 380vh; }
   .intro.is-live .intro-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; background: #000; }
   .intro.is-live .intro-poster, .intro.is-live .intro-video { position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; object-fit: cover; object-position: 38% center; }
-  .intro.is-live .intro-video { display: block; opacity: 0; transition: opacity 400ms var(--ease-out); }
+    .intro.is-live .intro-video { display: block; opacity: 0; transition: opacity 400ms var(--ease-out); }
   .intro.is-live.is-ready .intro-video { opacity: 1; }
   .intro.is-live .intro-copy { position: absolute; padding: 0; }
   .intro.is-live.a-off .intro-a, .intro.is-live.c-off .intro-c { visibility: hidden; }

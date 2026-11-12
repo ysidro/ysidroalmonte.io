@@ -166,8 +166,8 @@ export const moreProjects = [
     description:
       "Tienda de impresiones fotográficas hechas a pedido sobre WooCommerce, con un pipeline de subida a medida, reconstruida con Timber, Twig y Svelte para un frontend rápido y mantenible.",
     url: "https://acrylicphotoprint.com",
-    image: "/images/work/acrylicphotoprint/home-hero.jpg",
-    fullpage: "/images/work/fullpage/acrylicphotoprint.jpg",
+    image: "/images/work/acrylicphotoprint/home-hero.webp",
+    fullpage: "/images/work/fullpage/acrylicphotoprint.webp",
   },
   {
     name: "Chevrolet.com.do",
@@ -176,8 +176,8 @@ export const moreProjects = [
     description:
       "Implementación headless de WordPress y Gatsby, donde WordPress gestiona el contenido estructurado a través de WPGraphQL y Gatsby genera páginas estáticas optimizadas.",
     url: "https://chevrolet.com.do/",
-    image: "/images/work/legacy/chevrolet-w900-h720.png",
-    fullpage: "/images/work/fullpage/chevrolet.jpg",
+    image: "/images/work/legacy/chevrolet-w900-h720.webp",
+    fullpage: "/images/work/fullpage/chevrolet.webp",
   },
   {
     name: "Suzuki.com.do",
@@ -186,8 +186,8 @@ export const moreProjects = [
     description:
       "Implementación headless de Gatsby y WordPress con datos de vehículos gestionados vía ACF y despliegues automáticos activados por cambios de contenido en el CMS.",
     url: "https://suzuki.com.do/",
-    image: "/images/work/legacy/suzuki-w900-h720.png",
-    fullpage: "/images/work/fullpage/suzuki.jpg",
+    image: "/images/work/legacy/suzuki-w900-h720.webp",
+    fullpage: "/images/work/fullpage/suzuki.webp",
   },
   {
     name: "CoachCarolinTaveras.com",
@@ -196,8 +196,8 @@ export const moreProjects = [
     description:
       "Plataforma de coaching impulsada por WooCommerce, con paquetes de sesiones, productos digitales y flujos de reserva integrados con Calendly.",
     url: "https://coachcarolintaveras.com",
-    image: "/images/work/legacy/coachcarolin.png",
-    fullpage: "/images/work/fullpage/coachcarolin.jpg",
+    image: "/images/work/legacy/coachcarolin.webp",
+    fullpage: "/images/work/fullpage/coachcarolin.webp",
   },
   {
     name: "Argos.com.do",
@@ -206,8 +206,8 @@ export const moreProjects = [
     description:
       "Tema WordPress a medida con campos flexibles de ACF, dando al equipo interno control estructurado sobre el contenido sin perder el sistema visual aprobado.",
     url: "https://argos.com.do/",
-    image: "/images/work/legacy/argos.jpg",
-    fullpage: "/images/work/fullpage/argos.jpg",
+    image: "/images/work/legacy/argos.webp",
+    fullpage: "/images/work/fullpage/argos.webp",
   },
   {
     name: "Seer.bio",
@@ -216,8 +216,8 @@ export const moreProjects = [
     description:
       "Tema WordPress y arquitectura ACF a medida para el sitio de marketing corporativo de una empresa de proteómica.",
     url: "https://seer.bio/",
-    image: "/images/work/live/seer-bio.png",
-    fullpage: "/images/work/fullpage/seer.jpg",
+    image: "/images/work/live/seer-bio.webp",
+    fullpage: "/images/work/fullpage/seer.webp",
   },
   {
     name: "M Voy — Sitio de marketing",
@@ -226,8 +226,8 @@ export const moreProjects = [
     description:
       "Sitio de marketing de producto para la plataforma de movilidad M Voy, construido con Next.js y React para comunicar la funcionalidad de la app e impulsar descargas en App Store y Google Play.",
     url: "https://mvoyrd.com/",
-    image: "/images/work/live/mvoyrd.png",
-    fullpage: "/images/work/fullpage/mvoy.jpg",
+    image: "/images/work/live/mvoyrd.webp",
+    fullpage: "/images/work/fullpage/mvoy.webp",
   },
   {
     name: "GetWiredForPurpose.com",
@@ -235,7 +235,7 @@ export const moreProjects = [
     tags: ["WordPress", "ACF", "Figma", "PHP"],
     description:
       "Tema WordPress desarrollado directamente desde Figma sin page builder, usando ACF para dar control editorial estructurado sobre secciones reutilizables.",
-    image: "/images/work/legacy/getwiredforpurpose.jpg",
+    image: "/images/work/legacy/getwiredforpurpose.webp",
   },
   {
     name: "Imwhile.com",
@@ -243,7 +243,7 @@ export const moreProjects = [
     tags: ["WordPress", "Gutenberg", "PHP"],
     description:
       "Tema a medida basado en bloques de Gutenberg para control editorial completo, con marcado semántico limpio y assets optimizados.",
-    image: "/images/work/legacy/imwhile.png",
+    image: "/images/work/legacy/imwhile.webp",
   },
 ];
 

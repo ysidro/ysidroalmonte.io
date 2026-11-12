@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { person } from '../data/site';
+import displayFont from '@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-600-normal.woff2?url';
+import bodyFont from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -55,6 +57,8 @@ const isHome = enPath === '/';
     <meta property="og:locale" content={lang === 'es' ? 'es_DO' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon-32x32.jpg" type="image/jpeg" sizes="32x32" />
     <link rel="icon" href="/favicon-16x16.jpg" type="image/jpeg" sizes="16x16" />
@@ -75,6 +79,11 @@ const isHome = enPath === '/';
         sameAs: [person.links.linkedin, person.links.github],
       })} />
     )}
+
+    <!-- Prefetch (not prerender, so analytics only fires on a real visit) likely next pages on hover. -->
+    <script type="speculationrules" is:inline set:html={JSON.stringify({
+      prefetch: [{ where: { and: [{ href_matches: '/*' }, { not: { selector_matches: '[target=_blank], [rel~=nofollow]' } }] }, eagerness: 'moderate' }],
+    })} />
 
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B52YZ2XD3T"></script>
