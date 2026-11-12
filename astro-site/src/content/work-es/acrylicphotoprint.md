@@ -11,6 +11,7 @@ results:
   - "Pipeline de subida y procesamiento de imágenes gestionando fotos de clientes en el checkout"
   - "Lógica de carrito y checkout extendida para productos personalizados hechos a pedido"
   - "Reconstruido sobre Timber + Twig + Svelte para un frontend WordPress moderno y mantenible"
+  - "PageSpeed Insights (nov. 2026): escritorio 98 en rendimiento y 100 en accesibilidad, prácticas recomendadas y SEO; móvil 77 en rendimiento y 100 en las otras tres"
 walkthroughTitle: "Página por página: cómo el storefront guía la compra"
 walkthroughLede: "Recorre el storefront en producción. Cada paso es una sección real de acrylicphotoprint.com y lo que hace por el cliente."
 walkthrough:
@@ -99,6 +100,21 @@ El procesamiento de imágenes ocurre fuera del camino crítico del checkout, con
 ## Rendimiento / Seguridad / Escalabilidad
 
 AWS para almacenamiento y procesamiento, Cloudflare para caché y entrega, y una arquitectura de plantillas (Timber/Twig) que mantiene el código mantenible a medida que crecen el catálogo y las opciones de personalización.
+
+### Medido con PageSpeed Insights
+
+Resultados de laboratorio de la página de inicio en producción, ejecutados el 10 de noviembre de 2026 (Lighthouse, condiciones simuladas, así que los valores son estimaciones y varían entre ejecuciones):
+
+| | Rendimiento | Accesibilidad | Prácticas recomendadas | SEO |
+|---|---|---|---|---|
+| Escritorio | 98 | 100 | 100 | 100 |
+| Móvil | 77 | 100 | 100 | 100 |
+
+Métricas de escritorio: First Contentful Paint 0,3 s, Largest Contentful Paint 0,6 s, Total Blocking Time 120 ms, Cumulative Layout Shift 0,009, Speed Index 0,8 s. La puntuación de rendimiento en móvil es la que tiene margen de mejora; el desglose de sus métricas no se capturó en esta ejecución. Aún no había datos de campo (usuarios reales) para la página.
+
+<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-desktop.jpg" alt="Informe de PageSpeed Insights en escritorio para acrylicphotoprint.com: Rendimiento 98, Accesibilidad 100, Prácticas recomendadas 100, SEO 100, con FCP 0,3 s, LCP 0,6 s, TBT 120 ms, CLS 0,009 e Speed Index 0,8 s" width="1400" height="1179" loading="lazy" /></figure>
+
+<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-mobile.jpg" alt="Informe de PageSpeed Insights en móvil para acrylicphotoprint.com: Rendimiento 77, Accesibilidad 100, Prácticas recomendadas 100, SEO 100" width="1400" height="1194" loading="lazy" /></figure>
 
 ## Resultados
 

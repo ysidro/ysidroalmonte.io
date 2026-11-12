@@ -57,7 +57,7 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
     const clamp = (v: number) => Math.min(1, Math.max(0, v));
     // fade in over [a, b], out over [c, d]
     const win = (p: number, a: number, b: number, c: number, d: number) => clamp((p - a) / (b - a)) * (1 - clamp((p - c) / (d - c)));
-    let on = false, raf = 0, ready = false, target = 0, cur = 0;
+    let on = false, raf = 0, ready = false, snap = false, target = 0, cur = 0;
 
     const progress = () => {
       const r = track.getBoundingClientRect();
@@ -77,6 +77,7 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
       root.classList.toggle('c-off', c < 0.04);
       if (ready && video.duration) {
         target = p * video.duration;
+        if (snap) { cur = target; snap = false; }
         cur += (target - cur) * 0.2;
         if (Math.abs(target - cur) < 0.004) cur = target;
         if (!video.seeking && Math.abs(video.currentTime - cur) > 0.002) video.currentTime = cur;
@@ -85,12 +86,15 @@ const { name, role, phrase, links, feature, alt, scroll } = Astro.props;
     };
     const queue = () => { if (!raf) raf = requestAnimationFrame(tick); };
 
-    // "View selected work": while pinned, jump to the end of the track where the project is revealed.
+    // "View selected work": go straight to the project at the end of the track (no tour of the shot);
+    // the video snaps to its last frame instead of scrubbing there.
     const jump = (e: Event) => {
       if (!on) return;
       e.preventDefault();
       const end = track.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
-      window.scrollTo({ top: end, behavior: 'smooth' });
+      snap = true;
+      window.scrollTo({ top: end, behavior: 'instant' });
+      queue();
     };
     root.querySelectorAll<HTMLAnchorElement>('a[href="#featured"]').forEach((l) => l.addEventListener('click', jump));
 

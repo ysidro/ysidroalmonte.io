@@ -27,8 +27,8 @@ const diagramName = slug === 'real-estate-api-sync' || slug === 'woo-payment-gat
 const photo = heroImage && !heroImage.endsWith('.svg') ? heroImage : undefined;
 
 const t = lang === 'es'
-  ? { role: 'Rol', stack: 'Stack', links: 'Enlaces', github: 'GitHub', live: 'Proyecto en vivo', private: 'Trabajo privado para cliente, código no disponible públicamente', results: 'Resultados', closing: '¿Buscas un Senior WordPress / PHP Engineer?', closingBody: 'Estoy disponible para oportunidades remotas con equipos internacionales.', contact: 'Contáctame', back: 'Todos los proyectos' }
-  : { role: 'Role', stack: 'Stack', links: 'Links', github: 'GitHub', live: 'Live project', private: 'Private client work, code not publicly available', results: 'Results', closing: 'Looking for a Senior WordPress / PHP Engineer?', closingBody: 'I’m available for remote opportunities with international teams.', contact: 'Contact me', back: 'All projects' };
+  ? { role: 'Rol', stack: 'Stack', links: 'Enlaces', github: 'GitHub', live: 'Proyecto en vivo', private: 'Trabajo privado para cliente, código no disponible públicamente', liveNote: 'Sitio en producción; código no disponible públicamente', results: 'Resultados', closing: '¿Buscas un Senior WordPress / PHP Engineer?', closingBody: 'Estoy disponible para oportunidades remotas con equipos internacionales.', contact: 'Contáctame', back: 'Todos los proyectos' }
+  : { role: 'Role', stack: 'Stack', links: 'Links', github: 'GitHub', live: 'Live project', private: 'Private client work, code not publicly available', liveNote: 'Live in production; code not publicly available', results: 'Results', closing: 'Looking for a Senior WordPress / PHP Engineer?', closingBody: 'I’m available for remote opportunities with international teams.', contact: 'Contact me', back: 'All projects' };
 ---
 
 <Layout title={`${name} — Ysidro Almonte`} description={summary} path={Astro.url.pathname} lang={lang}>
@@ -49,7 +49,7 @@ const t = lang === 'es'
               {liveUrl && <a class="link" href={liveUrl} target="_blank" rel="noopener">{t.live}</a>}
               {!githubUrl && !liveUrl && <span class="muted">{t.private}</span>}
             </span>
-            {!githubUrl && liveUrl && <span class="muted" style="display:block; margin-top: var(--space-3xs)">{t.private}</span>}
+            {!githubUrl && liveUrl && <span class="muted" style="display:block; margin-top: var(--space-3xs)">{t.liveNote}</span>}
           </dd>
         </div>
       </dl>

@@ -11,6 +11,7 @@ results:
   - "Custom image upload and processing pipeline handling customer photos at checkout"
   - "Cart and checkout logic extended for personalized, made-to-order products"
   - "Rebuilt on Timber + Twig + Svelte for a modern, maintainable WordPress frontend"
+  - "PageSpeed Insights (Nov 2026): desktop 98 performance and 100 accessibility, best practices and SEO; mobile 77 performance and 100 on the other three"
 walkthroughTitle: "Page by page: how the storefront guides a purchase"
 walkthroughLede: "Scroll through the live storefront. Each step is a real section of acrylicphotoprint.com and what it does for the customer."
 walkthrough:
@@ -99,6 +100,21 @@ Image processing happens off the critical checkout path, with Cloudflare handlin
 ## Performance / Security / Scalability
 
 AWS for storage and processing, Cloudflare for caching and delivery, and a template architecture (Timber/Twig) that keeps the codebase maintainable as the catalog and customization options grow.
+
+### Measured with PageSpeed Insights
+
+Lab results for the live home page, run on Nov 10, 2026 (Lighthouse, simulated conditions, so values are estimates and vary between runs):
+
+| | Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|---|
+| Desktop | 98 | 100 | 100 | 100 |
+| Mobile | 77 | 100 | 100 | 100 |
+
+Desktop metrics: First Contentful Paint 0.3 s, Largest Contentful Paint 0.6 s, Total Blocking Time 120 ms, Cumulative Layout Shift 0.009, Speed Index 0.8 s. The mobile performance score is the one with headroom; its metric breakdown was not captured in this run. No field data (real-user) was available for the page yet.
+
+<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-desktop.jpg" alt="PageSpeed Insights desktop report for acrylicphotoprint.com: Performance 98, Accessibility 100, Best Practices 100, SEO 100, with FCP 0.3 s, LCP 0.6 s, TBT 120 ms, CLS 0.009 and Speed Index 0.8 s" width="1400" height="1179" loading="lazy" /></figure>
+
+<figure class="figure"><img src="/images/work/acrylicphotoprint/pagespeed-mobile.jpg" alt="PageSpeed Insights mobile report for acrylicphotoprint.com: Performance 77, Accessibility 100, Best Practices 100, SEO 100" width="1400" height="1194" loading="lazy" /></figure>
 
 ## Results
 

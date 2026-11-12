@@ -197,6 +197,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .prose-case ul { margin: 0 0 var(--space-sm); padding-left: 1.1rem; list-style: disc; }
 .prose-case li { margin-bottom: var(--space-2xs); }
 .prose-case strong { font-weight: 600; }
+.prose-case h3 { margin: var(--space-lg) 0 var(--space-xs); font-size: var(--text-lg); }
+.prose-case .figure { max-width: none; }
+.prose-case .figure img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.prose-case table { width: 100%; border-collapse: collapse; margin: 0 0 var(--space-sm); font-size: var(--text-sm); }
+.prose-case th, .prose-case td { padding: var(--space-2xs) var(--space-xs) var(--space-2xs) 0; text-align: left; }
 .prose-case code { font: 400 0.9em var(--font-mono); padding: 0.1em 0.35em; background: var(--color-paper-2); border-radius: 3px; }
 
 /* Closing band */
